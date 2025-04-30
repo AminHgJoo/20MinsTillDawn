@@ -1,15 +1,8 @@
 package com.example.views;
 
 import com.badlogic.gdx.Screen;
-import com.example.MainApp;
 
-public class MainMenu implements Screen {
-    final MainApp mainApp;
-
-    public MainMenu(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
-
+public class PauseMenu implements Screen {
     @Override
     public void show() {
 
