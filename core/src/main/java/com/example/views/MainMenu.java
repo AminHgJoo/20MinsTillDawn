@@ -2,6 +2,7 @@ package com.example.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -32,36 +33,35 @@ public class MainMenu implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
-        // Optionally, add table.debug(); to see boundaries during development
         stage.addActor(table);
 
-        Label title = new Label("Weird Stuff", skin);
+        Label title = new Label("Developed By @AminHgJoo", skin);
         title.setFontScale(2);
+        title.setColor(Color.CORAL);
+        title.setPosition(10, 10);
+        stage.addActor(title);
 
-        TextButton startButton = new TextButton("Start Game", skin);
-        startButton.addListener(new ChangeListener() {
+        TextButton loginButton = new TextButton("Login", skin);
+        loginButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Start Game Clicked");
+
             }
         });
 
-        TextButton settingsButton = new TextButton("Settings", skin);
-        settingsButton.addListener(new ChangeListener() {
+        TextButton registerButton = new TextButton("Register", skin);
+        registerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Settings Clicked");
+
             }
         });
 
-        // Add the button to the table with some padding
-        table.top();
+        table.center();
         table.padTop(50);
-        table.add(title).padBottom(20);
+        table.add(loginButton).width(300).height(60).pad(10);
         table.row();
-        table.add(startButton).width(200).height(60).padBottom(10);
-        table.row();
-        table.add(settingsButton).width(200).height(60).padBottom(10);
+        table.add(registerButton).width(300).height(60).pad(10);
     }
 
 
