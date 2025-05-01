@@ -34,7 +34,7 @@ public class UserSettings {
     }
 
     public UserSettings(String avatarKeyString, String lang) {
-        this.soundVolume = 1;
+        this.soundVolume = 0.75f;
         this.lang = lang;
         this.upKey = Input.Keys.W;
         this.shootKey = Input.Buttons.LEFT;

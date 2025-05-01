@@ -37,6 +37,14 @@ public enum Languages {
     WRONG_PASSWORD("Wrong password", "Verkeerd wachtwoord"),
     WRONG_QUESTION("Wrong question", "Verkeerde beveiligingsvraag"),
     WRONG_ANSWER("Wrong answer", "Verkeerd antwoord"),
+    YOUR_SCORE("Your Score", "Jouw Punten"),
+    TOGGLE_SFX("Toggle SFX", "SFX aan/uit"),
+    LOGGED_IN_AS_GUEST("Logged In as Guest", "Ingelogd als gast"),
+    MUSIC_VOLUME("Music Volume", "Muziekvolume"),
+    TOGGLE_AUTO_RELOAD("Toggle Auto Reload", "Automatisch herladen aan/uit"),
+    CHANGE_MUSIC("Change Music", "Muziek veranderen"),
+    GO_BACK("Go Back", "Ga terug"),
+
     ;
 
     final public String english;

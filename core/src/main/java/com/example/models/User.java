@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Json;
-import org.jetbrains.annotations.NotNull;
-import scala.App;
 
 import java.io.File;
 import java.sql.*;
@@ -13,7 +11,6 @@ import java.util.ArrayList;
 
 public class User {
 
-    //TODO: Update when a user is created.
     public final static ArrayList<User> users = new ArrayList<>();
     public static int lastUserId;
 
@@ -22,7 +19,6 @@ public class User {
     private String password;
     private String securityQuestion;
     private String securityAnswer;
-    //TODO: Save user settings when settings are changed in settings menu
     // Also delete this object's .json file if the user is deleted; in addition, load them from .json after loading users from db.
     private UserSettings userSettings;
     private Texture profileAvatar;
@@ -91,7 +87,7 @@ public class User {
         return null;
     }
 
-    public void saveToJson() {
+    public void saveSettingsToJson() {
         Json json = new Json();
 
         String jsonString = json.prettyPrint(this.userSettings);
@@ -103,6 +99,34 @@ public class User {
 
         FileHandle fileHandle = Gdx.files.absolute("./saved_data/users/" + id + ".json");
         fileHandle.writeString(jsonString, false);
+    }
+
+    //TODO: Implement
+    public void changePasswordInDB(final String newPassword) {
+        File dataDir = new File("./user_data");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+
+        String url = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String dbUser = "sa";
+        String dbPassword = "";
+
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newPassword);
+
+            pstmt.setInt(2, this.id);
+
+            pstmt.executeUpdate();
+
+            System.out.println("Password changed: " + newPassword);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public User(String username, String securityQuestion, String securityAnswer, String password, int id) {

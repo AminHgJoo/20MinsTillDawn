@@ -89,7 +89,7 @@ public class LoginAndRegistration {
 
             User newUser = new User(username, securityQuestion, securityAnswer, password, User.lastUserId + 1);
             newUser.initializeOtherObjects();
-            newUser.saveToJson();
+            newUser.saveSettingsToJson();
 
             User.users.add(newUser);
             User.lastUserId++;
@@ -140,6 +140,7 @@ public class LoginAndRegistration {
             && user.getSecurityAnswer().equals(securityAnswer)) {
             if (validatePasswordStrength(newPassword)) {
                 user.setPassword(newPassword);
+                user.changePasswordInDB(newPassword);
                 AppData.setCurrentUser(user);
                 AppData.setLang(user.getUserSettings().getLang());
                 return Languages.SUCCESS;

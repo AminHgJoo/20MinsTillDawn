@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
+import com.example.models.UIHelper;
 import com.example.models.enums.Languages;
 
 public class MainMenu implements Screen {
@@ -24,6 +25,16 @@ public class MainMenu implements Screen {
 
     public MainMenu(final MainApp mainApp) {
         this.mainApp = mainApp;
+
+        String musicName;
+
+        if (AppData.getCurrentUser() != null) {
+            musicName = AppData.getCurrentUser().getUserSettings().getMusicPath();
+        } else {
+            musicName = "sfx/music/Pretty Dungeon.wav";
+        }
+
+        mainApp.music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
 
         this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
 
@@ -59,7 +70,18 @@ public class MainMenu implements Screen {
             profilePicture = new Image(profileTexture);
         }
 
-        profilePicture.setPosition(10, 50);
+        Label scoreTitle;
+        if (AppData.getCurrentUser() != null) {
+            scoreTitle = new Label(Languages.YOUR_SCORE.translate() + ": " + AppData.getCurrentUser().getUserSettings().getScore(), skin);
+        } else {
+            scoreTitle = new Label(Languages.YOUR_SCORE.translate() + ": " + 0, skin);
+        }
+        scoreTitle.setFontScale(1.3f);
+        scoreTitle.setColor(Color.CYAN);
+        scoreTitle.setPosition(10, 50);
+        stage.addActor(scoreTitle);
+
+        profilePicture.setPosition(10, 90);
         profilePicture.setSize(profilePicture.getWidth(), profilePicture.getHeight());
         stage.addActor(profilePicture);
 
@@ -68,7 +90,14 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                if (AppData.getCurrentUser() != null) {
+                    mainApp.setScreen(new SettingsMenu(mainApp));
+                    AppData.setCurrentScreen(mainApp.getScreen());
+                    dispose();
+                } else {
+                    UIHelper uiHelper = new UIHelper(stage, skin);
+                    uiHelper.showErrorDialog(Languages.LOGGED_IN_AS_GUEST.translate());
+                }
             }
         });
 
@@ -77,7 +106,9 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                mainApp.setScreen(new ProfileMenu(mainApp));
+                AppData.setCurrentScreen(mainApp.getScreen());
+                dispose();
             }
         });
 
@@ -86,7 +117,9 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                mainApp.setScreen(new PreGameMenu(mainApp));
+                AppData.setCurrentScreen(mainApp.getScreen());
+                dispose();
             }
         });
 
@@ -95,7 +128,9 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                mainApp.setScreen(new LeaderboardMenu(mainApp));
+                AppData.setCurrentScreen(mainApp.getScreen());
+                dispose();
             }
         });
 
@@ -104,7 +139,9 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                mainApp.setScreen(new TalentMenu(mainApp));
+                AppData.setCurrentScreen(mainApp.getScreen());
+                dispose();
             }
         });
 
@@ -113,7 +150,9 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                mainApp.setScreen(new GameMenu(mainApp));
+                AppData.setCurrentScreen(mainApp.getScreen());
+                dispose();
             }
         });
 
@@ -124,6 +163,7 @@ public class MainMenu implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 AppData.setCurrentUser(null);
                 mainApp.setScreen(new LauncherMenu(mainApp));
+                mainApp.music.stop();
                 AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
                 //TODO: Maybe save data?
@@ -145,7 +185,19 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-
+        if (!mainApp.music.isPlaying()) {
+            if (AppData.getCurrentUser() != null) {
+                mainApp.music.setVolume(AppData.getCurrentUser().getUserSettings().getSoundVolume());
+                mainApp.music.setLooping(true);
+                if (AppData.getCurrentUser().getUserSettings().isPlaySFX()) {
+                    mainApp.music.play();
+                }
+            } else {
+                mainApp.music.setVolume(0.75f);
+                mainApp.music.setLooping(true);
+                mainApp.music.play();
+            }
+        }
     }
 
     @Override
