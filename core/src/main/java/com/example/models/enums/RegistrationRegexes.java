@@ -4,7 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum RegistrationRegexes {
-    ;
+    CAPITAL_LETTER("[A-Z]"),
+    LOWERCASE_LETTER("[a-z]"),
+    NUMBER("[0-9]"),
+    SPECIAL_CHARACTER("[@%$#&*()]");
 
     final private String regex;
 

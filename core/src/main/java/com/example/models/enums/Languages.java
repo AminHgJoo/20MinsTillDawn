@@ -1,7 +1,6 @@
 package com.example.models.enums;
 
 import com.example.models.AppData;
-import scala.App;
 
 public enum Languages {
 
@@ -19,6 +18,18 @@ public enum Languages {
     USER_SUCCESSFULLY_REGISTERED("User successfully registered", "Gebruiker succesvol geregistreerd"),
     ERROR("Error", "Foutmelding"),
     SUCCESS("Success", "Success"),
+    USERNAME_ALREADY_EXISTS("Username already exists", "Gebruikersnaam bestaat al"),
+    PASSWORD_IS_WEAK("Password is weak", "Wachtwoord is zwak"),
+    INVALID_USERNAME("Invalid Username", "Ongeldige gebruikersnaam"),
+    WELCOME("Welcome", "Wilkommen"),
+    GUEST("Guest", "Gast"),
+    SETTINGS("Settings", " Instellingen"),
+    PROFILE("Profile", "Profiel"),
+    PRE_GAME_MENU("Pre-Game Menu", "Pre-spelmenu"),
+    LEADERBOARD("Leaderboard", "Ranglijst"),
+    TALENTS("Talents", "Talenten"),
+    LOAD_FROM_SAVE("Load From Save", "Laad opgeslagen spel"),
+    LOGOUT("Logout", "Uitloggen")
     ;
 
     final public String english;

@@ -2,13 +2,13 @@ package com.example.models;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.example.models.enums.Languages;
 
 import java.util.HashMap;
 
 public class AppData {
     private final static HashMap<String, Texture> assets = new HashMap<>();
     private static String lang = "english";
-    private static boolean isPlayerGuest = false;
     private static Screen currentScreen;
     private static User currentUser = null;
     //TODO: handle being guest, handle current user getting set, handle current screen.
@@ -16,6 +16,14 @@ public class AppData {
 
     public static void initializeAssets() {
         //TODO: implement
+    }
+
+    public static String getCurrentUsername() {
+        if (currentUser == null) {
+            return Languages.GUEST.translate();
+        } else {
+            return currentUser.getUsername();
+        }
     }
 
     public static HashMap<String, Texture> getAssets() {
@@ -46,11 +54,4 @@ public class AppData {
         AppData.currentScreen = currentScreen;
     }
 
-    public static boolean isPlayerGuest() {
-        return isPlayerGuest;
-    }
-
-    public static void setIsPlayerGuest(boolean isPlayerGuest) {
-        AppData.isPlayerGuest = isPlayerGuest;
-    }
 }

@@ -3,6 +3,7 @@ package com.example.controllers;
 import com.example.models.AppData;
 import com.example.models.User;
 import com.example.models.enums.Languages;
+import com.example.models.enums.RegistrationRegexes;
 
 import java.io.File;
 import java.sql.*;
@@ -23,7 +24,45 @@ public class RegistrationController {
 
     private static Languages validateUser(final String username, final String password
         , final String securityQuestion, final String securityAnswer) {
+        User user = User.getUserByName(username);
 
+        if (user != null) {
+            return Languages.USERNAME_ALREADY_EXISTS;
+        }
+
+        if (username.contains(" ") || username.isBlank()) {
+            return Languages.INVALID_USERNAME;
+        }
+
+        if (!validatePasswordStrength(password)) {
+            return Languages.PASSWORD_IS_WEAK;
+        }
+
+        return Languages.SUCCESS;
+    }
+
+    private static boolean validatePasswordStrength(final String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+
+        if (!RegistrationRegexes.NUMBER.isValid(password)) {
+            return false;
+        }
+
+        if (!RegistrationRegexes.LOWERCASE_LETTER.isValid(password)) {
+            return false;
+        }
+
+        if (!RegistrationRegexes.CAPITAL_LETTER.isValid(password)) {
+            return false;
+        }
+
+        if (!RegistrationRegexes.SPECIAL_CHARACTER.isValid(password)) {
+            return false;
+        }
+
+        return true;
     }
 
     private static void createUserAndLoadToDB(String username, String password, String securityQuestion, String securityAnswer) {

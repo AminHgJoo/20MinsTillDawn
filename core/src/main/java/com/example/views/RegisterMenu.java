@@ -61,8 +61,8 @@ public class RegisterMenu implements Screen {
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Languages message = RegistrationController.registerUser(usernameField.getText(), passwordField.getText()
-                    , securityQuestionField.getText(), securityAnswerField.getText());
+                Languages message = RegistrationController.registerUser(usernameField.getText().trim(), passwordField.getText().trim()
+                    , securityQuestionField.getText().trim(), securityAnswerField.getText().trim());
 
                 if (message == Languages.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
@@ -81,7 +81,6 @@ public class RegisterMenu implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
                 AppData.setCurrentScreen(mainApp.getScreen());
-                AppData.setIsPlayerGuest(true);
                 dispose();
             }
         });

@@ -72,6 +72,15 @@ public class User {
         System.out.println("lastUserId: " + lastUserId);
     }
 
+    public static User getUserByName(final String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     public User(String username, String securityQuestion, String securityAnswer, String password, int id) {
         this.username = username;
         this.securityQuestion = securityQuestion;
