@@ -13,6 +13,7 @@ public enum Languages {
     PLAY_AS_GUEST("Play as Guest", "Speel als gast"),
     USERNAME("Username", "Gebruikersnaam"),
     PASSWORD("Password", "Wachtwoord"),
+    NEW_PASSWORD("New Password", "Nieuw Wachtwoord"),
     SECURITY_QUESTION("Security Question", "Beveiligingsvraag"),
     SECURITY_ANSWER("Security Answer", "Beveiligingsantwoord"),
     USER_SUCCESSFULLY_REGISTERED("User successfully registered", "Gebruiker succesvol geregistreerd"),
@@ -29,7 +30,13 @@ public enum Languages {
     LEADERBOARD("Leaderboard", "Ranglijst"),
     TALENTS("Talents", "Talenten"),
     LOAD_FROM_SAVE("Load From Save", "Laad opgeslagen spel"),
-    LOGOUT("Logout", "Uitloggen")
+    LOGOUT("Logout", "Uitloggen"),
+    ACCOUNT_RECOVERY("Account Recovery", "Accountherstel"),
+    GO_TO_REGISTRATION("Go to Registeration", "Ga naar Registratie"),
+    USER_DOESNT_EXIST("User does not exist", "Gebruiker bestaat niet"),
+    WRONG_PASSWORD("Wrong password", "Verkeerd wachtwoord"),
+    WRONG_QUESTION("Wrong question", "Verkeerde beveiligingsvraag"),
+    WRONG_ANSWER("Wrong answer", "Verkeerd antwoord"),
     ;
 
     final public String english;

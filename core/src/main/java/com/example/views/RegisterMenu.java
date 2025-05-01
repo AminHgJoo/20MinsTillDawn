@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
-import com.example.controllers.RegistrationController;
+import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
 import com.example.models.enums.Languages;
@@ -61,7 +61,7 @@ public class RegisterMenu implements Screen {
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Languages message = RegistrationController.registerUser(usernameField.getText().trim(), passwordField.getText().trim()
+                Languages message = LoginAndRegistration.registerUser(usernameField.getText().trim(), passwordField.getText().trim()
                     , securityQuestionField.getText().trim(), securityAnswerField.getText().trim());
 
                 if (message == Languages.SUCCESS) {

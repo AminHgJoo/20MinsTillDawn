@@ -16,6 +16,18 @@ public class AppData {
 
     public static void initializeAssets() {
         //TODO: implement
+        assets.put("AbbyPic", new Texture("avatar_pictures/T_Abby_Portrait.png"));
+        assets.put("DasherPic", new Texture("avatar_pictures/T_Dasher_Portrait.png"));
+        assets.put("DiamondPic", new Texture("avatar_pictures/T_Diamond_Portrait.png"));
+        assets.put("HasturPic", new Texture("avatar_pictures/T_Hastur_Portrait.png"));
+        assets.put("HinaPic", new Texture("avatar_pictures/T_Hina_Portrait.png"));
+        assets.put("LilithPic", new Texture("avatar_pictures/T_Lilith_Portrait.png"));
+        assets.put("LunaPic", new Texture("avatar_pictures/T_Luna_Portrait.png"));
+        assets.put("RavenPic", new Texture("avatar_pictures/T_Raven_Portrait.png"));
+        assets.put("ScarlettPic", new Texture("avatar_pictures/T_Scarlett_Portrait.png"));
+        assets.put("ShanaPic", new Texture("avatar_pictures/T_Shana_Portrait.png"));
+        assets.put("SparkPic", new Texture("avatar_pictures/T_Spark_Portrait.png"));
+        assets.put("YukiPic", new Texture("avatar_pictures/T_Yuki_Portrait.png"));
     }
 
     public static String getCurrentUsername() {
@@ -53,5 +65,4 @@ public class AppData {
     public static void setCurrentScreen(Screen currentScreen) {
         AppData.currentScreen = currentScreen;
     }
-
 }

@@ -49,6 +49,20 @@ public class MainMenu implements Screen {
         title.setPosition(10, 10);
         stage.addActor(title);
 
+        Image profilePicture;
+        if (AppData.getCurrentUser() != null) {
+            profilePicture = new Image(AppData.getCurrentUser().getProfileAvatar());
+        } else {
+            int randomIndex = (int) (Math.random() * 12);
+            String key = (String) AppData.getAssets().keySet().toArray()[randomIndex];
+            Texture profileTexture = AppData.getAssets().get(key);
+            profilePicture = new Image(profileTexture);
+        }
+
+        profilePicture.setPosition(10, 50);
+        profilePicture.setSize(profilePicture.getWidth(), profilePicture.getHeight());
+        stage.addActor(profilePicture);
+
         TextButton settings = new TextButton(Languages.SETTINGS.translate(), skin);
         settings.addListener(new ChangeListener() {
 

@@ -1,22 +1,32 @@
 package com.example.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
+import org.jetbrains.annotations.NotNull;
+import scala.App;
+
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class User {
-    public static int lastUserId;
+
     //TODO: Update when a user is created.
     public final static ArrayList<User> users = new ArrayList<>();
+    public static int lastUserId;
 
     private int id;
     private String username;
     private String password;
     private String securityQuestion;
     private String securityAnswer;
+    //TODO: Save user settings when settings are changed in settings menu
+    // Also delete this object's .json file if the user is deleted; in addition, load them from .json after loading users from db.
     private UserSettings userSettings;
+    private Texture profileAvatar;
     //TODO: private Game savedGame;
-    //TODO: private ProfileAvatar profileAvatar;
 
     public static void loadUsersFromDB() {
         File dataDir = new File("./user_data");
@@ -81,6 +91,20 @@ public class User {
         return null;
     }
 
+    public void saveToJson() {
+        Json json = new Json();
+
+        String jsonString = json.prettyPrint(this.userSettings);
+
+        File dataDir = new File("./saved_data/users");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+
+        FileHandle fileHandle = Gdx.files.absolute("./saved_data/users/" + id + ".json");
+        fileHandle.writeString(jsonString, false);
+    }
+
     public User(String username, String securityQuestion, String securityAnswer, String password, int id) {
         this.username = username;
         this.securityQuestion = securityQuestion;
@@ -90,12 +114,41 @@ public class User {
     }
 
     public void initializeOtherObjects() {
-        //TODO : implement
+        //TODO : implement game creation
+
+        int randomIndex = (int) (Math.random() * 12);
+        String key = (String) AppData.getAssets().keySet().toArray()[randomIndex];
+        this.profileAvatar = AppData.getAssets().get(key);
+
+        this.userSettings = new UserSettings(key, AppData.getLang());
     }
 
     public void loadUserObjects() {
-        //TODO: Implement
-        this.userSettings = new UserSettings();
+        //TODO: Implement loading game.
+
+        File dataDir = new File("./saved_data/users");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+
+        FileHandle file = Gdx.files.internal("saved_data/users/" + this.id + ".json");
+
+        Json json = new Json();
+
+        this.userSettings = json.fromJson(UserSettings.class, file.readString());
+
+        if (this.userSettings == null) {
+            int randomIndex = (int) (Math.random() * 12);
+            String key = (String) AppData.getAssets().keySet().toArray()[randomIndex];
+
+            this.userSettings = new UserSettings(key, AppData.getLang());
+
+            System.out.println("Error loading user settings. User settings reset.");
+        } else {
+            System.out.println("Loaded user settings.");
+        }
+
+        this.profileAvatar = AppData.getAssets().get(userSettings.getAvatarKeyString());
     }
 
     @Override
@@ -147,7 +200,11 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Texture getProfileAvatar() {
+        return profileAvatar;
+    }
+
+    public void setProfileAvatar(Texture profileAvatar) {
+        this.profileAvatar = profileAvatar;
     }
 }
