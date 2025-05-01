@@ -2,11 +2,13 @@ package com.example;
 
 import com.badlogic.gdx.Game;
 import com.example.models.AppData;
+import com.example.models.User;
 import com.example.views.LauncherMenu;
 
 public class MainApp extends Game {
     @Override
     public void create() {
+        User.loadUsersFromDB();
         AppData.initializeAssets();
         AppData.setCurrentScreen(new LauncherMenu(this));
         this.setScreen(AppData.getCurrentScreen());

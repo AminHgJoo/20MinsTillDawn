@@ -43,13 +43,13 @@ public class LauncherMenu implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        Label title = new Label(Languages.LAUNCHER_GAME_DEV.inThisLang(AppData.getLang()), skin);
+        Label title = new Label(Languages.LAUNCHER_GAME_DEV.translate(), skin);
         title.setFontScale(1.3f);
         title.setColor(Color.CYAN);
         title.setPosition(10, 10);
         stage.addActor(title);
 
-        TextButton loginButton = new TextButton(Languages.LOGIN.inThisLang(AppData.getLang()), skin);
+        TextButton loginButton = new TextButton(Languages.LOGIN.translate(), skin);
         loginButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -59,7 +59,7 @@ public class LauncherMenu implements Screen {
             }
         });
 
-        TextButton registerButton = new TextButton(Languages.REGISTER.inThisLang(AppData.getLang()), skin);
+        TextButton registerButton = new TextButton(Languages.REGISTER.translate(), skin);
         registerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -69,7 +69,7 @@ public class LauncherMenu implements Screen {
             }
         });
 
-        TextButton languageButton = new TextButton(Languages.LANGUAGE_BUTTON_TEXT.inThisLang(AppData.getLang()), skin);
+        TextButton languageButton = new TextButton(Languages.LANGUAGE_BUTTON_TEXT.translate(), skin);
         languageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

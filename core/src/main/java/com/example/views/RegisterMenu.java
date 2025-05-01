@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
+import com.example.controllers.RegistrationController;
 import com.example.models.AppData;
+import com.example.models.UIHelper;
 import com.example.models.enums.Languages;
 
 public class RegisterMenu implements Screen {
@@ -26,7 +28,7 @@ public class RegisterMenu implements Screen {
         this.mainApp = mainApp;
 
         this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
-        ;
+
         this.backgroundTexture = new Texture("register_menu/background.jpg");
 
         initializeGUI();
@@ -39,36 +41,47 @@ public class RegisterMenu implements Screen {
         background.setFillParent(true);
         stage.addActor(background);
 
-        Label label = new Label(Languages.CHOOSE_A_USERNAME.inThisLang(AppData.getLang()), skin);
+        Label label = new Label(Languages.CHOOSE_A_USERNAME.translate(), skin);
         label.setColor(Color.CORAL);
         label.setFontScale(1.5f);
 
         TextField usernameField = new TextField("", skin);
-        usernameField.setMessageText(Languages.USERNAME.inThisLang(AppData.getLang()));
+        usernameField.setMessageText(Languages.USERNAME.translate());
 
         TextField passwordField = new TextField("", skin);
-        passwordField.setMessageText(Languages.PASSWORD.inThisLang(AppData.getLang()));
+        passwordField.setMessageText(Languages.PASSWORD.translate());
 
         TextField securityQuestionField = new TextField("", skin);
-        securityQuestionField.setMessageText(Languages.SECURITY_QUESTION.inThisLang(AppData.getLang()));
+        securityQuestionField.setMessageText(Languages.SECURITY_QUESTION.translate());
 
         TextField securityAnswerField = new TextField("", skin);
-        securityAnswerField.setMessageText(Languages.SECURITY_ANSWER.inThisLang(AppData.getLang()));
+        securityAnswerField.setMessageText(Languages.SECURITY_ANSWER.translate());
 
-        TextButton confirmButton = new TextButton(Languages.CONFIRM.inThisLang(AppData.getLang()), skin);
+        TextButton confirmButton = new TextButton(Languages.CONFIRM.translate(), skin);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO: Call controller.
+                Languages message = RegistrationController.registerUser(usernameField.getText(), passwordField.getText()
+                    , securityQuestionField.getText(), securityAnswerField.getText());
+
+                if (message == Languages.SUCCESS) {
+                    mainApp.setScreen(new MainMenu(mainApp));
+                    AppData.setCurrentScreen(mainApp.getScreen());
+                    dispose();
+                } else {
+                    UIHelper uiHelper = new UIHelper(stage, skin);
+                    uiHelper.showErrorDialog(message.translate());
+                }
             }
         });
 
-        TextButton playAsGuest = new TextButton(Languages.PLAY_AS_GUEST.inThisLang(AppData.getLang()), skin);
+        TextButton playAsGuest = new TextButton(Languages.PLAY_AS_GUEST.translate(), skin);
         playAsGuest.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
                 AppData.setCurrentScreen(mainApp.getScreen());
+                AppData.setIsPlayerGuest(true);
                 dispose();
             }
         });

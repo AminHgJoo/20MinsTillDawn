@@ -1,13 +1,23 @@
+plugins {
+  id 'java'
+}
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
+
+repositories {
+  mavenCentral()
+}
+
 
 dependencies {
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   api "org.apache.groovy:groovy-all:$groovyVersion"
   api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   api "org.scala-lang:scala3-library_3:$scalaVersion"
+  implementation group: 'com.h2database', name: 'h2', version: '2.3.232'
 
-  if(enableGraalNative == 'true') {
+  if (enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
 }

@@ -11,6 +11,8 @@ public class AppData {
     private static boolean isPlayerGuest = false;
     private static Screen currentScreen;
     private static User currentUser = null;
+    //TODO: handle being guest, handle current user getting set, handle current screen.
+    //TODO: load language from user settings.
 
     public static void initializeAssets() {
         //TODO: implement
