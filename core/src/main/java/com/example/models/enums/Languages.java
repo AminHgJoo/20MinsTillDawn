@@ -44,7 +44,20 @@ public enum Languages {
     TOGGLE_AUTO_RELOAD("Toggle Auto Reload", "Automatisch herladen aan/uit"),
     CHANGE_MUSIC("Change Music", "Muziek veranderen"),
     GO_BACK("Go Back", "Ga terug"),
-
+    CONTROLS("Controls", "Besturing"),
+    UP_KEY("upKey", "omhoogToets"),
+    DOWN_KEY("downKey", "omlaagToets"),
+    LEFT_KEY("leftKey", "linkerToets"),
+    RIGHT_KEY("rightKey", "rechterToets"),
+    RELOAD_KEY("reloadKey", "herlaadToets"),
+    REDUCE_TIME_CHEAT("reduceTimeCheat", "verminderTijdCheat"),
+    PAUSE_KEY("pauseKey", "pauzeToets"),
+    LEVEL_UP_CHEAT("levelUpCheat", "verhoogNiveauCheat"),
+    INVINCIBILITY_CHEAT("invincibilityCheat", "onkwetsbaarCheat"),
+    ADD_HP_CHEAT("addHpCheat", "voegHpToeCheat"),
+    AIMBOT_KEY("aimbotKey", "aimbotToets"),
+    GO_TO_BOSS_CHEAT("goToBossCheat", "gaNaarBaasCheat"),
+    PRESS_A_NEW_KEY("Press A New Key", "Druk op een nieuwe toets"),
     ;
 
     final public String english;
@@ -53,6 +66,18 @@ public enum Languages {
     Languages(String english, String dutch) {
         this.english = english;
         this.dutch = dutch;
+    }
+
+    public static Languages getLangObj(String text) {
+        for (Languages lang : Languages.values()) {
+            if (lang.english.equals(text)) {
+                return lang;
+            }
+            if (lang.dutch.equals(text)) {
+                return lang;
+            }
+        }
+        return null;
     }
 
     public String translate() {

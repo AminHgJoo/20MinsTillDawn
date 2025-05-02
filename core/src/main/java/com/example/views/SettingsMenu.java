@@ -2,7 +2,6 @@ package com.example.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,11 +21,13 @@ public class SettingsMenu implements Screen {
 
     final private Texture backgroundTexture;
     final private Skin skin;
+    private boolean hasLanguageChanged;
 
     private Stage stage;
 
     public SettingsMenu(final MainApp mainApp) {
         this.mainApp = mainApp;
+        this.hasLanguageChanged = false;
 
         this.backgroundTexture = new Texture("settings_menu/background.png");
 
@@ -35,7 +36,7 @@ public class SettingsMenu implements Screen {
         initializeGUI();
     }
 
-    public void initializeGUI() {
+    private void initializeGUI() {
         stage = new Stage(new ScreenViewport());
 
         Image background = new Image(backgroundTexture);
@@ -45,6 +46,23 @@ public class SettingsMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+
+        TextButton changeLanguage = new TextButton(Languages.LANGUAGE_BUTTON_TEXT.translate(), skin);
+        changeLanguage.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (AppData.getLang().compareToIgnoreCase("english") == 0) {
+                    AppData.setLang("dutch");
+                    AppData.getCurrentUser().getUserSettings().setLang("dutch");
+                    hasLanguageChanged = true;
+                } else if (AppData.getLang().compareToIgnoreCase("dutch") == 0) {
+                    AppData.setLang("english");
+                    AppData.getCurrentUser().getUserSettings().setLang("english");
+                    hasLanguageChanged = true;
+                }
+            }
+        });
 
         TextButton toggleSFX = new TextButton(Languages.TOGGLE_SFX.translate(), skin);
         toggleSFX.addListener(new ChangeListener() {
@@ -132,13 +150,26 @@ public class SettingsMenu implements Screen {
             }
         });
 
+        TextButton keyBinds = new TextButton(Languages.CONTROLS.translate(), skin);
+        keyBinds.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                mainApp.setScreen(new KeybindsMenu(mainApp));
+                AppData.setCurrentScreen(mainApp.getScreen());
+                AppData.getCurrentUser().saveSettingsToJson();
+                dispose();
+            }
+        });
+
         table.center();
         table.padTop(50);
+        table.add(changeLanguage).width(700).height(60).pad(10).row();
         table.add(toggleSFX).width(700).height(50).pad(10).row();
         table.add(toggleAutoReload).width(700).height(50).pad(10).row();
         table.add(changeMusic).width(700).height(50).pad(10).row();
         table.add(sliderLabel).pad(10).row();
         table.add(slider).width(700).height(50).pad(10).row();
+        table.add(keyBinds).width(700).height(50).pad(10).row();
         table.add(goBack).width(700).height(50).pad(10).row();
 
         Gdx.input.setInputProcessor(stage);
@@ -152,6 +183,11 @@ public class SettingsMenu implements Screen {
 
     @Override
     public void render(float delta) {
+        if (hasLanguageChanged) {
+            stage.dispose();
+            initializeGUI();
+            hasLanguageChanged = false;
+        }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();

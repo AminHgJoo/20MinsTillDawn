@@ -3,6 +3,7 @@ package com.example.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
 
 import java.io.File;
@@ -13,6 +14,7 @@ public class User {
 
     public final static ArrayList<User> users = new ArrayList<>();
     public static int lastUserId;
+    //TODO: Fetch from DB What the last UID was.
 
     private int id;
     private String username;
@@ -101,7 +103,6 @@ public class User {
         fileHandle.writeString(jsonString, false);
     }
 
-    //TODO: Implement
     public void changePasswordInDB(final String newPassword) {
         File dataDir = new File("./user_data");
         if (!dataDir.exists()) {
@@ -159,7 +160,12 @@ public class User {
 
         Json json = new Json();
 
-        this.userSettings = json.fromJson(UserSettings.class, file.readString());
+        try {
+            this.userSettings = json.fromJson(UserSettings.class, file.readString());
+        } catch (GdxRuntimeException e) {
+            e.printStackTrace();
+            this.userSettings = null;
+        }
 
         if (this.userSettings == null) {
             int randomIndex = (int) (Math.random() * 12);
