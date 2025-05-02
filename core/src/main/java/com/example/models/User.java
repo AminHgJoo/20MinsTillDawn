@@ -14,14 +14,13 @@ public class User {
 
     public final static ArrayList<User> users = new ArrayList<>();
     public static int lastUserId;
-    //TODO: Fetch from DB What the last UID was.
 
     private int id;
     private String username;
     private String password;
     private String securityQuestion;
     private String securityAnswer;
-    // Also delete this object's .json file if the user is deleted; in addition, load them from .json after loading users from db.
+    //TODO: Also delete this object's .json file if the user is deleted; in addition, load them from .json after loading users from db.
     private UserSettings userSettings;
     private Texture profileAvatar;
     //TODO: private Game savedGame;
@@ -73,7 +72,14 @@ public class User {
         }
 
         if (users.isEmpty()) {
-            lastUserId = 0;
+            FileHandle file = new FileHandle("./saved_data/users/num.txt");
+            try {
+                lastUserId = Integer.parseInt(file.readString());
+            } catch (GdxRuntimeException e) {
+                e.printStackTrace();
+                lastUserId = 0;
+                file.writeString("0", false);
+            }
         } else {
             lastUserId = users.get(users.size() - 1).getId();
         }
@@ -101,6 +107,33 @@ public class User {
 
         FileHandle fileHandle = Gdx.files.absolute("./saved_data/users/" + id + ".json");
         fileHandle.writeString(jsonString, false);
+    }
+
+    public void changeUsernameInDB(final String newUsername) {
+        File dataDir = new File("./user_data");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+
+        String url = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String dbUser = "sa";
+        String dbPassword = "";
+
+        String sql = "UPDATE users SET USERNAME = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newUsername);
+
+            pstmt.setInt(2, this.id);
+
+            pstmt.executeUpdate();
+
+            System.out.println("Username changed: " + newUsername);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void changePasswordInDB(final String newPassword) {

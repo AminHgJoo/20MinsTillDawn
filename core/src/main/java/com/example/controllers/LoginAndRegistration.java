@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.example.models.AppData;
 import com.example.models.User;
 import com.example.models.enums.Languages;
@@ -40,7 +42,7 @@ public class LoginAndRegistration {
         return Languages.SUCCESS;
     }
 
-    private static boolean validatePasswordStrength(final String password) {
+    public static boolean validatePasswordStrength(final String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -93,6 +95,9 @@ public class LoginAndRegistration {
 
             User.users.add(newUser);
             User.lastUserId++;
+
+            FileHandle fileHandle = new FileHandle("./saved_data/users/num.txt");
+            fileHandle.writeString(String.valueOf(User.lastUserId), false);
 
             System.out.println("User created: " + newUser);
 
@@ -154,5 +159,36 @@ public class LoginAndRegistration {
         }
 
         return Languages.WRONG_ANSWER;
+    }
+
+    public static void deleteUser(final User user) {
+        String jdbcUrl = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String username = "sa";
+        String password = "";
+
+        int idToDelete = user.getId();
+        User.users.remove(user);
+
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM USERS WHERE id = ?")) {
+
+            preparedStatement.setInt(1, idToDelete);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("Deleted " + rowsAffected + " row(s).");
+
+        } catch (SQLException e) {
+
+            System.out.println("Error while deleting the row: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        FileHandle fileHandle = new FileHandle("./saved_data/users/" + user.getId() + ".json");
+        try {
+            fileHandle.delete();
+        } catch (GdxRuntimeException e) {
+            e.printStackTrace();
+            System.out.println("Error while deleting the file: " + e.getMessage());
+        }
     }
 }

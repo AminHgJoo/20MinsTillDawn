@@ -14,6 +14,7 @@ public enum Languages {
     USERNAME("Username", "Gebruikersnaam"),
     PASSWORD("Password", "Wachtwoord"),
     NEW_PASSWORD("New Password", "Nieuw Wachtwoord"),
+    NEW_USERNAME("New Username", "Nieuw Gebruikersnaam"),
     SECURITY_QUESTION("Security Question", "Beveiligingsvraag"),
     SECURITY_ANSWER("Security Answer", "Beveiligingsantwoord"),
     USER_SUCCESSFULLY_REGISTERED("User successfully registered", "Gebruiker succesvol geregistreerd"),
@@ -58,6 +59,8 @@ public enum Languages {
     AIMBOT_KEY("aimbotKey", "aimbotToets"),
     GO_TO_BOSS_CHEAT("goToBossCheat", "gaNaarBaasCheat"),
     PRESS_A_NEW_KEY("Press A New Key", "Druk op een nieuwe toets"),
+    DELETE_ACCOUNT("Delete Account", "Account Verwijderen"),
+    AVATAR_MENU("Avatar Menu", "Avatar Menu"),
     ;
 
     final public String english;

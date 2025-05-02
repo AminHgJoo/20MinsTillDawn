@@ -96,7 +96,7 @@ public class MainMenu implements Screen {
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showErrorDialog(Languages.LOGGED_IN_AS_GUEST.translate());
+                    uiHelper.showDialog(Languages.LOGGED_IN_AS_GUEST.translate(), Languages.ERROR);
                 }
             }
         });
@@ -106,9 +106,14 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                mainApp.setScreen(new ProfileMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
-                dispose();
+                if (AppData.getCurrentUser() != null) {
+                    mainApp.setScreen(new ProfileMenu(mainApp));
+                    AppData.setCurrentScreen(mainApp.getScreen());
+                    dispose();
+                } else {
+                    UIHelper uiHelper = new UIHelper(stage, skin);
+                    uiHelper.showDialog(Languages.LOGGED_IN_AS_GUEST.translate(), Languages.ERROR);
+                }
             }
         });
 

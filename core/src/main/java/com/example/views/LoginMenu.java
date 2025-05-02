@@ -63,7 +63,7 @@ public class LoginMenu implements Screen {
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showErrorDialog(message.translate());
+                    uiHelper.showDialog(message.translate(), Languages.ERROR);
                 }
             }
         });
@@ -101,7 +101,7 @@ public class LoginMenu implements Screen {
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showErrorDialog(message.translate());
+                    uiHelper.showDialog(message.translate(), Languages.ERROR);
                 }
             }
         });

@@ -15,18 +15,18 @@ public class UIHelper {
         this.skin = skin;
     }
 
-    public void showErrorDialog(String message) {
+    public void showDialog(String message, Languages promptType) {
 
-        Dialog errorDialog = new Dialog(Languages.ERROR.translate(), skin) {
+        Dialog dialog = new Dialog(promptType.translate(), skin) {
             @Override
             protected void result(Object object) {
 
             }
         };
 
-        errorDialog.text(message);
-        errorDialog.button(Languages.CONFIRM.translate());
+        dialog.text(message);
+        dialog.button(Languages.CONFIRM.translate());
 
-        errorDialog.show(stage);
+        dialog.show(stage);
     }
 }
