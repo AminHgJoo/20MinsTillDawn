@@ -2,6 +2,7 @@ package com.example.models;
 
 import com.badlogic.gdx.Input;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserSettings {
@@ -19,6 +20,8 @@ public class UserSettings {
     private boolean autoReload;
 
     public HashMap<String, Integer> keyBinds;
+
+    public ArrayList<String> savedProfileAssetPaths = new ArrayList<>();
 
     public UserSettings() {
     }

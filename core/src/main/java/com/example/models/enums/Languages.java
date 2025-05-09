@@ -69,7 +69,8 @@ public enum Languages {
     SORT_BY_NAME("Sort By Name", "Sorteren op Gebruikersnaam"),
     SORT_BY_KILLS("Sort By Kills", "Sorteren op kills"),
     SORT_BY_SURVIVAL_TIME("Sort By Survival Time", "Sorteren op Langste Overleving"),
-    SORTED_BY("Sorted By", "Gesorteerd op")
+    SORTED_BY("Sorted By", "Gesorteerd op"),
+    DRAG_AND_DROP("Drag And Drop", "Drag And Drop"),
     ;
 
     final public String english;

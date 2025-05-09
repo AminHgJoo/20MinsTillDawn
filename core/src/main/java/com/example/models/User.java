@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
+import org.intellij.lang.annotations.Language;
 
 import java.io.File;
 import java.sql.*;
@@ -20,7 +21,6 @@ public class User {
     private String password;
     private String securityQuestion;
     private String securityAnswer;
-    //TODO: Also delete this object's .json file if the user is deleted; in addition, load them from .json after loading users from db.
     private UserSettings userSettings;
     private Texture profileAvatar;
     //TODO: private Game savedGame;
@@ -35,6 +35,7 @@ public class User {
         String dbUser = "sa";
         String dbPassword = "";
 
+        @Language("H2")
         String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
             "id INT AUTO_INCREMENT PRIMARY KEY, " +
             "username VARCHAR(255) NOT NULL, " +
@@ -48,7 +49,7 @@ public class User {
 
             stmt.execute(createTableSQL);
 
-            String querySQL = "SELECT username, password, securityQuestion, securityAnswer, ID FROM users";
+            @Language("H2") String querySQL = "SELECT username, password, securityQuestion, securityAnswer, ID FROM users";
             try (ResultSet rs = stmt.executeQuery(querySQL)) {
                 while (rs.next()) {
                     String username1 = rs.getString("username");
@@ -119,6 +120,7 @@ public class User {
         String dbUser = "sa";
         String dbPassword = "";
 
+        @Language("H2")
         String sql = "UPDATE users SET USERNAME = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
@@ -146,6 +148,7 @@ public class User {
         String dbUser = "sa";
         String dbPassword = "";
 
+        @Language("H2")
         String sql = "UPDATE users SET password = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(url, dbUser, dbPassword);
@@ -175,14 +178,15 @@ public class User {
         //TODO : implement game creation
 
         int randomIndex = (int) (Math.random() * 12);
-        String key = (String) AppData.getAssets().keySet().toArray()[randomIndex];
-        this.profileAvatar = AppData.getAssets().get(key);
+        String key = (String) AppData.getProfileAssets().keySet().toArray()[randomIndex];
+        this.profileAvatar = AppData.getProfileAssets().get(key);
 
         this.userSettings = new UserSettings(key, AppData.getLang());
     }
 
     public void loadUserObjects() {
         //TODO: Implement loading game.
+        //TODO: Load custom assets for profile pics.
 
         File dataDir = new File("./saved_data/users");
         if (!dataDir.exists()) {
@@ -195,6 +199,7 @@ public class User {
 
         try {
             this.userSettings = json.fromJson(UserSettings.class, file.readString());
+            AppData.loadCustomProfileAssets(this.userSettings.savedProfileAssetPaths);
         } catch (GdxRuntimeException e) {
             e.printStackTrace();
             this.userSettings = null;
@@ -202,7 +207,7 @@ public class User {
 
         if (this.userSettings == null) {
             int randomIndex = (int) (Math.random() * 12);
-            String key = (String) AppData.getAssets().keySet().toArray()[randomIndex];
+            String key = (String) AppData.getProfileAssets().keySet().toArray()[randomIndex];
 
             this.userSettings = new UserSettings(key, AppData.getLang());
 
@@ -211,7 +216,7 @@ public class User {
             System.out.println("Loaded user settings.");
         }
 
-        this.profileAvatar = AppData.getAssets().get(userSettings.getAvatarKeyString());
+        this.profileAvatar = AppData.getProfileAssets().get(userSettings.getAvatarKeyString());
     }
 
     @Override

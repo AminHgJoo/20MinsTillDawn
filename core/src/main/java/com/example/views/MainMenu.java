@@ -65,8 +65,8 @@ public class MainMenu implements Screen {
             profilePicture = new Image(AppData.getCurrentUser().getProfileAvatar());
         } else {
             int randomIndex = (int) (Math.random() * 12);
-            String key = (String) AppData.getAssets().keySet().toArray()[randomIndex];
-            Texture profileTexture = AppData.getAssets().get(key);
+            String key = (String) AppData.getProfileAssets().keySet().toArray()[randomIndex];
+            Texture profileTexture = AppData.getProfileAssets().get(key);
             profilePicture = new Image(profileTexture);
         }
 

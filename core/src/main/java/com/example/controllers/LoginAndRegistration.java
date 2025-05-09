@@ -6,6 +6,7 @@ import com.example.models.AppData;
 import com.example.models.User;
 import com.example.models.enums.Languages;
 import com.example.models.enums.RegistrationRegexes;
+import org.intellij.lang.annotations.Language;
 
 import java.io.File;
 import java.sql.*;
@@ -76,6 +77,7 @@ public class LoginAndRegistration {
         String dbUser = "sa";
         String dbPassword = "";
 
+        @Language("H2")
         String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
             "id INT AUTO_INCREMENT PRIMARY KEY, " +
             "username VARCHAR(255) NOT NULL, " +
@@ -101,6 +103,7 @@ public class LoginAndRegistration {
 
             System.out.println("User created: " + newUser);
 
+            @Language("H2")
             String insertSQL = "INSERT INTO users (username, password, securityQuestion, securityAnswer) VALUES (?, ?, ?, ?)";
             try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
                 pstmt.setString(1, newUser.getUsername());

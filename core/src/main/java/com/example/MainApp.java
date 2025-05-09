@@ -13,6 +13,7 @@ public class MainApp extends Game {
     @Override
     public void create() {
         AppData.initializeAssets();
+        AppData.setMainApp(this);
         User.loadUsersFromDB();
         AppData.setCurrentScreen(new LauncherMenu(this));
         this.setScreen(AppData.getCurrentScreen());
@@ -29,8 +30,8 @@ public class MainApp extends Game {
             music.dispose();
         }
         screen.dispose();
-        for (String key : AppData.getAssets().keySet()) {
-            Texture asset = AppData.getAssets().get(key);
+        for (String key : AppData.getProfileAssets().keySet()) {
+            Texture asset = AppData.getProfileAssets().get(key);
             asset.dispose();
         }
     }
