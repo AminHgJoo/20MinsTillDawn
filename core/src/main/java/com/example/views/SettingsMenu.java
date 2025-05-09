@@ -16,7 +16,6 @@ import com.example.models.UserSettings;
 import com.example.models.enums.Languages;
 
 public class SettingsMenu implements Screen {
-    //TODO; Update user's .json settings file.
     final MainApp mainApp;
 
     final private Texture backgroundTexture;

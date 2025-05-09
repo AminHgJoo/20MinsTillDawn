@@ -12,7 +12,7 @@ public class MainApp extends Game {
 
     @Override
     public void create() {
-        AppData.initializeAssets();
+        AppData.initializeProfileAssets();
         AppData.setMainApp(this);
         User.loadUsersFromDB();
         AppData.setCurrentScreen(new LauncherMenu(this));

@@ -186,7 +186,6 @@ public class User {
 
     public void loadUserObjects() {
         //TODO: Implement loading game.
-        //TODO: Load custom assets for profile pics.
 
         File dataDir = new File("./saved_data/users");
         if (!dataDir.exists()) {

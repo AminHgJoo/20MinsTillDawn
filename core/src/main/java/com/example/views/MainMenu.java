@@ -171,7 +171,6 @@ public class MainMenu implements Screen {
                 mainApp.music.stop();
                 AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
-                //TODO: Maybe save data?
             }
         });
 

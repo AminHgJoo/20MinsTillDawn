@@ -2,7 +2,6 @@ package com.example.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.example.MainApp;
 import com.example.models.enums.Languages;
@@ -18,8 +17,7 @@ public class AppData {
     public static boolean isProgramWaitingForFileDrop = false;
     private static MainApp mainApp;
 
-    public static void initializeAssets() {
-        //TODO: implement
+    public static void initializeProfileAssets() {
         profileAssets.put("AbbyPic", new Texture("avatar_pictures/T_Abby_Portrait.png"));
         profileAssets.put("DasherPic", new Texture("avatar_pictures/T_Dasher_Portrait.png"));
         profileAssets.put("DiamondPic", new Texture("avatar_pictures/T_Diamond_Portrait.png"));

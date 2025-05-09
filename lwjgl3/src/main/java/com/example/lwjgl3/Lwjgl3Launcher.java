@@ -39,12 +39,8 @@ public class Lwjgl3Launcher {
                     if (AppData.isProgramWaitingForFileDrop) {
                         AppData.isProgramWaitingForFileDrop = false;
 
-                        if (AppData.getCurrentScreen() instanceof AvatarMenu) {
-                            AvatarMenu avatarMenu = (AvatarMenu) AppData.getCurrentScreen();
-
-                            Gdx.app.postRunnable(() -> {
-                                avatarMenu.processDraggedImage(file);
-                            });
+                        if (AppData.getCurrentScreen() instanceof AvatarMenu avatarMenu) {
+                            Gdx.app.postRunnable(() -> avatarMenu.processDraggedImage(file));
                         }
                     }
                 }
