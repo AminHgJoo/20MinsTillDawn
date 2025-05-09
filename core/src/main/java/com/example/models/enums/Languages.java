@@ -39,6 +39,10 @@ public enum Languages {
     WRONG_QUESTION("Wrong question", "Verkeerde beveiligingsvraag"),
     WRONG_ANSWER("Wrong answer", "Verkeerd antwoord"),
     YOUR_SCORE("Your Score", "Jouw Punten"),
+    SCORE("Score", "Punten"),
+    RANK("Rank", "Rang"),
+    KILLS("Kills", "Kills"),
+    SURVIVAL_TIME("Survival Time", "Langste Overleving"),
     TOGGLE_SFX("Toggle SFX", "SFX aan/uit"),
     LOGGED_IN_AS_GUEST("Logged In as Guest", "Ingelogd als gast"),
     MUSIC_VOLUME("Music Volume", "Muziekvolume"),
@@ -61,6 +65,11 @@ public enum Languages {
     PRESS_A_NEW_KEY("Press A New Key", "Druk op een nieuwe toets"),
     DELETE_ACCOUNT("Delete Account", "Account Verwijderen"),
     AVATAR_MENU("Avatar Menu", "Avatar Menu"),
+    SORT_BY_SCORE("Sort By Score", "Sorteren op punten"),
+    SORT_BY_NAME("Sort By Name", "Sorteren op Gebruikersnaam"),
+    SORT_BY_KILLS("Sort By Kills", "Sorteren op kills"),
+    SORT_BY_SURVIVAL_TIME("Sort By Survival Time", "Sorteren op Langste Overleving"),
+    SORTED_BY("Sorted By", "Gesorteerd op")
     ;
 
     final public String english;

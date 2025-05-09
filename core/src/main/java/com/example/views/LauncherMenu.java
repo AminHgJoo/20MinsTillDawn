@@ -19,6 +19,7 @@ public class LauncherMenu implements Screen {
 
     final private Skin skin;
     final private Texture backgroundTexture;
+
     private boolean hasLanguageChanged;
 
     private Stage stage;

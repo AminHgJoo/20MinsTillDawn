@@ -2,6 +2,7 @@ package com.example.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowAdapter;
 import com.example.MainApp;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -23,6 +24,16 @@ public class Lwjgl3Launcher {
         configuration.useVsync(true);
 
         configuration.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate + 1);
+
+        configuration.setWindowListener(new Lwjgl3WindowAdapter() {
+            @Override
+            public void filesDropped(String[] files) {
+                for (String file : files) {
+                    System.out.println(file);
+
+                }
+            }
+        });
 
         configuration.setWindowedMode(1920, 975);
 
