@@ -48,7 +48,10 @@ public class UserSettings {
         return false;
     }
 
-    /// Json reader use only.
+    /**
+     * @author AminHg
+     * @apiNote Only for JSON Deserialization.
+     */
     public UserSettings() {
     }
 

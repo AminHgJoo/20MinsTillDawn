@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.example.models.AppData;
+import com.example.utilities.CursorManager;
 import com.example.models.User;
 import com.example.views.LauncherMenu;
 

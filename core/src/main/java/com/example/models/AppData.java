@@ -13,6 +13,8 @@ import java.util.HashMap;
 public class AppData {
     private final static HashMap<String, Texture> profileAssets = new HashMap<>();
 
+    private final static HashMap<String, Texture> mapAssets = new HashMap<>();
+
     private final static HashMap<String, Texture> heroAssets = new HashMap<>();
 
     private static String lang = "english";
@@ -29,6 +31,11 @@ public class AppData {
     public static void initializeAssets() {
         initializeProfileAssets();
         initializeHeroAssets();
+        initializeMapAssets();
+    }
+
+    public static void initializeMapAssets() {
+        mapAssets.put("Light", new Texture("game_menu_assets/light.png"));
     }
 
     public static void initializeHeroAssets() {
@@ -124,5 +131,9 @@ public class AppData {
 
     public static void setCurrentUserSettings(UserSettings currentUserSettings) {
         AppData.currentUserSettings = currentUserSettings;
+    }
+
+    public static HashMap<String, Texture> getMapAssets() {
+        return mapAssets;
     }
 }

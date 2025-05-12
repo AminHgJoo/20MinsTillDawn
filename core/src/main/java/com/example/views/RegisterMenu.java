@@ -1,6 +1,7 @@
 package com.example.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
+import com.example.utilities.CursorManager;
 import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
@@ -107,7 +109,10 @@ public class RegisterMenu implements Screen {
         table.row();
         table.add(playAsGuest).width(400).height(60).pad(10);
 
-        Gdx.input.setInputProcessor(stage);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
