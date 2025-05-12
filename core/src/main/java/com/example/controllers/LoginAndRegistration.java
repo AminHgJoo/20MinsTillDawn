@@ -60,7 +60,7 @@ public class LoginAndRegistration {
             return false;
         }
 
-        if (!RegistrationRegexes.SPECIAL_CHARACTER.isValid(password)) {
+        if (!RegistrationRegexes.SPECIAL_CHARACTERS.isValid(password)) {
             return false;
         }
 

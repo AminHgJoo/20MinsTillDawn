@@ -71,6 +71,23 @@ public enum Languages {
     SORT_BY_SURVIVAL_TIME("Sort By Survival Time", "Sorteren op Langste Overleving"),
     SORTED_BY("Sorted By", "Gesorteerd op"),
     DRAG_AND_DROP("Drag And Drop", "Drag And Drop"),
+    SELECT_FILE("Select File", "Selecteer bestand"),
+    CHARACTER("Character", "Personage"),
+    SPEED("Speed", "Snelheid"),
+    HP("HP", "HP"),
+    CHEAT_CODE("Cheat Code", "Cheat Code"),
+    DESCRIPTION("Description", "Beschrijving"),
+    REDUCE_TIME_DESC("Reduces game time left.", "Vermindert de resterende speeltijd."),
+    LEVEL_UP_DESC("Levels up your character.", "Verhoogt het niveau van je personage."),
+    INVINCIBILITY_DESC("Makes you invincible.", "Maakt je onoverwinnelijk."),
+    ADD_HP_DESC("Adds HP.", "Voegt levenspunten toe."),
+    SKIP_TO_BOSS_DESC("Skips to boss.", "Springt naar het baasgevecht."),
+    VITALITY_DESC("Increase maximum HP by 1", "Verhoogt de maximale HP met 1."),
+    DAMAGER_DESC("Increase weapon DMG by 25% for 10s", "Verhoogt de wapenschade met 25% gedurende 10s."),
+    PROCREASE_DESC("Increase weapon projectiles by 1.", "Verhoogt het aantal projectielen van het wapen met 1."),
+    AMOCREASE_DESC("Increase weapon mag-size by 5.", "Vergroot het magazijn van het wapen met 5."),
+    SPEEDY_DESC("Double player speed for 10s.", "Verdubbelt de snelheid van de speler gedurende 10s."),
+    ABILITY("Ability", "Vaardigheid")
     ;
 
     final public String english;

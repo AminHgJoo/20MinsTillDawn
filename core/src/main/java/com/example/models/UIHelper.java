@@ -7,8 +7,8 @@ import com.example.models.enums.Languages;
 
 public class UIHelper {
 
-    private Stage stage;
-    private Skin skin;
+    private final Stage stage;
+    private final Skin skin;
 
     public UIHelper(Stage stage, Skin skin) {
         this.stage = stage;
@@ -20,7 +20,6 @@ public class UIHelper {
         Dialog dialog = new Dialog(promptType.translate(), skin) {
             @Override
             protected void result(Object object) {
-
             }
         };
 

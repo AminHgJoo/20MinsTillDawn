@@ -14,6 +14,7 @@ import com.example.MainApp;
 import com.example.models.AppData;
 import com.example.models.enums.Languages;
 
+import javax.swing.*;
 import java.io.File;
 
 public class AvatarMenu implements Screen {
@@ -47,7 +48,6 @@ public class AvatarMenu implements Screen {
         Table contentTable = new Table();
         contentTable.center();
 
-        int index = 0;
         for (String key : AppData.getProfileAssets().keySet()) {
             TextButton button = new TextButton(key.matches("^\\S+Pic$") ? key.substring(0, key.length() - 3) : "Custom", skin);
             button.addListener(new ClickListener() {
@@ -66,7 +66,6 @@ public class AvatarMenu implements Screen {
             contentTable.add(image).pad(10);
 
             contentTable.row();
-            index++;
         }
 
         ScrollPane scrollPane = new ScrollPane(contentTable, skin);
@@ -91,14 +90,44 @@ public class AvatarMenu implements Screen {
             }
         });
 
+        TextButton selectFile = new TextButton(Languages.SELECT_FILE.translate(), skin);
+        selectFile.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                new Thread(() -> {
+
+                    try {
+                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    } catch (ClassNotFoundException | InstantiationException
+                             | IllegalAccessException | UnsupportedLookAndFeelException e) {
+                        e.printStackTrace();
+                    }
+
+                    JFileChooser fileChooser = new JFileChooser();
+                    int returnVal = fileChooser.showOpenDialog(null);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+
+                        Gdx.app.postRunnable(() -> {
+                            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+
+                            processSelectedImage(selectedFile.getAbsolutePath());
+                        });
+                    }
+                }).start();
+            }
+        });
+
         Table mainTable = new Table();
         mainTable.setFillParent(true);
         mainTable.center();
 
         mainTable.add(scrollPane).width(800).height(800);
         mainTable.row();
-        mainTable.add(backButton).row();
-        mainTable.add(dragAndDropPicture).row();
+        mainTable.add(backButton).height(50).row();
+        mainTable.add(dragAndDropPicture).height(50).row();
+        mainTable.add(selectFile).height(50).row();
 
         stage.addActor(mainTable);
 
@@ -140,6 +169,16 @@ public class AvatarMenu implements Screen {
         AppData.getCurrentUser().setProfileAvatar(AppData.getProfileAssets().get(absPath));
 
         loadingOverlay.setVisible(false);
+    }
+
+    private void processSelectedImage(String absPath) {
+        FileHandle fileHandle = Gdx.files.absolute(absPath);
+
+        AppData.getProfileAssets().put(absPath, new Texture(fileHandle));
+        AppData.getCurrentUser().getUserSettings().savedProfileAssetPaths.add(absPath);
+        AppData.getCurrentUser().getUserSettings().setAvatarKeyString(absPath);
+        AppData.getCurrentUser().saveSettingsToJson();
+        AppData.getCurrentUser().setProfileAvatar(AppData.getProfileAssets().get(absPath));
     }
 
     @Override

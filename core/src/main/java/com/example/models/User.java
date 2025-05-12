@@ -49,7 +49,9 @@ public class User {
 
             stmt.execute(createTableSQL);
 
-            @Language("H2") String querySQL = "SELECT username, password, securityQuestion, securityAnswer, ID FROM users";
+            @Language("H2")
+            String querySQL = "SELECT username, password, securityQuestion, securityAnswer, ID FROM users";
+
             try (ResultSet rs = stmt.executeQuery(querySQL)) {
                 while (rs.next()) {
                     String username1 = rs.getString("username");
