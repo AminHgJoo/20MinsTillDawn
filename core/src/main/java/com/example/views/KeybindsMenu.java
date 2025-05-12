@@ -14,7 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
-import com.example.models.enums.Languages;
+import com.example.models.UIHelper;
+import com.example.models.enums.Translation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,14 +33,14 @@ public class KeybindsMenu implements Screen {
 
         this.backgroundTexture = new Texture("settings_menu/background.png");
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
 
         initializeGUI();
     }
 
-    private Map<Languages, Integer> keyBinds;
-    private Map<Languages, TextButton> keyButtons;
-    private Languages currentlyRebinding = null;
+    private Map<Translation, Integer> keyBinds;
+    private Map<Translation, TextButton> keyButtons;
+    private Translation currentlyRebinding = null;
 
     private void initializeGUI() {
 
@@ -51,7 +52,7 @@ public class KeybindsMenu implements Screen {
 
         keyBinds = new HashMap<>();
         for (String key : AppData.getCurrentUser().getUserSettings().keyBinds.keySet()) {
-            keyBinds.put(Languages.getLangObj(key), AppData.getCurrentUser().getUserSettings().keyBinds.get(key));
+            keyBinds.put(Translation.getLangObj(key), AppData.getCurrentUser().getUserSettings().keyBinds.get(key));
         }
 
         keyButtons = new HashMap<>();
@@ -63,8 +64,8 @@ public class KeybindsMenu implements Screen {
 
         int fact = 1;
 
-        for (Map.Entry<Languages, Integer> entry : keyBinds.entrySet()) {
-            final Languages function = entry.getKey();
+        for (Map.Entry<Translation, Integer> entry : keyBinds.entrySet()) {
+            final Translation function = entry.getKey();
             Integer keyCode = entry.getValue();
 
             Label functionLabel = new Label(function.translate(), skin);
@@ -78,7 +79,7 @@ public class KeybindsMenu implements Screen {
                 public void clicked(InputEvent event, float x, float y) {
                     if (currentlyRebinding == null) {
                         currentlyRebinding = function;
-                        keyButton.setText(Languages.PRESS_A_NEW_KEY.translate());
+                        keyButton.setText(Translation.PRESS_A_NEW_KEY.translate());
                     }
                 }
             });
@@ -91,7 +92,7 @@ public class KeybindsMenu implements Screen {
             fact *= -1;
         }
 
-        TextButton backButton = new TextButton(Languages.GO_BACK.translate(), skin);
+        TextButton backButton = new TextButton(Translation.GO_BACK.translate(), skin);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -108,6 +109,17 @@ public class KeybindsMenu implements Screen {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (currentlyRebinding != null) {
+
+                    if (AppData.getCurrentUser().getUserSettings().detectKeybindConflict(keycode)) {
+                        TextButton keyButton = keyButtons.get(currentlyRebinding);
+                        keyButton.setText(Input.Keys.toString(AppData.getCurrentUser().getUserSettings().keyBinds.get(currentlyRebinding.english)));
+
+                        currentlyRebinding = null;
+
+                        UIHelper uiHelper = new UIHelper(stage, skin);
+                        uiHelper.showDialog(Translation.KEYBIND_CONFLICT.translate(), Translation.ERROR);
+                        return true;
+                    }
 
                     keyBinds.put(currentlyRebinding, keycode);
 
@@ -161,7 +173,6 @@ public class KeybindsMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

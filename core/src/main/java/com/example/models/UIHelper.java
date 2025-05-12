@@ -3,7 +3,7 @@ package com.example.models;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class UIHelper {
 
@@ -15,7 +15,7 @@ public class UIHelper {
         this.skin = skin;
     }
 
-    public void showDialog(String message, Languages promptType) {
+    public void showDialog(String message, Translation promptType) {
 
         Dialog dialog = new Dialog(promptType.translate(), skin) {
             @Override
@@ -24,7 +24,7 @@ public class UIHelper {
         };
 
         dialog.text(message);
-        dialog.button(Languages.CONFIRM.translate());
+        dialog.button(Translation.CONFIRM.translate());
 
         dialog.show(stage);
     }

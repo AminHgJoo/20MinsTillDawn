@@ -23,11 +23,7 @@ public class UserSettings {
 
     public ArrayList<String> savedProfileAssetPaths = new ArrayList<>();
 
-    public UserSettings() {
-    }
-
-    public UserSettings(String avatarKeyString, String lang) {
-        keyBinds = new HashMap<>();
+    public void initializeKeyBinds() {
         keyBinds.put("upKey", Input.Keys.W);
         keyBinds.put("downKey", Input.Keys.S);
         keyBinds.put("leftKey", Input.Keys.A);
@@ -40,6 +36,32 @@ public class UserSettings {
         keyBinds.put("addHpCheat", Input.Keys.H);
         keyBinds.put("aimbotKey", Input.Keys.SPACE);
         keyBinds.put("goToBossCheat", Input.Keys.G);
+    }
+
+    public boolean detectKeybindConflict(int keycode) {
+        for (String key : keyBinds.keySet()) {
+            int value = keyBinds.get(key);
+            if (value == keycode) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// Json reader use only.
+    public UserSettings() {
+    }
+
+    public UserSettings(boolean useDefaultKeymap) {
+        if (useDefaultKeymap) {
+            keyBinds = new HashMap<>();
+            initializeKeyBinds();
+        }
+    }
+
+    public UserSettings(String avatarKeyString, String lang) {
+        keyBinds = new HashMap<>();
+        initializeKeyBinds();
         this.soundVolume = 0.75f;
         this.lang = lang;
         this.score = 0;

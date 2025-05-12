@@ -14,7 +14,7 @@ import com.example.MainApp;
 import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class LoginMenu implements Screen {
     final private MainApp mainApp;
@@ -27,7 +27,7 @@ public class LoginMenu implements Screen {
     public LoginMenu(final MainApp mainApp) {
         this.mainApp = mainApp;
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
 
         this.background = new Texture("register_menu/background.jpg");
 
@@ -41,72 +41,72 @@ public class LoginMenu implements Screen {
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        Label label = new Label(Languages.LOGIN.translate(), skin);
+        Label label = new Label(Translation.LOGIN.translate(), skin);
         label.setColor(Color.CORAL);
         label.setFontScale(1.5f);
 
         TextField usernameField = new TextField("", skin);
-        usernameField.setMessageText(Languages.USERNAME.translate());
+        usernameField.setMessageText(Translation.USERNAME.translate());
 
         TextField passwordField = new TextField("", skin);
-        passwordField.setMessageText(Languages.PASSWORD.translate());
+        passwordField.setMessageText(Translation.PASSWORD.translate());
 
-        TextButton loginButton = new TextButton(Languages.LOGIN.translate(), skin);
+        TextButton loginButton = new TextButton(Translation.LOGIN.translate(), skin);
         loginButton.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Languages message = LoginAndRegistration.handleLogin(usernameField.getText().trim(), passwordField.getText().trim());
-                if (message == Languages.SUCCESS) {
+                Translation message = LoginAndRegistration.handleLogin(usernameField.getText().trim(), passwordField.getText().trim());
+                if (message == Translation.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(message.translate(), Languages.ERROR);
+                    uiHelper.showDialog(message.translate(), Translation.ERROR);
                 }
             }
         });
 
-        Label label2 = new Label(Languages.ACCOUNT_RECOVERY.translate(), skin);
+        Label label2 = new Label(Translation.ACCOUNT_RECOVERY.translate(), skin);
         label2.setColor(Color.CORAL);
         label2.setFontScale(1.5f);
 
         TextField oldUsernameField = new TextField("", skin);
-        oldUsernameField.setMessageText(Languages.USERNAME.translate());
+        oldUsernameField.setMessageText(Translation.USERNAME.translate());
 
         TextField newPasswordField = new TextField("", skin);
-        newPasswordField.setMessageText(Languages.NEW_PASSWORD.translate());
+        newPasswordField.setMessageText(Translation.NEW_PASSWORD.translate());
 
         TextField securityQuestionField = new TextField("", skin);
-        securityQuestionField.setMessageText(Languages.SECURITY_QUESTION.translate());
+        securityQuestionField.setMessageText(Translation.SECURITY_QUESTION.translate());
 
         TextField securityAnswerField = new TextField("", skin);
-        securityAnswerField.setMessageText(Languages.SECURITY_ANSWER.translate());
+        securityAnswerField.setMessageText(Translation.SECURITY_ANSWER.translate());
 
-        TextButton recoverAccountButton = new TextButton(Languages.ACCOUNT_RECOVERY.translate(), skin);
+        TextButton recoverAccountButton = new TextButton(Translation.ACCOUNT_RECOVERY.translate(), skin);
         recoverAccountButton.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Languages message = LoginAndRegistration.handleAccountRecovery(
+                Translation message = LoginAndRegistration.handleAccountRecovery(
                     securityQuestionField.getText().trim()
                     , securityAnswerField.getText().trim()
                     , newPasswordField.getText().trim()
                     , oldUsernameField.getText().trim());
 
-                if (message == Languages.SUCCESS) {
+                if (message == Translation.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(message.translate(), Languages.ERROR);
+                    uiHelper.showDialog(message.translate(), Translation.ERROR);
                 }
             }
         });
 
-        TextButton goToRegisterButton = new TextButton(Languages.GO_TO_REGISTRATION.translate(), skin);
+        TextButton goToRegisterButton = new TextButton(Translation.GO_TO_REGISTRATION.translate(), skin);
         goToRegisterButton.addListener(new ChangeListener() {
 
             @Override
@@ -173,7 +173,6 @@ public class LoginMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         background.dispose();
     }
 }

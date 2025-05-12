@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class TalentMenu implements Screen {
     final MainApp mainApp;
@@ -26,7 +26,7 @@ public class TalentMenu implements Screen {
     public TalentMenu(MainApp mainApp) {
         this.mainApp = mainApp;
 
-        skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        skin = AppData.skin;
 
         backgroundTexture = new Texture("game_cover.jpg");
 
@@ -45,15 +45,15 @@ public class TalentMenu implements Screen {
         Table contentTable = new Table();
         contentTable.center();
 
-        Label label = new Label(Languages.CHARACTER.translate(), skin);
+        Label label = new Label(Translation.CHARACTER.translate(), skin);
         label.setColor(Color.VIOLET);
         contentTable.add(label).pad(10);
 
-        Label label2 = new Label(Languages.SPEED.translate(), skin);
+        Label label2 = new Label(Translation.SPEED.translate(), skin);
         label2.setColor(Color.VIOLET);
         contentTable.add(label2).pad(10);
 
-        Label label3 = new Label(Languages.HP.translate(), skin);
+        Label label3 = new Label(Translation.HP.translate(), skin);
         label3.setColor(Color.VIOLET);
         contentTable.add(label3).pad(10).row();
 
@@ -120,62 +120,62 @@ public class TalentMenu implements Screen {
         Table contentTable2 = new Table();
         contentTable2.center();
 
-        Label label19 = new Label(Languages.CHEAT_CODE.translate(), skin);
+        Label label19 = new Label(Translation.CHEAT_CODE.translate(), skin);
         label19.setColor(Color.SCARLET);
         contentTable2.add(label19).pad(10);
 
-        Label label20 = new Label(Languages.DESCRIPTION.translate(), skin);
+        Label label20 = new Label(Translation.DESCRIPTION.translate(), skin);
         label20.setColor(Color.SCARLET);
         contentTable2.add(label20).pad(10).row();
 
-        Label label21 = new Label(Languages.REDUCE_TIME_CHEAT.translate(), skin);
+        Label label21 = new Label(Translation.REDUCE_TIME_CHEAT.translate(), skin);
         label21.setColor(Color.GREEN);
         contentTable2.add(label21).pad(10);
 
-        Label label22 = new Label(Languages.REDUCE_TIME_DESC.translate() , skin);
+        Label label22 = new Label(Translation.REDUCE_TIME_DESC.translate() , skin);
         label22.setColor(Color.GREEN);
         contentTable2.add(label22).pad(10).row();
 
-        Label label23 = new Label(Languages.LEVEL_UP_CHEAT.translate(), skin);
+        Label label23 = new Label(Translation.LEVEL_UP_CHEAT.translate(), skin);
         label23.setColor(Color.GREEN);
         contentTable2.add(label23).pad(10);
 
-        Label label24 = new Label(Languages.LEVEL_UP_DESC.translate(), skin);
+        Label label24 = new Label(Translation.LEVEL_UP_DESC.translate(), skin);
         label24.setColor(Color.GREEN);
         contentTable2.add(label24).pad(10).row();
 
-        Label label25 = new Label(Languages.INVINCIBILITY_CHEAT.translate(), skin);
+        Label label25 = new Label(Translation.INVINCIBILITY_CHEAT.translate(), skin);
         label25.setColor(Color.GREEN);
         contentTable2.add(label25).pad(10);
 
-        Label label26 = new Label(Languages.INVINCIBILITY_DESC.translate(), skin);
+        Label label26 = new Label(Translation.INVINCIBILITY_DESC.translate(), skin);
         label26.setColor(Color.GREEN);
         contentTable2.add(label26).pad(10).row();
 
-        Label label27 = new Label(Languages.ADD_HP_CHEAT.translate(), skin);
+        Label label27 = new Label(Translation.ADD_HP_CHEAT.translate(), skin);
         label27.setColor(Color.GREEN);
         contentTable2.add(label27).pad(10);
 
-        Label label28 = new Label(Languages.ADD_HP_DESC.translate(), skin);
+        Label label28 = new Label(Translation.ADD_HP_DESC.translate(), skin);
         label28.setColor(Color.GREEN);
         contentTable2.add(label28).pad(10).row();
 
-        Label label29 = new Label(Languages.GO_TO_BOSS_CHEAT.translate(), skin);
+        Label label29 = new Label(Translation.GO_TO_BOSS_CHEAT.translate(), skin);
         label29.setColor(Color.GREEN);
         contentTable2.add(label29).pad(10);
 
-        Label label30 = new Label(Languages.SKIP_TO_BOSS_DESC.translate(), skin);
+        Label label30 = new Label(Translation.SKIP_TO_BOSS_DESC.translate(), skin);
         label30.setColor(Color.GREEN);
         contentTable2.add(label30).pad(10).row();
 
         Table contentTable3 = new Table();
         contentTable3.center();
 
-        Label label31 = new Label(Languages.ABILITY.translate(), skin);
+        Label label31 = new Label(Translation.ABILITY.translate(), skin);
         label31.setColor(Color.TEAL);
         contentTable3.add(label31).pad(10);
 
-        Label label32 = new Label(Languages.DESCRIPTION.translate(), skin);
+        Label label32 = new Label(Translation.DESCRIPTION.translate(), skin);
         label32.setColor(Color.TEAL);
         contentTable3.add(label32).pad(10).row();
 
@@ -183,7 +183,7 @@ public class TalentMenu implements Screen {
         label33.setColor(Color.BLUE);
         contentTable3.add(label33).pad(10);
 
-        Label label34 = new Label(Languages.VITALITY_DESC.translate(), skin);
+        Label label34 = new Label(Translation.VITALITY_DESC.translate(), skin);
         label34.setColor(Color.BLUE);
         contentTable3.add(label34).pad(10).row();
 
@@ -191,7 +191,7 @@ public class TalentMenu implements Screen {
         label35.setColor(Color.BLUE);
         contentTable3.add(label35).pad(10);
 
-        Label label36 = new Label(Languages.DAMAGER_DESC.translate(), skin);
+        Label label36 = new Label(Translation.DAMAGER_DESC.translate(), skin);
         label36.setColor(Color.BLUE);
         contentTable3.add(label36).pad(10).row();
 
@@ -199,7 +199,7 @@ public class TalentMenu implements Screen {
         label37.setColor(Color.BLUE);
         contentTable3.add(label37).pad(10);
 
-        Label label38 = new Label(Languages.PROCREASE_DESC.translate(), skin);
+        Label label38 = new Label(Translation.PROCREASE_DESC.translate(), skin);
         label38.setColor(Color.BLUE);
         contentTable3.add(label38).pad(10).row();
 
@@ -207,7 +207,7 @@ public class TalentMenu implements Screen {
         label39.setColor(Color.BLUE);
         contentTable3.add(label39).pad(10);
 
-        Label label40 = new Label(Languages.AMOCREASE_DESC.translate(), skin);
+        Label label40 = new Label(Translation.AMOCREASE_DESC.translate(), skin);
         label40.setColor(Color.BLUE);
         contentTable3.add(label40).pad(10).row();
 
@@ -215,18 +215,18 @@ public class TalentMenu implements Screen {
         label41.setColor(Color.BLUE);
         contentTable3.add(label41).pad(10);
 
-        Label label42 = new Label(Languages.SPEEDY_DESC.translate(), skin);
+        Label label42 = new Label(Translation.SPEEDY_DESC.translate(), skin);
         label42.setColor(Color.BLUE);
         contentTable3.add(label42).pad(10).row();
 
 
-        TextButton keyBindsMenu = new TextButton(Languages.CONTROLS.translate(), skin);
+        TextButton keyBindsMenu = new TextButton(Translation.CONTROLS.translate(), skin);
         keyBindsMenu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (AppData.getCurrentUser() == null) {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.LOGGED_IN_AS_GUEST.translate(), Languages.ERROR);
+                    uiHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
                     return;
                 }
                 mainApp.setScreen(new KeybindsMenu(mainApp));
@@ -235,7 +235,7 @@ public class TalentMenu implements Screen {
             }
         });
 
-        TextButton backButton = new TextButton(Languages.GO_BACK.translate(), skin);
+        TextButton backButton = new TextButton(Translation.GO_BACK.translate(), skin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -269,7 +269,6 @@ public class TalentMenu implements Screen {
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -302,7 +301,6 @@ public class TalentMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
 import com.example.models.User;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,8 +27,8 @@ public class LeaderboardMenu implements Screen {
 
     private boolean hasSortOptionChanged;
     private final ArrayList<User> users;
-    private final ArrayList<Languages> sortOptions;
-    private Languages sortedByCurrently;
+    private final ArrayList<Translation> sortOptions;
+    private Translation sortedByCurrently;
 
     private Stage stage;
 
@@ -36,35 +36,35 @@ public class LeaderboardMenu implements Screen {
         this.mainApp = mainApp;
         this.hasSortOptionChanged = false;
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
         this.backgroundTexture = new Texture("game_cover.jpg");
 
         this.users = new ArrayList<>();
         this.users.addAll(User.users);
         this.users.sort(Comparator.comparingInt((User u) -> u.getUserSettings().getScore()).reversed());
 
-        this.sortedByCurrently = Languages.SCORE;
+        this.sortedByCurrently = Translation.SCORE;
 
         this.sortOptions = new ArrayList<>();
-        sortOptions.add(Languages.SORT_BY_NAME);
-        sortOptions.add(Languages.SORT_BY_SURVIVAL_TIME);
-        sortOptions.add(Languages.SORT_BY_KILLS);
-        sortOptions.add(Languages.SORT_BY_SCORE);
+        sortOptions.add(Translation.SORT_BY_NAME);
+        sortOptions.add(Translation.SORT_BY_SURVIVAL_TIME);
+        sortOptions.add(Translation.SORT_BY_KILLS);
+        sortOptions.add(Translation.SORT_BY_SCORE);
 
         initializeStage();
     }
 
     private void iterateSortOptionsList() {
-        Languages currentSortOption = sortOptions.get(0);
+        Translation currentSortOption = sortOptions.get(0);
 
-        if (currentSortOption == Languages.SORT_BY_NAME) {
-            sortedByCurrently = Languages.USERNAME;
-        } else if (currentSortOption == Languages.SORT_BY_SURVIVAL_TIME) {
-            sortedByCurrently = Languages.SURVIVAL_TIME;
-        } else if (currentSortOption == Languages.SORT_BY_KILLS) {
-            sortedByCurrently = Languages.KILLS;
-        } else if (currentSortOption == Languages.SORT_BY_SCORE) {
-            sortedByCurrently = Languages.SCORE;
+        if (currentSortOption == Translation.SORT_BY_NAME) {
+            sortedByCurrently = Translation.USERNAME;
+        } else if (currentSortOption == Translation.SORT_BY_SURVIVAL_TIME) {
+            sortedByCurrently = Translation.SURVIVAL_TIME;
+        } else if (currentSortOption == Translation.SORT_BY_KILLS) {
+            sortedByCurrently = Translation.KILLS;
+        } else if (currentSortOption == Translation.SORT_BY_SCORE) {
+            sortedByCurrently = Translation.SCORE;
         }
 
         Collections.rotate(sortOptions, 1);
@@ -80,27 +80,27 @@ public class LeaderboardMenu implements Screen {
         Table contentTable = new Table();
         contentTable.center();
 
-        Label rankLabel = new Label(Languages.RANK.translate(), skin);
+        Label rankLabel = new Label(Translation.RANK.translate(), skin);
         rankLabel.setFontScale(1.3f);
         rankLabel.setColor(Color.GOLD);
         contentTable.add(rankLabel).pad(10);
 
-        Label usernameLabel = new Label(Languages.USERNAME.translate(), skin);
+        Label usernameLabel = new Label(Translation.USERNAME.translate(), skin);
         usernameLabel.setFontScale(1.3f);
         usernameLabel.setColor(Color.GOLD);
         contentTable.add(usernameLabel).pad(10);
 
-        Label scoreLabel = new Label(Languages.SCORE.translate(), skin);
+        Label scoreLabel = new Label(Translation.SCORE.translate(), skin);
         scoreLabel.setFontScale(1.3f);
         scoreLabel.setColor(Color.GOLD);
         contentTable.add(scoreLabel).pad(10);
 
-        Label killsLabel = new Label(Languages.KILLS.translate(), skin);
+        Label killsLabel = new Label(Translation.KILLS.translate(), skin);
         killsLabel.setFontScale(1.3f);
         killsLabel.setColor(Color.GOLD);
         contentTable.add(killsLabel).pad(10);
 
-        Label survivalTimeLabel = new Label(Languages.SURVIVAL_TIME.translate(), skin);
+        Label survivalTimeLabel = new Label(Translation.SURVIVAL_TIME.translate(), skin);
         survivalTimeLabel.setFontScale(1.3f);
         survivalTimeLabel.setColor(Color.GOLD);
         contentTable.add(survivalTimeLabel).pad(10);
@@ -149,7 +149,7 @@ public class LeaderboardMenu implements Screen {
         ScrollPane scrollPane = new ScrollPane(contentTable, skin);
         scrollPane.setScrollingDisabled(true, false);
 
-        TextButton backButton = new TextButton(Languages.GO_BACK.translate(), skin);
+        TextButton backButton = new TextButton(Translation.GO_BACK.translate(), skin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -165,14 +165,14 @@ public class LeaderboardMenu implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 hasSortOptionChanged = true;
 
-                if (sortOptions.get(0).equals(Languages.SORT_BY_NAME)) {
+                if (sortOptions.get(0).equals(Translation.SORT_BY_NAME)) {
                     users.sort(Comparator.comparing(User::getUsername));
-                } else if (sortOptions.get(0).equals(Languages.SORT_BY_SURVIVAL_TIME)) {
+                } else if (sortOptions.get(0).equals(Translation.SORT_BY_SURVIVAL_TIME)) {
                     users.sort(Comparator.comparingInt((User user) -> user.getUserSettings()
                         .getLongestSurvivalTimeSeconds()).reversed());
-                } else if (sortOptions.get(0).equals(Languages.SORT_BY_KILLS)) {
+                } else if (sortOptions.get(0).equals(Translation.SORT_BY_KILLS)) {
                     users.sort(Comparator.comparingInt((User user) -> user.getUserSettings().getKills()).reversed());
-                } else if (sortOptions.get(0).equals(Languages.SORT_BY_SCORE)) {
+                } else if (sortOptions.get(0).equals(Translation.SORT_BY_SCORE)) {
                     users.sort(Comparator.comparingInt((User user) -> user.getUserSettings().getScore()).reversed());
                 }
 
@@ -180,7 +180,7 @@ public class LeaderboardMenu implements Screen {
             }
         });
 
-        Label label = new Label(Languages.SORTED_BY.translate() + " " + sortedByCurrently.translate(), skin);
+        Label label = new Label(Translation.SORTED_BY.translate() + " " + sortedByCurrently.translate(), skin);
         label.setFontScale(1.3f);
         label.setColor(Color.GREEN);
 
@@ -240,7 +240,6 @@ public class LeaderboardMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.example.models.AppData;
 import com.example.models.User;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 import com.example.models.enums.RegistrationRegexes;
 import org.intellij.lang.annotations.Language;
 
@@ -12,35 +12,36 @@ import java.io.File;
 import java.sql.*;
 
 public class LoginAndRegistration {
-    public static Languages registerUser(final String username, final String password
+    public static Translation registerUser(final String username, final String password
         , final String securityQuestion, final String securityAnswer) {
 
-        Languages message = validateUser(username, password);
+        Translation message = validateUser(username, password);
 
-        if (message == Languages.SUCCESS) {
+        if (message == Translation.SUCCESS) {
             createUserAndLoadToDB(username, password, securityQuestion, securityAnswer);
             AppData.setCurrentUser(User.users.get(User.users.size() - 1));
+            AppData.setCurrentUserSettings(AppData.getCurrentUser().getUserSettings());
         }
 
         return message;
     }
 
-    private static Languages validateUser(final String username, final String password) {
+    private static Translation validateUser(final String username, final String password) {
         User user = User.getUserByName(username);
 
         if (user != null) {
-            return Languages.USERNAME_ALREADY_EXISTS;
+            return Translation.USERNAME_ALREADY_EXISTS;
         }
 
         if (username.contains(" ") || username.isBlank()) {
-            return Languages.INVALID_USERNAME;
+            return Translation.INVALID_USERNAME;
         }
 
         if (!validatePasswordStrength(password)) {
-            return Languages.PASSWORD_IS_WEAK;
+            return Translation.PASSWORD_IS_WEAK;
         }
 
-        return Languages.SUCCESS;
+        return Translation.SUCCESS;
     }
 
     public static boolean validatePasswordStrength(final String password) {
@@ -120,28 +121,29 @@ public class LoginAndRegistration {
         }
     }
 
-    public static Languages handleLogin(final String username, final String password) {
+    public static Translation handleLogin(final String username, final String password) {
         User user = User.getUserByName(username);
         if (user == null) {
-            return Languages.USER_DOESNT_EXIST;
+            return Translation.USER_DOESNT_EXIST;
         }
 
         if (!user.getPassword().equals(password)) {
-            return Languages.WRONG_PASSWORD;
+            return Translation.WRONG_PASSWORD;
         }
 
         AppData.setCurrentUser(user);
         AppData.setLang(user.getUserSettings().getLang());
-        return Languages.SUCCESS;
+        AppData.setCurrentUserSettings(user.getUserSettings());
+        return Translation.SUCCESS;
     }
 
-    public static Languages handleAccountRecovery(final String securityQuestion, final String securityAnswer
+    public static Translation handleAccountRecovery(final String securityQuestion, final String securityAnswer
         , final String newPassword, final String username) {
 
         User user = User.getUserByName(username);
 
         if (user == null) {
-            return Languages.USER_DOESNT_EXIST;
+            return Translation.USER_DOESNT_EXIST;
         }
 
         if (user.getSecurityQuestion().equals(securityQuestion)
@@ -151,17 +153,17 @@ public class LoginAndRegistration {
                 user.changePasswordInDB(newPassword);
                 AppData.setCurrentUser(user);
                 AppData.setLang(user.getUserSettings().getLang());
-                return Languages.SUCCESS;
+                return Translation.SUCCESS;
             } else {
-                return Languages.PASSWORD_IS_WEAK;
+                return Translation.PASSWORD_IS_WEAK;
             }
         }
 
         if (!user.getSecurityQuestion().equals(securityQuestion)) {
-            return Languages.WRONG_QUESTION;
+            return Translation.WRONG_QUESTION;
         }
 
-        return Languages.WRONG_ANSWER;
+        return Translation.WRONG_ANSWER;
     }
 
     public static void deleteUser(final User user) {

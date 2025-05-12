@@ -12,7 +12,7 @@ public class MainApp extends Game {
 
     @Override
     public void create() {
-        AppData.initializeProfileAssets();
+        AppData.initializeAssets();
         AppData.setMainApp(this);
         User.loadUsersFromDB();
         AppData.setCurrentScreen(new LauncherMenu(this));
@@ -34,5 +34,6 @@ public class MainApp extends Game {
             Texture asset = AppData.getProfileAssets().get(key);
             asset.dispose();
         }
+        AppData.skin.dispose();
     }
 }

@@ -2,7 +2,7 @@ package com.example.models.enums;
 
 import com.example.models.AppData;
 
-public enum Languages {
+public enum Translation {
 
     LAUNCHER_GAME_DEV("Developed By @AminHgJoo : May 2025", "Ontwikkeld door @AminHgJoo: Mei 2025"),
     LOGIN("Login", "Inloggen"),
@@ -87,19 +87,20 @@ public enum Languages {
     PROCREASE_DESC("Increase weapon projectiles by 1.", "Verhoogt het aantal projectielen van het wapen met 1."),
     AMOCREASE_DESC("Increase weapon mag-size by 5.", "Vergroot het magazijn van het wapen met 5."),
     SPEEDY_DESC("Double player speed for 10s.", "Verdubbelt de snelheid van de speler gedurende 10s."),
-    ABILITY("Ability", "Vaardigheid")
+    ABILITY("Ability", "Vaardigheid"),
+    KEYBIND_CONFLICT("Keybind Conflict", "Sneltoetsconflict"),
     ;
 
     final public String english;
     final public String dutch;
 
-    Languages(String english, String dutch) {
+    Translation(String english, String dutch) {
         this.english = english;
         this.dutch = dutch;
     }
 
-    public static Languages getLangObj(String text) {
-        for (Languages lang : Languages.values()) {
+    public static Translation getLangObj(String text) {
+        for (Translation lang : Translation.values()) {
             if (lang.english.equals(text)) {
                 return lang;
             }

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class LauncherMenu implements Screen {
     final private MainApp mainApp;
@@ -28,7 +28,7 @@ public class LauncherMenu implements Screen {
         this.mainApp = app;
         this.hasLanguageChanged = false;
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
         this.backgroundTexture = new Texture("game_cover.jpg");
 
         initializeStage();
@@ -44,13 +44,13 @@ public class LauncherMenu implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        Label title = new Label(Languages.LAUNCHER_GAME_DEV.translate(), skin);
+        Label title = new Label(Translation.LAUNCHER_GAME_DEV.translate(), skin);
         title.setFontScale(1.3f);
         title.setColor(Color.CYAN);
         title.setPosition(10, 10);
         stage.addActor(title);
 
-        TextButton loginButton = new TextButton(Languages.LOGIN.translate(), skin);
+        TextButton loginButton = new TextButton(Translation.LOGIN.translate(), skin);
         loginButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -60,7 +60,7 @@ public class LauncherMenu implements Screen {
             }
         });
 
-        TextButton registerButton = new TextButton(Languages.REGISTER.translate(), skin);
+        TextButton registerButton = new TextButton(Translation.REGISTER.translate(), skin);
         registerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -70,7 +70,7 @@ public class LauncherMenu implements Screen {
             }
         });
 
-        TextButton languageButton = new TextButton(Languages.LANGUAGE_BUTTON_TEXT.translate(), skin);
+        TextButton languageButton = new TextButton(Translation.LANGUAGE_BUTTON_TEXT.translate(), skin);
         languageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -135,7 +135,6 @@ public class LauncherMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

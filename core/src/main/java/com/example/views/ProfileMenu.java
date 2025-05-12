@@ -14,7 +14,7 @@ import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
 import com.example.models.User;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class ProfileMenu implements Screen {
     final MainApp mainApp;
@@ -27,7 +27,7 @@ public class ProfileMenu implements Screen {
     public ProfileMenu(final MainApp mainApp) {
         this.mainApp = mainApp;
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
 
         this.backgroundTexture = new Texture("game_cover.jpg");
 
@@ -46,9 +46,9 @@ public class ProfileMenu implements Screen {
         stage.addActor(table);
 
         TextField usernameField = new TextField("", skin);
-        usernameField.setMessageText(Languages.NEW_USERNAME.translate());
+        usernameField.setMessageText(Translation.NEW_USERNAME.translate());
 
-        TextButton changeUsernameButton = new TextButton(Languages.CONFIRM.translate(), skin);
+        TextButton changeUsernameButton = new TextButton(Translation.CONFIRM.translate(), skin);
         changeUsernameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -64,18 +64,18 @@ public class ProfileMenu implements Screen {
                     usernameField.setText("");
 
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.SUCCESS.translate(), Languages.SUCCESS);
+                    uiHelper.showDialog(Translation.SUCCESS.translate(), Translation.SUCCESS);
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.USERNAME_ALREADY_EXISTS.translate(), Languages.ERROR);
+                    uiHelper.showDialog(Translation.USERNAME_ALREADY_EXISTS.translate(), Translation.ERROR);
                 }
             }
         });
 
         TextField passwordField = new TextField("", skin);
-        passwordField.setMessageText(Languages.NEW_PASSWORD.translate());
+        passwordField.setMessageText(Translation.NEW_PASSWORD.translate());
 
-        TextButton changePasswordButton = new TextButton(Languages.CONFIRM.translate(), skin);
+        TextButton changePasswordButton = new TextButton(Translation.CONFIRM.translate(), skin);
         changePasswordButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -91,15 +91,15 @@ public class ProfileMenu implements Screen {
                     passwordField.setText("");
 
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.SUCCESS.translate(), Languages.SUCCESS);
+                    uiHelper.showDialog(Translation.SUCCESS.translate(), Translation.SUCCESS);
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.PASSWORD_IS_WEAK.translate(), Languages.ERROR);
+                    uiHelper.showDialog(Translation.PASSWORD_IS_WEAK.translate(), Translation.ERROR);
                 }
             }
         });
 
-        TextButton deleteUser = new TextButton(Languages.DELETE_ACCOUNT.translate(), skin);
+        TextButton deleteUser = new TextButton(Translation.DELETE_ACCOUNT.translate(), skin);
         deleteUser.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -117,7 +117,7 @@ public class ProfileMenu implements Screen {
             }
         });
 
-        TextButton avatarButton = new TextButton(Languages.AVATAR_MENU.translate(), skin);
+        TextButton avatarButton = new TextButton(Translation.AVATAR_MENU.translate(), skin);
         avatarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -127,7 +127,7 @@ public class ProfileMenu implements Screen {
             }
         });
 
-        TextButton backButton = new TextButton(Languages.GO_BACK.translate(), skin);
+        TextButton backButton = new TextButton(Translation.GO_BACK.translate(), skin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -185,7 +185,6 @@ public class ProfileMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

@@ -14,7 +14,8 @@ import com.example.MainApp;
 import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
-import com.example.models.enums.Languages;
+import com.example.models.UserSettings;
+import com.example.models.enums.Translation;
 
 public class RegisterMenu implements Screen {
     final private MainApp mainApp;
@@ -27,7 +28,7 @@ public class RegisterMenu implements Screen {
     public RegisterMenu(final MainApp mainApp) {
         this.mainApp = mainApp;
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
 
         this.backgroundTexture = new Texture("register_menu/background.jpg");
 
@@ -41,46 +42,47 @@ public class RegisterMenu implements Screen {
         background.setFillParent(true);
         stage.addActor(background);
 
-        Label label = new Label(Languages.CHOOSE_A_USERNAME.translate(), skin);
+        Label label = new Label(Translation.CHOOSE_A_USERNAME.translate(), skin);
         label.setColor(Color.CORAL);
         label.setFontScale(1.5f);
 
         TextField usernameField = new TextField("", skin);
-        usernameField.setMessageText(Languages.USERNAME.translate());
+        usernameField.setMessageText(Translation.USERNAME.translate());
 
         TextField passwordField = new TextField("", skin);
-        passwordField.setMessageText(Languages.PASSWORD.translate());
+        passwordField.setMessageText(Translation.PASSWORD.translate());
 
         TextField securityQuestionField = new TextField("", skin);
-        securityQuestionField.setMessageText(Languages.SECURITY_QUESTION.translate());
+        securityQuestionField.setMessageText(Translation.SECURITY_QUESTION.translate());
 
         TextField securityAnswerField = new TextField("", skin);
-        securityAnswerField.setMessageText(Languages.SECURITY_ANSWER.translate());
+        securityAnswerField.setMessageText(Translation.SECURITY_ANSWER.translate());
 
-        TextButton confirmButton = new TextButton(Languages.CONFIRM.translate(), skin);
+        TextButton confirmButton = new TextButton(Translation.CONFIRM.translate(), skin);
         confirmButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Languages message = LoginAndRegistration.registerUser(usernameField.getText().trim(), passwordField.getText().trim()
+                Translation message = LoginAndRegistration.registerUser(usernameField.getText().trim(), passwordField.getText().trim()
                     , securityQuestionField.getText().trim(), securityAnswerField.getText().trim());
 
-                if (message == Languages.SUCCESS) {
+                if (message == Translation.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(message.translate(), Languages.ERROR);
+                    uiHelper.showDialog(message.translate(), Translation.ERROR);
                 }
             }
         });
 
-        TextButton playAsGuest = new TextButton(Languages.PLAY_AS_GUEST.translate(), skin);
+        TextButton playAsGuest = new TextButton(Translation.PLAY_AS_GUEST.translate(), skin);
         playAsGuest.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
                 AppData.setCurrentScreen(mainApp.getScreen());
+                AppData.setCurrentUserSettings(new UserSettings(true));
                 dispose();
             }
         });
@@ -143,7 +145,6 @@ public class RegisterMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

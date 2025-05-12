@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 import javax.swing.*;
 import java.io.File;
@@ -29,7 +29,7 @@ public class AvatarMenu implements Screen {
     public AvatarMenu(MainApp mainApp) {
         this.mainApp = mainApp;
 
-        skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        skin = AppData.skin;
 
         backgroundTexture = new Texture("game_cover.jpg");
 
@@ -71,7 +71,7 @@ public class AvatarMenu implements Screen {
         ScrollPane scrollPane = new ScrollPane(contentTable, skin);
         scrollPane.setScrollingDisabled(true, false);
 
-        TextButton backButton = new TextButton(Languages.GO_BACK.translate(), skin);
+        TextButton backButton = new TextButton(Translation.GO_BACK.translate(), skin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -81,7 +81,7 @@ public class AvatarMenu implements Screen {
             }
         });
 
-        TextButton dragAndDropPicture = new TextButton(Languages.DRAG_AND_DROP.translate(), skin);
+        TextButton dragAndDropPicture = new TextButton(Translation.DRAG_AND_DROP.translate(), skin);
         dragAndDropPicture.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -90,7 +90,7 @@ public class AvatarMenu implements Screen {
             }
         });
 
-        TextButton selectFile = new TextButton(Languages.SELECT_FILE.translate(), skin);
+        TextButton selectFile = new TextButton(Translation.SELECT_FILE.translate(), skin);
         selectFile.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

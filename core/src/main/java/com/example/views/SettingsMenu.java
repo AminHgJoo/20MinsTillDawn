@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
 import com.example.models.UserSettings;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class SettingsMenu implements Screen {
     final MainApp mainApp;
@@ -30,7 +30,7 @@ public class SettingsMenu implements Screen {
 
         this.backgroundTexture = new Texture("settings_menu/background.png");
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
 
         initializeGUI();
     }
@@ -46,7 +46,7 @@ public class SettingsMenu implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        TextButton changeLanguage = new TextButton(Languages.LANGUAGE_BUTTON_TEXT.translate(), skin);
+        TextButton changeLanguage = new TextButton(Translation.LANGUAGE_BUTTON_TEXT.translate(), skin);
         changeLanguage.addListener(new ChangeListener() {
 
             @Override
@@ -63,7 +63,7 @@ public class SettingsMenu implements Screen {
             }
         });
 
-        TextButton toggleSFX = new TextButton(Languages.TOGGLE_SFX.translate(), skin);
+        TextButton toggleSFX = new TextButton(Translation.TOGGLE_SFX.translate(), skin);
         toggleSFX.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -82,7 +82,7 @@ public class SettingsMenu implements Screen {
             }
         });
 
-        TextButton toggleAutoReload = new TextButton(Languages.TOGGLE_AUTO_RELOAD.translate(), skin);
+        TextButton toggleAutoReload = new TextButton(Translation.TOGGLE_AUTO_RELOAD.translate(), skin);
         toggleAutoReload.addListener(new ChangeListener() {
 
             @Override
@@ -92,7 +92,7 @@ public class SettingsMenu implements Screen {
             }
         });
 
-        TextButton changeMusic = new TextButton(Languages.CHANGE_MUSIC.translate(), skin);
+        TextButton changeMusic = new TextButton(Translation.CHANGE_MUSIC.translate(), skin);
         changeMusic.addListener(new ChangeListener() {
 
             @Override
@@ -124,7 +124,7 @@ public class SettingsMenu implements Screen {
             }
         });
 
-        Label sliderLabel = new Label(Languages.MUSIC_VOLUME.translate(), skin);
+        Label sliderLabel = new Label(Translation.MUSIC_VOLUME.translate(), skin);
         sliderLabel.setColor(Color.RED);
         sliderLabel.setFontScale(1.5f);
 
@@ -138,7 +138,7 @@ public class SettingsMenu implements Screen {
             }
         });
 
-        TextButton goBack = new TextButton(Languages.GO_BACK.translate(), skin);
+        TextButton goBack = new TextButton(Translation.GO_BACK.translate(), skin);
         goBack.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -149,7 +149,7 @@ public class SettingsMenu implements Screen {
             }
         });
 
-        TextButton keyBinds = new TextButton(Languages.CONTROLS.translate(), skin);
+        TextButton keyBinds = new TextButton(Translation.CONTROLS.translate(), skin);
         keyBinds.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -216,6 +216,5 @@ public class SettingsMenu implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
-        skin.dispose();
     }
 }

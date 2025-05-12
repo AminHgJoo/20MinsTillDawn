@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
-import com.example.models.enums.Languages;
+import com.example.models.enums.Translation;
 
 public class MainMenu implements Screen {
     final private MainApp mainApp;
@@ -36,7 +36,7 @@ public class MainMenu implements Screen {
 
         mainApp.music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
 
-        this.skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
+        this.skin = AppData.skin;
 
         this.backgroundTexture = new Texture("game_cover.jpg");
 
@@ -54,7 +54,7 @@ public class MainMenu implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        Label title = new Label(Languages.WELCOME.translate() + " " + AppData.getCurrentUsername(), skin);
+        Label title = new Label(Translation.WELCOME.translate() + " " + AppData.getCurrentUsername(), skin);
         title.setFontScale(1.3f);
         title.setColor(Color.CYAN);
         title.setPosition(10, 10);
@@ -72,9 +72,9 @@ public class MainMenu implements Screen {
 
         Label scoreTitle;
         if (AppData.getCurrentUser() != null) {
-            scoreTitle = new Label(Languages.YOUR_SCORE.translate() + ": " + AppData.getCurrentUser().getUserSettings().getScore(), skin);
+            scoreTitle = new Label(Translation.YOUR_SCORE.translate() + ": " + AppData.getCurrentUser().getUserSettings().getScore(), skin);
         } else {
-            scoreTitle = new Label(Languages.YOUR_SCORE.translate() + ": " + 0, skin);
+            scoreTitle = new Label(Translation.YOUR_SCORE.translate() + ": " + 0, skin);
         }
         scoreTitle.setFontScale(1.3f);
         scoreTitle.setColor(Color.CYAN);
@@ -85,7 +85,7 @@ public class MainMenu implements Screen {
         profilePicture.setSize(profilePicture.getWidth(), profilePicture.getHeight());
         stage.addActor(profilePicture);
 
-        TextButton settings = new TextButton(Languages.SETTINGS.translate(), skin);
+        TextButton settings = new TextButton(Translation.SETTINGS.translate(), skin);
         settings.addListener(new ChangeListener() {
 
             @Override
@@ -96,12 +96,12 @@ public class MainMenu implements Screen {
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.LOGGED_IN_AS_GUEST.translate(), Languages.ERROR);
+                    uiHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
                 }
             }
         });
 
-        TextButton profile = new TextButton(Languages.PROFILE.translate(), skin);
+        TextButton profile = new TextButton(Translation.PROFILE.translate(), skin);
         profile.addListener(new ChangeListener() {
 
             @Override
@@ -112,12 +112,12 @@ public class MainMenu implements Screen {
                     dispose();
                 } else {
                     UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Languages.LOGGED_IN_AS_GUEST.translate(), Languages.ERROR);
+                    uiHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
                 }
             }
         });
 
-        TextButton preGame = new TextButton(Languages.PRE_GAME_MENU.translate(), skin);
+        TextButton preGame = new TextButton(Translation.PRE_GAME_MENU.translate(), skin);
         preGame.addListener(new ChangeListener() {
 
             @Override
@@ -128,7 +128,7 @@ public class MainMenu implements Screen {
             }
         });
 
-        TextButton leaderboard = new TextButton(Languages.LEADERBOARD.translate(), skin);
+        TextButton leaderboard = new TextButton(Translation.LEADERBOARD.translate(), skin);
         leaderboard.addListener(new ChangeListener() {
 
             @Override
@@ -139,7 +139,7 @@ public class MainMenu implements Screen {
             }
         });
 
-        TextButton talents = new TextButton(Languages.TALENTS.translate(), skin);
+        TextButton talents = new TextButton(Translation.TALENTS.translate(), skin);
         talents.addListener(new ChangeListener() {
 
             @Override
@@ -150,7 +150,7 @@ public class MainMenu implements Screen {
             }
         });
 
-        TextButton loadGame = new TextButton(Languages.LOAD_FROM_SAVE.translate(), skin);
+        TextButton loadGame = new TextButton(Translation.LOAD_FROM_SAVE.translate(), skin);
         loadGame.addListener(new ChangeListener() {
 
             @Override
@@ -161,12 +161,13 @@ public class MainMenu implements Screen {
             }
         });
 
-        TextButton logout = new TextButton(Languages.LOGOUT.translate(), skin);
+        TextButton logout = new TextButton(Translation.LOGOUT.translate(), skin);
         logout.addListener(new ChangeListener() {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 AppData.setCurrentUser(null);
+                AppData.setCurrentUserSettings(null);
                 mainApp.setScreen(new LauncherMenu(mainApp));
                 mainApp.music.stop();
                 AppData.setCurrentScreen(mainApp.getScreen());
@@ -235,6 +236,5 @@ public class MainMenu implements Screen {
     public void dispose() {
         stage.dispose();
         backgroundTexture.dispose();
-        skin.dispose();
     }
 }
