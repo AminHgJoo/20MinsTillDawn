@@ -5,12 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.example.models.enums.Translation;
 
-public class UIHelper {
+public class UIPopupHelper {
 
     private final Stage stage;
     private final Skin skin;
 
-    public UIHelper(Stage stage, Skin skin) {
+    public UIPopupHelper(Stage stage, Skin skin) {
         this.stage = stage;
         this.skin = skin;
     }

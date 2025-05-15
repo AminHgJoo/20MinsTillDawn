@@ -4,46 +4,77 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.example.models.enums.HeroTypes;
+import com.example.models.enums.types.HeroTypes;
 import com.example.views.GameMenu;
 
 import java.util.ArrayList;
 
+//TODO: Set the current player field in appData
 public class Player {
-    private Vector2 position;
-    private Vector2 speed;
+    private HeroTypes heroType;
 
+    private Vector2 position;
+
+    private Vector2 velocity;
     private Rectangle rectangle;
 
-    private final Animation<TextureRegion> idleAnimation;
-    private final Animation<TextureRegion> walkingAnimation;
+    private transient Animation<TextureRegion> idleAnimation;
+
+    private transient Animation<TextureRegion> walkingAnimation;
     private float stateTimeIdle;
     private float stateTimeWalking;
 
     private int HP;
+    private int xp;
+    private int level;
+
     private int maxHP;
     private int heroSpeedFactor;
+    private ArrayList<ActiveAbility> activeAbilities;
 
-    private final ArrayList<ActiveAbility> activeAbilities;
+    //TODO: Initialize later.
 
+    private Weapon weapon;
     private boolean isIdle;
 
-    //TODO: Set the current player field in appData
-    public Player(HeroTypes heroType) {
+    public void loadAnimations() {
         this.idleAnimation = new Animation<>(0.1f, heroType.idleTextures);
         this.walkingAnimation = new Animation<>(0.1f, heroType.walkingTextures);
+        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        walkingAnimation.setPlayMode(Animation.PlayMode.LOOP);
+    }
+
+    public int howMuchXpToNextLevel() {
+        return 20 * level;
+    }
+
+    public Player() {
+    }
+
+    public Player(HeroTypes heroType, Weapon weapon) {
+        this.heroType = heroType;
+
+        loadAnimations();
+
+        this.velocity = new Vector2(0, 0);
+        this.position = new Vector2(GameMenu.SCREEN_WIDTH, GameMenu.SCREEN_HEIGHT);
+
         this.activeAbilities = new ArrayList<>();
+
         this.stateTimeIdle = 0;
         this.stateTimeWalking = 0;
         this.isIdle = true;
-        this.position = new Vector2(GameMenu.SCREEN_WIDTH / 2, GameMenu.SCREEN_HEIGHT / 2);
-        this.speed = new Vector2(0, 0);
-        walkingAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
         HP = heroType.baseHP;
         maxHP = heroType.baseHP;
         heroSpeedFactor = heroType.baseSpeed;
+
         rectangle = new Rectangle();
+
+        this.weapon = weapon;
+
+        xp = 0;
+        level = 1;
     }
 
     public Animation<TextureRegion> getIdleAnimation() {
@@ -66,12 +97,12 @@ public class Player {
         this.position = position;
     }
 
-    public Vector2 getSpeed() {
-        return speed;
+    public Vector2 getVelocity() {
+        return velocity;
     }
 
-    public void setSpeed(Vector2 speed) {
-        this.speed = speed;
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
     }
 
     public float getStateTimeIdle() {
@@ -128,5 +159,49 @@ public class Player {
 
     public ArrayList<ActiveAbility> getActiveAbilities() {
         return activeAbilities;
+    }
+
+    public void setActiveAbilities(ArrayList<ActiveAbility> activeAbilities) {
+        this.activeAbilities = activeAbilities;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setWalkingAnimation(Animation<TextureRegion> walkingAnimation) {
+        this.walkingAnimation = walkingAnimation;
+    }
+
+    public void setIdleAnimation(Animation<TextureRegion> idleAnimation) {
+        this.idleAnimation = idleAnimation;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public HeroTypes getHeroType() {
+        return heroType;
+    }
+
+    public void setHeroType(HeroTypes heroType) {
+        this.heroType = heroType;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

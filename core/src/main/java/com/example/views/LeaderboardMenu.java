@@ -198,7 +198,7 @@ public class LeaderboardMenu implements Screen {
 
         stage.addActor(mainTable);
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

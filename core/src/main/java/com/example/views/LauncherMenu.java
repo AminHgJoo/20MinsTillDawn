@@ -94,7 +94,7 @@ public class LauncherMenu implements Screen {
         table.row();
         table.add(languageButton).width(300).height(60).pad(10);
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

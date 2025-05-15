@@ -138,7 +138,7 @@ public class PauseMenu implements Screen {
     @Override
     public void show() {
         initializeGUI();
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -171,7 +171,9 @@ public class PauseMenu implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        if (stage != null) {
+            stage.dispose();
+        }
         background.dispose();
     }
 

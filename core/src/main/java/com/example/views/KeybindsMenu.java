@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
-import com.example.models.UIHelper;
+import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
@@ -118,8 +118,8 @@ public class KeybindsMenu implements Screen {
 
                         currentlyRebinding = null;
 
-                        UIHelper uiHelper = new UIHelper(stage, skin);
-                        uiHelper.showDialog(Translation.KEYBIND_CONFLICT.translate(), Translation.ERROR);
+                        UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                        uiPopupHelper.showDialog(Translation.KEYBIND_CONFLICT.translate(), Translation.ERROR);
                         return true;
                     }
 
@@ -137,7 +137,7 @@ public class KeybindsMenu implements Screen {
             }
         });
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

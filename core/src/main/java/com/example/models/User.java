@@ -26,12 +26,12 @@ public class User {
     //TODO: private Game savedGame;
 
     public static void loadUsersFromDB() {
-        File dataDir = new File("./user_data");
+        File dataDir = new File("../user_db");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
-        String url = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String url = "jdbc:h2:file:../user_db/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         String dbUser = "sa";
         String dbPassword = "";
 
@@ -75,18 +75,18 @@ public class User {
         }
 
         if (users.isEmpty()) {
-            FileHandle file = new FileHandle("./saved_data/users/num.txt");
+            FileHandle file = new FileHandle("../saved_data/users/num.txt");
             try {
                 lastUserId = Integer.parseInt(file.readString());
             } catch (GdxRuntimeException e) {
-                e.printStackTrace();
+                System.out.println("Could not load last user ID, file created.");
                 lastUserId = 0;
                 file.writeString("0", false);
             }
         } else {
             lastUserId = users.get(users.size() - 1).getId();
         }
-        System.out.println("lastUserId: " + lastUserId);
+        System.out.println("Last created user id: " + lastUserId);
     }
 
     public static User getUserByName(final String username) {
@@ -103,22 +103,22 @@ public class User {
 
         String jsonString = json.prettyPrint(this.userSettings);
 
-        File dataDir = new File("./saved_data/users");
+        File dataDir = new File("../saved_data/users");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
-        FileHandle fileHandle = Gdx.files.absolute("./saved_data/users/" + id + ".json");
+        FileHandle fileHandle = Gdx.files.absolute("../saved_data/users/" + id + ".json");
         fileHandle.writeString(jsonString, false);
     }
 
     public void changeUsernameInDB(final String newUsername) {
-        File dataDir = new File("./user_data");
+        File dataDir = new File("../user_db");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
-        String url = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String url = "jdbc:h2:file:../user_db/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         String dbUser = "sa";
         String dbPassword = "";
 
@@ -141,12 +141,12 @@ public class User {
     }
 
     public void changePasswordInDB(final String newPassword) {
-        File dataDir = new File("./user_data");
+        File dataDir = new File("../user_db");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
-        String url = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String url = "jdbc:h2:file:../user_db/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         String dbUser = "sa";
         String dbPassword = "";
 
@@ -189,12 +189,12 @@ public class User {
     public void loadUserObjects() {
         //TODO: Implement loading game.
 
-        File dataDir = new File("./saved_data/users");
+        File dataDir = new File("../saved_data/users");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
-        FileHandle file = Gdx.files.internal("saved_data/users/" + this.id + ".json");
+        FileHandle file = Gdx.files.absolute("../saved_data/users/" + this.id + ".json");
 
         Json json = new Json();
 

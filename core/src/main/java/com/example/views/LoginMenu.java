@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
-import com.example.models.UIHelper;
+import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
@@ -64,8 +64,8 @@ public class LoginMenu implements Screen {
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(message.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(message.translate(), Translation.ERROR);
                 }
             }
         });
@@ -102,8 +102,8 @@ public class LoginMenu implements Screen {
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(message.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(message.translate(), Translation.ERROR);
                 }
             }
         });
@@ -137,7 +137,7 @@ public class LoginMenu implements Screen {
         table.add(recoverAccountButton).width(500).height(60).pad(10).row();
         table.add(goToRegisterButton);
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

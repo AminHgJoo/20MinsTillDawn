@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
-import com.example.models.UIHelper;
+import com.example.models.UIPopupHelper;
 import com.example.models.User;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
@@ -65,11 +65,11 @@ public class ProfileMenu implements Screen {
 
                     usernameField.setText("");
 
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.SUCCESS.translate(), Translation.SUCCESS);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.SUCCESS.translate(), Translation.SUCCESS);
                 } else {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.USERNAME_ALREADY_EXISTS.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.USERNAME_ALREADY_EXISTS.translate(), Translation.ERROR);
                 }
             }
         });
@@ -92,11 +92,11 @@ public class ProfileMenu implements Screen {
 
                     passwordField.setText("");
 
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.SUCCESS.translate(), Translation.SUCCESS);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.SUCCESS.translate(), Translation.SUCCESS);
                 } else {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.PASSWORD_IS_WEAK.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.PASSWORD_IS_WEAK.translate(), Translation.ERROR);
                 }
             }
         });
@@ -150,7 +150,7 @@ public class ProfileMenu implements Screen {
         table.add(backButton).width(600).height(50).pad(10).row();
 
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

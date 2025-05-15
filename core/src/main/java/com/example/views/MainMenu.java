@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
-import com.example.models.UIHelper;
+import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
@@ -97,8 +97,8 @@ public class MainMenu implements Screen {
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
                 }
             }
         });
@@ -113,8 +113,8 @@ public class MainMenu implements Screen {
                     AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
                 }
             }
         });
@@ -187,7 +187,7 @@ public class MainMenu implements Screen {
         table.add(loadGame).width(500).height(60).pad(10).row();
         table.add(logout).width(500).height(60).pad(10).row();
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }

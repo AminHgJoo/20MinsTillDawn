@@ -41,7 +41,7 @@ public class AvatarMenu implements Screen {
     private void initializeStage() {
         stage = new Stage(new ScreenViewport());
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -220,7 +220,6 @@ public class AvatarMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         backgroundTexture.dispose();
     }
 }

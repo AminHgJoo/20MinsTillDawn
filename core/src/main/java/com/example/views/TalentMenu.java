@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
-import com.example.models.UIHelper;
+import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
@@ -229,8 +229,8 @@ public class TalentMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (AppData.getCurrentUser() == null) {
-                    UIHelper uiHelper = new UIHelper(stage, skin);
-                    uiHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
+                    UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                    uiPopupHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
                     return;
                 }
                 mainApp.setScreen(new KeybindsMenu(mainApp));

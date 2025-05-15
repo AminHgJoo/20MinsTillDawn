@@ -1,6 +1,6 @@
 package com.example.models;
 
-import com.example.models.enums.AbilityTypes;
+import com.example.models.enums.types.AbilityTypes;
 
 public class ActiveAbility {
     private final AbilityTypes type;

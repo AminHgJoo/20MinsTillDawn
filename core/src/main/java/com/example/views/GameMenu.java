@@ -16,7 +16,7 @@ import com.example.controllers.PlayerController;
 import com.example.controllers.WorldController;
 import com.example.models.AppData;
 import com.example.models.Player;
-import com.example.models.enums.HeroTypes;
+import com.example.models.enums.types.HeroTypes;
 import com.example.utilities.CursorManager;
 
 public class GameMenu implements Screen, InputProcessor {
@@ -53,13 +53,14 @@ public class GameMenu implements Screen, InputProcessor {
 
         this.backgroundTexture = new Texture(Gdx.files.internal("game_menu_assets/game_map.png"));
 
-        this.player = new Player(HeroTypes.SHANA);
+        //TODO: Properly load/initialize.
+        this.player = new Player(HeroTypes.DASHER, null);
         AppData.setCurrentPlayer(player);
     }
 
     @Override
     public void show() {
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(this, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), this);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 

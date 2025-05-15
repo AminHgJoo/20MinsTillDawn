@@ -17,7 +17,7 @@ public class PlayerController {
     public static void handlePlayerRenderingUpdates(float delta, Player player) {
         TextureRegion currentFrame;
 
-        if (player.getSpeed().isZero()) {
+        if (player.getVelocity().isZero()) {
             player.setIdle(true);
             player.setStateTimeWalking(0);
             currentFrame = player.getIdleAnimation().getKeyFrame(player.getStateTimeIdle(), true);
@@ -34,10 +34,10 @@ public class PlayerController {
         }
 
         player.getPosition().set(
-            MathUtils.clamp(player.getSpeed().x * delta + player.getPosition().x
+            MathUtils.clamp(player.getVelocity().x * delta + player.getPosition().x
                 , currentFrame.getRegionWidth() * scaleFactor / 2
                 , GameMenu.SCREEN_WIDTH * zoomFactor - currentFrame.getRegionWidth() * scaleFactor / 2)
-            , MathUtils.clamp(player.getSpeed().y * delta + player.getPosition().y
+            , MathUtils.clamp(player.getVelocity().y * delta + player.getPosition().y
                 , currentFrame.getRegionHeight() * scaleFactor / 2
                 , GameMenu.SCREEN_HEIGHT * zoomFactor - currentFrame.getRegionHeight() * scaleFactor / 2));
 
@@ -51,15 +51,15 @@ public class PlayerController {
         HashMap<String, Integer> map = AppData.getCurrentUserSettings().keyBinds;
 
         if (keycode == map.get("upKey")) {
-            player.getSpeed().y = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().y = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
         } else if (keycode == map.get("downKey")) {
-            player.getSpeed().y = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().y = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
         }
 
         if (keycode == map.get("leftKey")) {
-            player.getSpeed().x = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().x = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
         } else if (keycode == map.get("rightKey")) {
-            player.getSpeed().x = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().x = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
         }
 
         if (Gdx.input.isKeyJustPressed(keycode) && keycode == map.get("pauseKey")) {
@@ -72,11 +72,11 @@ public class PlayerController {
         HashMap<String, Integer> map = AppData.getCurrentUserSettings().keyBinds;
 
         if (keycode == map.get("upKey") || keycode == map.get("downKey")) {
-            player.getSpeed().y = 0;
+            player.getVelocity().y = 0;
         }
 
         if (keycode == map.get("leftKey") || keycode == map.get("rightKey")) {
-            player.getSpeed().x = 0;
+            player.getVelocity().x = 0;
         }
     }
 
@@ -90,7 +90,7 @@ public class PlayerController {
             currentFrame = player.getWalkingAnimation().getKeyFrame(player.getStateTimeWalking(), true);
         }
 
-        int reversalFactor = player.getSpeed().x < 0 ? -1 : 1;
+        int reversalFactor = player.getVelocity().x < 0 ? -1 : 1;
 
         batch.draw(currentFrame
             , player.getPosition().x - (float) currentFrame.getRegionWidth() * scaleFactor * reversalFactor / 2

@@ -69,12 +69,12 @@ public class LoginAndRegistration {
     }
 
     private static void createUserAndLoadToDB(String username, String password, String securityQuestion, String securityAnswer) {
-        File dataDir = new File("./user_data");
+        File dataDir = new File("../user_db");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
-        String url = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String url = "jdbc:h2:file:../user_db/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         String dbUser = "sa";
         String dbPassword = "";
 
@@ -99,7 +99,7 @@ public class LoginAndRegistration {
             User.users.add(newUser);
             User.lastUserId++;
 
-            FileHandle fileHandle = new FileHandle("./saved_data/users/num.txt");
+            FileHandle fileHandle = new FileHandle("../saved_data/users/num.txt");
             fileHandle.writeString(String.valueOf(User.lastUserId), false);
 
             System.out.println("User created: " + newUser);
@@ -167,7 +167,7 @@ public class LoginAndRegistration {
     }
 
     public static void deleteUser(final User user) {
-        String jdbcUrl = "jdbc:h2:file:./user_data/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String jdbcUrl = "jdbc:h2:file:../user_db/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         String username = "sa";
         String password = "";
 
@@ -188,7 +188,7 @@ public class LoginAndRegistration {
             e.printStackTrace();
         }
 
-        FileHandle fileHandle = new FileHandle("./saved_data/users/" + user.getId() + ".json");
+        FileHandle fileHandle = new FileHandle("../saved_data/users/" + user.getId() + ".json");
         try {
             fileHandle.delete();
         } catch (GdxRuntimeException e) {

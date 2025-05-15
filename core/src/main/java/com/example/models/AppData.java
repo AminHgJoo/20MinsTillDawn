@@ -33,27 +33,85 @@ public class AppData {
         initializeProfileAssets();
         initializeHeroAssets();
         initializeMapAssets();
+        initializeWeaponAssets();
+        initializeEnemyAssets();
     }
 
     public static void initializeMapAssets() {
         mapAssets.put("Light", new Texture("game_menu_assets/light.png"));
     }
 
-    public static void initializeHeroAssets() {
-        heroAssets.put("ShanaIdle0", new Texture("game_menu_assets/shana_assets/shana_idle/Idle_0.png"));
-        heroAssets.put("ShanaIdle1", new Texture("game_menu_assets/shana_assets/shana_idle/Idle_1.png"));
-        heroAssets.put("ShanaIdle2", new Texture("game_menu_assets/shana_assets/shana_idle/Idle_2.png"));
-        heroAssets.put("ShanaIdle3", new Texture("game_menu_assets/shana_assets/shana_idle/Idle_3.png"));
-        heroAssets.put("ShanaIdle4", new Texture("game_menu_assets/shana_assets/shana_idle/Idle_4.png"));
-        heroAssets.put("ShanaIdle5", new Texture("game_menu_assets/shana_assets/shana_idle/Idle_5.png"));
+    public static void initializeEnemyAssets() {
+        //TODO: Implement
+    }
 
-        heroAssets.put("ShanaWalking0", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_0.png"));
-        heroAssets.put("ShanaWalking1", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_1.png"));
-        heroAssets.put("ShanaWalking2", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_2.png"));
-        heroAssets.put("ShanaWalking3", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_3.png"));
-        heroAssets.put("ShanaWalking5", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_5.png"));
-        heroAssets.put("ShanaWalking6", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_6.png"));
-        heroAssets.put("ShanaWalking7", new Texture("game_menu_assets/shana_assets/shana_walking/Walk_7.png"));
+    public static void initializeWeaponAssets() {
+        //TODO: Implement
+    }
+
+    public static void initializeHeroAssets() {
+        for (int i = 0; i <= 5; i++) {
+            String shanaIdle = "ShanaIdle" + i;
+            String pathString = "game_menu_assets/shana_assets/shana_idle/Idle_" + i + ".png";
+            heroAssets.put(shanaIdle, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 7; i++) {
+            if (i == 4) {
+                continue;
+            }
+            String shanaWalking =  "ShanaWalking" + i;
+            String pathString = "game_menu_assets/shana_assets/shana_walking/Walk_" + i + ".png";
+            heroAssets.put(shanaWalking, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 5; i++) {
+            String diamondIdle = "DiamondIdle" + i;
+            String pathString = "game_menu_assets/diamond_assets/diamond_idle/Idle_" + i + ".png";
+            heroAssets.put(diamondIdle, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 7; i++) {
+            String diamondWalking = "DiamondWalking" + i;
+            String pathString = "game_menu_assets/diamond_assets/diamond_walking/Walk_" + i + ".png";
+            heroAssets.put(diamondWalking, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 5; i++) {
+            String scarletIdle = "ScarletIdle" + i;
+            String pathString = "game_menu_assets/scarlet_assets/scarlet_idle/Idle_" + i + ".png";
+            heroAssets.put(scarletIdle, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            String scarletWalking = "ScarletWalking" + i;
+            String pathString = "game_menu_assets/scarlet_assets/scarlet_walking/Run_" + i + ".png";
+            heroAssets.put(scarletWalking, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 5; i++) {
+            String lilithIdle = "LilithIdle" + i;
+            String pathString =  "game_menu_assets/lilith_assets/lilith_idle/Idle_" + i + ".png";
+            heroAssets.put(lilithIdle, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 7; i++) {
+            String lilithWalking = "LilithWalking" + i;
+            String pathString = "game_menu_assets/lilith_assets/lilith_walking/Walk_" + i + ".png";
+            heroAssets.put(lilithWalking, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 5; i++) {
+            String dasherIdle = "DasherIdle" + i;
+            String pathString = "game_menu_assets/dasher_assets/dasher_idle/Idle_" + i + ".png";
+            heroAssets.put(dasherIdle, new Texture(pathString));
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            String dasherWalking = "DasherWalking" + i;
+            String pathString = "game_menu_assets/dasher_assets/dasher_walking/Run_" + i + ".png";
+            heroAssets.put(dasherWalking, new Texture(pathString));
+        }
     }
 
     public static void initializeProfileAssets() {

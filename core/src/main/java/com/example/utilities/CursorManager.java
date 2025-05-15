@@ -37,7 +37,6 @@ public class CursorManager extends InputAdapter implements Disposable {
         hoverCursor = Gdx.graphics.newCursor(hoverPixmap, 0, 0);
         clickCursor = Gdx.graphics.newCursor(clickPixmap, 0, 0);
 
-
         Gdx.graphics.setCursor(hoverCursor);
 
         hoverPixmap.dispose();

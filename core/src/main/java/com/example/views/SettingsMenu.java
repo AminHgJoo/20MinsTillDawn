@@ -174,7 +174,7 @@ public class SettingsMenu implements Screen {
         table.add(goBack).width(700).height(50).pad(10).row();
 
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
