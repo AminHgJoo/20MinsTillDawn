@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.example.models.enums.types.WeaponTypes;
 
 public class Weapon {
-    private int magSize;
+    private int bulletsLeftInMag;
+    private int maxMagSize;
     private int reloadTime;
     private int projectileAmount;
     private int dmg;
@@ -24,7 +25,12 @@ public class Weapon {
         this.type = type;
 
         loadSprite();
-        //TODO: Everything else loaded from enum!
+
+        bulletsLeftInMag = type.magSize;
+        maxMagSize = type.magSize;
+        reloadTime = type.reloadTime;
+        projectileAmount = type.projectileAmount;
+        dmg = type.dmg;
     }
 
     public int getDmg() {
@@ -33,14 +39,6 @@ public class Weapon {
 
     public void setDmg(int dmg) {
         this.dmg = dmg;
-    }
-
-    public int getMagSize() {
-        return magSize;
-    }
-
-    public void setMagSize(int magSize) {
-        this.magSize = magSize;
     }
 
     public int getProjectileAmount() {
@@ -73,5 +71,21 @@ public class Weapon {
 
     public void setType(WeaponTypes type) {
         this.type = type;
+    }
+
+    public int getBulletsLeftInMag() {
+        return bulletsLeftInMag;
+    }
+
+    public void setBulletsLeftInMag(int bulletsLeftInMag) {
+        this.bulletsLeftInMag = bulletsLeftInMag;
+    }
+
+    public int getMaxMagSize() {
+        return maxMagSize;
+    }
+
+    public void setMaxMagSize(int maxMagSize) {
+        this.maxMagSize = maxMagSize;
     }
 }

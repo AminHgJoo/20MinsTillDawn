@@ -12,14 +12,18 @@ public class GameData {
     private boolean isGameInBossStage;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Bullet> bullets;
 
     /**
      * @author AminHg
-     * @apiNote Used after JSON deserialization of saved game, loads all graphical assets.
+     * @apiNote Used after JSON deserialization of saved game, loads all transient graphical assets.
      */
     public void loadTransientObjects() {
         for (Enemy enemy : enemies) {
             enemy.loadAnimation();
+        }
+        for (Bullet bullet : bullets) {
+            bullet.loadSprite();
         }
         player.getWeapon().loadSprite();
         player.loadAnimations();
@@ -34,6 +38,7 @@ public class GameData {
 
         elapsedTimeInSeconds = 0;
         enemies = new ArrayList<>();
+        bullets = new ArrayList<>();
         isGameInBossStage = false;
     }
 
@@ -75,5 +80,13 @@ public class GameData {
 
     public void setGameInBossStage(boolean gameInBossStage) {
         isGameInBossStage = gameInBossStage;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(ArrayList<Bullet> bullets) {
+        this.bullets = bullets;
     }
 }

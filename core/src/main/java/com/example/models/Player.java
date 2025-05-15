@@ -24,6 +24,7 @@ public class Player {
     private float stateTimeWalking;
 
     private int HP;
+    private int kills;
     private int xp;
     private int level;
 
@@ -66,6 +67,7 @@ public class Player {
         HP = heroType.baseHP;
         maxHP = heroType.baseHP;
         heroSpeedFactor = heroType.baseSpeed;
+        kills = 0;
 
         rectangle = new Rectangle();
 
@@ -201,5 +203,13 @@ public class Player {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 }
