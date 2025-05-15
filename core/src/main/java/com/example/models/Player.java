@@ -9,7 +9,6 @@ import com.example.views.GameMenu;
 
 import java.util.ArrayList;
 
-//TODO: Set the current player field in appData
 public class Player {
     private HeroTypes heroType;
 
@@ -33,7 +32,6 @@ public class Player {
     private ArrayList<ActiveAbility> activeAbilities;
 
     //TODO: Initialize later.
-
     private Weapon weapon;
     private boolean isIdle;
 

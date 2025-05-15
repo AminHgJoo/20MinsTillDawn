@@ -2,12 +2,14 @@ package com.example.models;
 
 import java.util.ArrayList;
 
-public class Game {
+public class GameData {
     private Player player;
 
     private int gameEndTimeInMins;
 
+    //TODO: Update these two
     private int elapsedTimeInSeconds;
+    private boolean isGameInBossStage;
 
     private ArrayList<Enemy> enemies;
 
@@ -23,15 +25,16 @@ public class Game {
         player.loadAnimations();
     }
 
-    public Game() {
+    public GameData() {
     }
 
-    public Game(int gameEndTimeInMins, Player player) {
+    public GameData(int gameEndTimeInMins, Player player) {
         this.gameEndTimeInMins = gameEndTimeInMins;
         this.player = player;
 
         elapsedTimeInSeconds = 0;
         enemies = new ArrayList<>();
+        isGameInBossStage = false;
     }
 
     public int getElapsedTimeInSeconds() {
@@ -64,5 +67,13 @@ public class Game {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean isGameInBossStage() {
+        return isGameInBossStage;
+    }
+
+    public void setGameInBossStage(boolean gameInBossStage) {
+        isGameInBossStage = gameInBossStage;
     }
 }

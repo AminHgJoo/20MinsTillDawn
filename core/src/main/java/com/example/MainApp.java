@@ -1,11 +1,11 @@
 package com.example;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.example.models.AppData;
 import com.example.models.User;
-import com.example.utilities.CursorManager;
 import com.example.views.GameMenu;
 import com.example.views.LauncherMenu;
 import com.example.views.PauseMenu;
@@ -18,8 +18,7 @@ public class MainApp extends Game {
         AppData.initializeAssets();
         AppData.setMainApp(this);
         User.loadUsersFromDB();
-        AppData.setCurrentScreen(new LauncherMenu(this));
-        this.setScreen(AppData.getCurrentScreen());
+        this.setScreen(new LauncherMenu(this));
     }
 
     @Override
@@ -46,5 +45,14 @@ public class MainApp extends Game {
         } else {
             screen.dispose();
         }
+    }
+
+    /**
+     * Overridden to automatically set the screen field in AppData as well.
+     * @author AminHg*/
+    @Override
+    public void setScreen(Screen screen) {
+        super.setScreen(screen);
+        AppData.setCurrentScreen(screen);
     }
 }

@@ -53,7 +53,7 @@ public class LeaderboardMenu implements Screen {
         sortOptions.add(Translation.SORT_BY_KILLS);
         sortOptions.add(Translation.SORT_BY_SCORE);
 
-        initializeStage();
+        initializeGUI();
     }
 
     private void iterateSortOptionsList() {
@@ -72,7 +72,7 @@ public class LeaderboardMenu implements Screen {
         Collections.rotate(sortOptions, 1);
     }
 
-    private void initializeStage() {
+    private void initializeGUI() {
         stage = new Stage(new ScreenViewport());
 
         Image background = new Image(backgroundTexture);
@@ -156,7 +156,6 @@ public class LeaderboardMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -213,7 +212,7 @@ public class LeaderboardMenu implements Screen {
     public void render(float delta) {
         if (hasSortOptionChanged) {
             stage.dispose();
-            initializeStage();
+            initializeGUI();
             hasSortOptionChanged = false;
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

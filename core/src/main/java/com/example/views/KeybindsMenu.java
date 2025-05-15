@@ -100,7 +100,6 @@ public class KeybindsMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 AppData.getCurrentUser().saveSettingsToJson();
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });

@@ -15,6 +15,7 @@ import com.example.MainApp;
 import com.example.controllers.PlayerController;
 import com.example.controllers.WorldController;
 import com.example.models.AppData;
+import com.example.models.GameData;
 import com.example.models.Player;
 import com.example.models.enums.types.HeroTypes;
 import com.example.utilities.CursorManager;
@@ -29,16 +30,17 @@ public class GameMenu implements Screen, InputProcessor {
     final private PauseMenu pauseMenu;
 
     private SpriteBatch batch;
-    private OrthographicCamera camera;
-    private StretchViewport viewport;
+    private final OrthographicCamera camera;
+    private final StretchViewport viewport;
 
     final private Texture backgroundTexture;
 
-    private Stage uiStage;
+    private final Stage uiStage;
 
-    private Player player;
+    private final Player player;
+    private final GameData gameData;
 
-    public GameMenu(MainApp mainApp) {
+    public GameMenu(final MainApp mainApp, final GameData gameData) {
         this.mainApp = mainApp;
 
         this.pauseMenu = new PauseMenu(mainApp, this);
@@ -53,8 +55,8 @@ public class GameMenu implements Screen, InputProcessor {
 
         this.backgroundTexture = new Texture(Gdx.files.internal("game_menu_assets/game_map.png"));
 
-        //TODO: Properly load/initialize.
-        this.player = new Player(HeroTypes.DASHER, null);
+        this.gameData = gameData;
+        this.player = gameData.getPlayer();
         AppData.setCurrentPlayer(player);
     }
 
@@ -118,6 +120,7 @@ public class GameMenu implements Screen, InputProcessor {
     public void dispose() {
         batch.dispose();
         uiStage.dispose();
+        AppData.setCurrentPlayer(null);
     }
 
     @Override
@@ -177,5 +180,9 @@ public class GameMenu implements Screen, InputProcessor {
 
     public PauseMenu getPauseMenu() {
         return pauseMenu;
+    }
+
+    public GameData getGameData() {
+        return gameData;
     }
 }

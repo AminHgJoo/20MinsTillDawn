@@ -18,7 +18,7 @@ import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
 public class SettingsMenu implements Screen {
-    final MainApp mainApp;
+    final private MainApp mainApp;
 
     final private Texture backgroundTexture;
     final private Skin skin;
@@ -146,7 +146,6 @@ public class SettingsMenu implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 AppData.getCurrentUser().saveSettingsToJson();
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -156,7 +155,6 @@ public class SettingsMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new KeybindsMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 AppData.getCurrentUser().saveSettingsToJson();
                 dispose();
             }

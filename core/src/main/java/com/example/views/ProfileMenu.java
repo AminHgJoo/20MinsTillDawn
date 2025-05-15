@@ -19,7 +19,7 @@ import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
 public class ProfileMenu implements Screen {
-    final MainApp mainApp;
+    final private MainApp mainApp;
 
     final private Skin skin;
     final private Texture backgroundTexture;
@@ -33,10 +33,10 @@ public class ProfileMenu implements Screen {
 
         this.backgroundTexture = new Texture("game_cover.jpg");
 
-        initializeStage();
+        initializeGUI();
     }
 
-    private void initializeStage() {
+    private void initializeGUI() {
         stage = new Stage(new ScreenViewport());
 
         Image background = new Image(backgroundTexture);
@@ -114,7 +114,6 @@ public class ProfileMenu implements Screen {
                 LoginAndRegistration.deleteUser(toBeDeleted);
 
                 mainApp.setScreen(new LauncherMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -124,7 +123,6 @@ public class ProfileMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new AvatarMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -134,7 +132,6 @@ public class ProfileMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });

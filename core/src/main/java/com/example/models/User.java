@@ -23,7 +23,6 @@ public class User {
     private String securityAnswer;
     private UserSettings userSettings;
     private Texture profileAvatar;
-    //TODO: private Game savedGame;
 
     public static void loadUsersFromDB() {
         File dataDir = new File("../user_db");
@@ -177,8 +176,6 @@ public class User {
     }
 
     public void initializeOtherObjects() {
-        //TODO : implement game creation
-
         int randomIndex = (int) (Math.random() * 12);
         String key = (String) AppData.getProfileAssets().keySet().toArray()[randomIndex];
         this.profileAvatar = AppData.getProfileAssets().get(key);
@@ -187,8 +184,6 @@ public class User {
     }
 
     public void loadUserObjects() {
-        //TODO: Implement loading game.
-
         File dataDir = new File("../saved_data/users");
         if (!dataDir.exists()) {
             dataDir.mkdirs();

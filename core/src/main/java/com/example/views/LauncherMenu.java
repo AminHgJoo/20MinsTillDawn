@@ -33,10 +33,10 @@ public class LauncherMenu implements Screen {
         this.skin = AppData.skin;
         this.backgroundTexture = new Texture("game_cover.jpg");
 
-        initializeStage();
+        initializeGUI();
     }
 
-    private void initializeStage() {
+    private void initializeGUI() {
         stage = new Stage(new ScreenViewport());
         Image background = new Image(backgroundTexture);
         background.setFillParent(true);
@@ -57,7 +57,6 @@ public class LauncherMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new LoginMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -67,7 +66,6 @@ public class LauncherMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new RegisterMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -113,7 +111,7 @@ public class LauncherMenu implements Screen {
     public void render(float delta) {
         if (hasLanguageChanged) {
             stage.dispose();
-            initializeStage();
+            initializeGUI();
             hasLanguageChanged = false;
         }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

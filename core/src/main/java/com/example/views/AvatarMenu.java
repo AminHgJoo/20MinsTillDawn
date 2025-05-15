@@ -20,7 +20,7 @@ import javax.swing.*;
 import java.io.File;
 
 public class AvatarMenu implements Screen {
-    final MainApp mainApp;
+    final private MainApp mainApp;
 
     final private Skin skin;
     final private Texture backgroundTexture;
@@ -35,10 +35,10 @@ public class AvatarMenu implements Screen {
 
         backgroundTexture = new Texture("game_cover.jpg");
 
-        initializeStage();
+        initializeGUI();
     }
 
-    private void initializeStage() {
+    private void initializeGUI() {
         stage = new Stage(new ScreenViewport());
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
@@ -80,7 +80,6 @@ public class AvatarMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new ProfileMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });

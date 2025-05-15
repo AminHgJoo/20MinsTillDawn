@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class UserSettings {
     private String avatarKeyString;
 
+    //TODO: Update all these after game is playable.
     private int score;
     private int kills;
     private int longestSurvivalTimeSeconds;

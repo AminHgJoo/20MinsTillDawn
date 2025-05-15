@@ -92,7 +92,12 @@ public enum Translation {
     RESUME("Resume", "Hervatten"),
     GIVE_UP("Give Up", "Opgeven"),
     SAVE_AND_QUIT("Save and Quit","Opslaan en afsluiten"),
-
+    SAVE_NOT_FOUND("Save not found", "Geen save gevonden"),
+    CANNOT_SAVE_NOW("Cannot save now", "Kan nu niet opslaan"),
+    START_GAME("Start Game", "Spelen"),
+    SELECT_A_HERO("Select a Hero", "Kies een held"),
+    SELECT_A_WEAPON("Select a Weapon", "Kies een wapen"),
+    SELECT_A_GAME_DURATION("Select a Game Duration", "Kies een spelduur"),
     ;
 
     final public String english;

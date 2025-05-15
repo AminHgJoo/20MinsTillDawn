@@ -61,7 +61,6 @@ public class LoginMenu implements Screen {
                 Translation message = LoginAndRegistration.handleLogin(usernameField.getText().trim(), passwordField.getText().trim());
                 if (message == Translation.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
-                    AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
@@ -99,7 +98,6 @@ public class LoginMenu implements Screen {
 
                 if (message == Translation.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
-                    AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
@@ -114,7 +112,6 @@ public class LoginMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new RegisterMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });

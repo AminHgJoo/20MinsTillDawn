@@ -18,24 +18,24 @@ import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
 
 public class TalentMenu implements Screen {
-    final MainApp mainApp;
+    final private MainApp mainApp;
 
     final private Skin skin;
     final private Texture backgroundTexture;
 
     private Stage stage;
 
-    public TalentMenu(MainApp mainApp) {
+    public TalentMenu(final MainApp mainApp) {
         this.mainApp = mainApp;
 
         skin = AppData.skin;
 
         backgroundTexture = new Texture("game_cover.jpg");
 
-        initializeStage();
+        initializeGUI();
     }
 
-    private void initializeStage() {
+    private void initializeGUI() {
         stage = new Stage(new ScreenViewport());
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage, CursorManager.getInstance());
@@ -234,7 +234,6 @@ public class TalentMenu implements Screen {
                     return;
                 }
                 mainApp.setScreen(new KeybindsMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -244,7 +243,6 @@ public class TalentMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });

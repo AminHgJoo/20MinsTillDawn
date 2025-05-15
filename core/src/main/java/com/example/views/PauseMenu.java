@@ -14,18 +14,20 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.ActiveAbility;
 import com.example.models.AppData;
+import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
+import com.example.utilities.GameSaveUtil;
 
 public class PauseMenu implements Screen {
-    final MainApp mainApp;
+    final private MainApp mainApp;
     final private GameMenu gameMenu;
 
     private Texture background;
     private Stage stage;
     private Skin skin;
 
-    public PauseMenu(MainApp mainApp, GameMenu gameMenu) {
+    public PauseMenu(final MainApp mainApp, final GameMenu gameMenu) {
         this.mainApp = mainApp;
         this.gameMenu = gameMenu;
 
@@ -50,8 +52,7 @@ public class PauseMenu implements Screen {
         resumeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                mainApp.setScreen(gameMenu);
-                AppData.setCurrentScreen(gameMenu);
+                mainApp.setScreen(gameMenu);;
             }
         });
 
@@ -60,7 +61,6 @@ public class PauseMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 gameMenu.dispose();
                 dispose();
             }
@@ -70,7 +70,22 @@ public class PauseMenu implements Screen {
         saveButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO: Implement saving.
+                UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+
+                if (AppData.getCurrentUser() == null) {
+                    uiPopupHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
+                    return;
+                }
+
+                if (gameMenu.getGameData().isGameInBossStage()) {
+                    uiPopupHelper.showDialog(Translation.CANNOT_SAVE_NOW.translate(), Translation.ERROR);
+                    return;
+                }
+
+                GameSaveUtil.saveGame(gameMenu.getGameData(), AppData.getCurrentUser().getId());
+                mainApp.setScreen(new MainMenu(mainApp));
+                gameMenu.dispose();
+                dispose();
             }
         });
 

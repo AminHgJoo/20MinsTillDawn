@@ -13,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
 import com.example.models.AppData;
+import com.example.models.GameData;
 import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
+import com.example.utilities.GameSaveUtil;
 
 public class MainMenu implements Screen {
     final private MainApp mainApp;
@@ -94,7 +96,6 @@ public class MainMenu implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if (AppData.getCurrentUser() != null) {
                     mainApp.setScreen(new SettingsMenu(mainApp));
-                    AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
@@ -110,7 +111,6 @@ public class MainMenu implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if (AppData.getCurrentUser() != null) {
                     mainApp.setScreen(new ProfileMenu(mainApp));
-                    AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
@@ -125,7 +125,6 @@ public class MainMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new PreGameMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -136,7 +135,6 @@ public class MainMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new LeaderboardMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -147,7 +145,6 @@ public class MainMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new TalentMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });
@@ -157,8 +154,21 @@ public class MainMenu implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                mainApp.setScreen(new GameMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
+                UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+
+                if (AppData.getCurrentUser() == null) {
+                    uiPopupHelper.showDialog(Translation.LOGGED_IN_AS_GUEST.translate(), Translation.ERROR);
+                    return;
+                }
+
+                GameData gameData = GameSaveUtil.loadGame(AppData.getCurrentUser().getId());
+
+                if (gameData == null) {
+                    uiPopupHelper.showDialog(Translation.SAVE_NOT_FOUND.translate(), Translation.ERROR);
+                    return;
+                }
+
+                mainApp.setScreen(new GameMenu(mainApp, gameData));
                 dispose();
             }
         });
@@ -172,7 +182,6 @@ public class MainMenu implements Screen {
                 AppData.setCurrentUserSettings(null);
                 mainApp.setScreen(new LauncherMenu(mainApp));
                 mainApp.music.stop();
-                AppData.setCurrentScreen(mainApp.getScreen());
                 dispose();
             }
         });

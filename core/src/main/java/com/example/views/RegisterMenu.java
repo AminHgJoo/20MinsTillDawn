@@ -69,7 +69,6 @@ public class RegisterMenu implements Screen {
 
                 if (message == Translation.SUCCESS) {
                     mainApp.setScreen(new MainMenu(mainApp));
-                    AppData.setCurrentScreen(mainApp.getScreen());
                     dispose();
                 } else {
                     UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
@@ -83,7 +82,6 @@ public class RegisterMenu implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 mainApp.setScreen(new MainMenu(mainApp));
-                AppData.setCurrentScreen(mainApp.getScreen());
                 AppData.setCurrentUserSettings(new UserSettings(true));
                 dispose();
             }

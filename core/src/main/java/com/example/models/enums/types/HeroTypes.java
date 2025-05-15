@@ -12,14 +12,32 @@ public enum HeroTypes {
     SCARLET(3, 5, "Scarlet", scarletWalkingTextures(), scarletIdleTextures()),
     LILITH(5, 3, "Lilith", lilithWalkingTextures(), lilithIdleTextures()),
     DASHER(2, 10, "Dasher", dasherWalkingTextures(), dasherIdleTextures()),
-
     ;
+
+    public final static String[] allHeroNames = allHeroesNames();
 
     public final String name;
     public final TextureRegion[] idleTextures;
     public final TextureRegion[] walkingTextures;
     public final int baseSpeed;
     public final int baseHP;
+
+    private static String[] allHeroesNames() {
+        String[] names = new String[values().length];
+        for (HeroTypes heroType : values()) {
+            names[heroType.ordinal()] = heroType.name;
+        }
+        return names;
+    }
+
+    public static HeroTypes getHeroTypeByName(String name) {
+        for (HeroTypes heroType : values()) {
+            if (heroType.name.equals(name)) {
+                return heroType;
+            }
+        }
+        return null;
+    }
 
     HeroTypes(int baseHP, int baseSpeed, String name, TextureRegion[] walkingTextures, TextureRegion[] idleTextures) {
         this.baseHP = baseHP;
