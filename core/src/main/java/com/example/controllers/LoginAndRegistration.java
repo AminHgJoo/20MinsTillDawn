@@ -167,6 +167,11 @@ public class LoginAndRegistration {
     }
 
     public static void deleteUser(final User user) {
+        File dataDir = new File("../user_db");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+
         String jdbcUrl = "jdbc:h2:file:../user_db/mydatabase;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         String username = "sa";
         String password = "";
