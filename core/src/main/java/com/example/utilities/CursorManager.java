@@ -20,7 +20,7 @@ public class CursorManager extends InputAdapter implements Disposable {
         int frameWidth = cursorSheet.getWidth() / 2;
         int frameHeight = cursorSheet.getHeight();
 
-        final int scaleFactor = 10;
+        final int scaleFactor = 12;
 
         TextureRegion hoverRegion = new TextureRegion(cursorSheet, 0, 0, frameWidth, frameHeight);
         TextureRegion clickRegion = new TextureRegion(cursorSheet, frameWidth, 0, frameWidth, frameHeight);
@@ -28,14 +28,15 @@ public class CursorManager extends InputAdapter implements Disposable {
         Pixmap hoverPixmap = regionToPixmap(hoverRegion);
         Pixmap clickPixmap = regionToPixmap(clickRegion);
 
-        hoverPixmap = CursorUtil.scaleCursorSize(hoverPixmap, scaleFactor);
-        clickPixmap = CursorUtil.scaleCursorSize(clickPixmap, scaleFactor);
+        hoverPixmap = CursorUtil.scaleDownCursorSize(hoverPixmap, scaleFactor);
+        clickPixmap = CursorUtil.scaleDownCursorSize(clickPixmap, scaleFactor);
 
         hoverPixmap = CursorUtil.padPixmapToPOT(hoverPixmap);
         clickPixmap = CursorUtil.padPixmapToPOT(clickPixmap);
 
-        hoverCursor = Gdx.graphics.newCursor(hoverPixmap, (frameWidth / 2) / scaleFactor, (frameHeight / 2) / scaleFactor);
-        clickCursor = Gdx.graphics.newCursor(clickPixmap, (frameWidth / 2) / scaleFactor, (frameHeight / 2) / scaleFactor);
+        hoverCursor = Gdx.graphics.newCursor(hoverPixmap, 0, 0);
+        clickCursor = Gdx.graphics.newCursor(clickPixmap, 0, 0);
+
 
         Gdx.graphics.setCursor(hoverCursor);
 

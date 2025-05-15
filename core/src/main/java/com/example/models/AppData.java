@@ -26,6 +26,7 @@ public class AppData {
     public static boolean isProgramWaitingForFileDrop = false;
 
     private static User currentUser = null;
+    private static Player currentPlayer = null;
     private static UserSettings currentUserSettings = null;
 
     public static void initializeAssets() {
@@ -135,5 +136,13 @@ public class AppData {
 
     public static HashMap<String, Texture> getMapAssets() {
         return mapAssets;
+    }
+
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static void setCurrentPlayer(Player currentPlayer) {
+        AppData.currentPlayer = currentPlayer;
     }
 }

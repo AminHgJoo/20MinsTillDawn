@@ -12,12 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
-import com.example.utilities.CursorManager;
 import com.example.controllers.LoginAndRegistration;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
 import com.example.models.UserSettings;
 import com.example.models.enums.Translation;
+import com.example.utilities.CursorManager;
 
 public class RegisterMenu implements Screen {
     final private MainApp mainApp;

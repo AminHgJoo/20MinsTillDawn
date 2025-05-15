@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -59,6 +60,11 @@ public class PlayerController {
             player.getSpeed().x = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
         } else if (keycode == map.get("rightKey")) {
             player.getSpeed().x = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+        }
+
+        if (Gdx.input.isKeyJustPressed(keycode) && keycode == map.get("pauseKey")) {
+            GameMenu gameMenu = (GameMenu) AppData.getCurrentScreen();
+            AppData.getMainApp().setScreen(gameMenu.getPauseMenu());
         }
     }
 

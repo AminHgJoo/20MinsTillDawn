@@ -14,10 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
-import com.example.utilities.CursorManager;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
 import com.example.models.enums.Translation;
+import com.example.utilities.CursorManager;
 
 import java.util.HashMap;
 import java.util.Map;

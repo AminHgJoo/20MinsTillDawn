@@ -12,10 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.example.MainApp;
-import com.example.utilities.CursorManager;
 import com.example.models.AppData;
 import com.example.models.UIHelper;
 import com.example.models.enums.Translation;
+import com.example.utilities.CursorManager;
 
 public class TalentMenu implements Screen {
     final MainApp mainApp;
@@ -136,7 +136,7 @@ public class TalentMenu implements Screen {
         label21.setColor(Color.GREEN);
         contentTable2.add(label21).pad(10);
 
-        Label label22 = new Label(Translation.REDUCE_TIME_DESC.translate() , skin);
+        Label label22 = new Label(Translation.REDUCE_TIME_DESC.translate(), skin);
         label22.setColor(Color.GREEN);
         contentTable2.add(label22).pad(10).row();
 

@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.example.models.enums.HeroTypes;
 import com.example.views.GameMenu;
 
+import java.util.ArrayList;
+
 public class Player {
     private Vector2 position;
     private Vector2 speed;
@@ -22,11 +24,15 @@ public class Player {
     private int maxHP;
     private int heroSpeedFactor;
 
+    private final ArrayList<ActiveAbility> activeAbilities;
+
     private boolean isIdle;
 
+    //TODO: Set the current player field in appData
     public Player(HeroTypes heroType) {
         this.idleAnimation = new Animation<>(0.1f, heroType.idleTextures);
         this.walkingAnimation = new Animation<>(0.1f, heroType.walkingTextures);
+        this.activeAbilities = new ArrayList<>();
         this.stateTimeIdle = 0;
         this.stateTimeWalking = 0;
         this.isIdle = true;
@@ -118,5 +124,9 @@ public class Player {
 
     public void setRectangle(Rectangle rectangle) {
         this.rectangle = rectangle;
+    }
+
+    public ArrayList<ActiveAbility> getActiveAbilities() {
+        return activeAbilities;
     }
 }

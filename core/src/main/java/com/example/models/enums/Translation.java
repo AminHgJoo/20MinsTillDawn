@@ -89,6 +89,10 @@ public enum Translation {
     SPEEDY_DESC("Double player speed for 10s.", "Verdubbelt de snelheid van de speler gedurende 10s."),
     ABILITY("Ability", "Vaardigheid"),
     KEYBIND_CONFLICT("Keybind Conflict", "Sneltoetsconflict"),
+    RESUME("Resume", "Hervatten"),
+    GIVE_UP("Give Up", "Opgeven"),
+    SAVE_AND_QUIT("Save and Quit","Opslaan en afsluiten"),
+
     ;
 
     final public String english;

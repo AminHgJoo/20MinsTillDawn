@@ -1,7 +1,5 @@
 package com.example.utilities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -11,6 +9,7 @@ public class CursorUtil {
      *
      * @param original The original pixmap.
      * @return A new pixmap with dimensions that are powers of two, containing the original image at the top-left.
+     * @author AminHg
      */
     public static Pixmap padPixmapToPOT(Pixmap original) {
         int originalWidth = original.getWidth();
@@ -34,7 +33,7 @@ public class CursorUtil {
         return padded;
     }
 
-    public static Pixmap scaleCursorSize(Pixmap original, int scaleFactor) {
+    public static Pixmap scaleDownCursorSize(Pixmap original, int scaleFactor) {
 
         int desiredWidth = original.getWidth() / scaleFactor;
         int desiredHeight = original.getHeight() / scaleFactor;
@@ -43,9 +42,6 @@ public class CursorUtil {
 
         scaledPixmap.drawPixmap(original, 0, 0, original.getWidth(), original.getHeight()
             , 0, 0, desiredWidth, desiredHeight);
-
-        int hotspotX = desiredWidth / 2;
-        int hotspotY = desiredHeight / 2;
 
         original.dispose();
         return scaledPixmap;

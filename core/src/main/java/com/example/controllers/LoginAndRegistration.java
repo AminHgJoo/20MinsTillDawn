@@ -4,8 +4,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.example.models.AppData;
 import com.example.models.User;
-import com.example.models.enums.Translation;
 import com.example.models.enums.RegistrationRegexes;
+import com.example.models.enums.Translation;
 import org.intellij.lang.annotations.Language;
 
 import java.io.File;

@@ -4,9 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.example.models.AppData;
-import com.example.utilities.CursorManager;
 import com.example.models.User;
+import com.example.views.GameMenu;
 import com.example.views.LauncherMenu;
+import com.example.views.PauseMenu;
 
 public class MainApp extends Game {
     public Music music = null;
@@ -30,11 +31,19 @@ public class MainApp extends Game {
         if (music != null) {
             music.dispose();
         }
-        screen.dispose();
         for (String key : AppData.getProfileAssets().keySet()) {
             Texture asset = AppData.getProfileAssets().get(key);
             asset.dispose();
         }
         AppData.skin.dispose();
+        if (this.screen instanceof GameMenu gameMenu) {
+            gameMenu.getPauseMenu().dispose();
+            gameMenu.dispose();
+        } else if (this.screen instanceof PauseMenu pauseMenu) {
+            pauseMenu.getGameMenu().dispose();
+            pauseMenu.dispose();
+        } else {
+            screen.dispose();
+        }
     }
 }

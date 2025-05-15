@@ -12,11 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.example.MainApp;
-import com.example.utilities.CursorManager;
 import com.example.controllers.PlayerController;
 import com.example.controllers.WorldController;
+import com.example.models.AppData;
 import com.example.models.Player;
 import com.example.models.enums.HeroTypes;
+import com.example.utilities.CursorManager;
 
 public class GameMenu implements Screen, InputProcessor {
 
@@ -25,6 +26,7 @@ public class GameMenu implements Screen, InputProcessor {
     public static final float basePlayerSpeed = 40;
 
     final MainApp mainApp;
+    final private PauseMenu pauseMenu;
 
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -39,6 +41,8 @@ public class GameMenu implements Screen, InputProcessor {
     public GameMenu(MainApp mainApp) {
         this.mainApp = mainApp;
 
+        this.pauseMenu = new PauseMenu(mainApp, this);
+
         this.batch = new SpriteBatch();
 
         this.camera = new OrthographicCamera();
@@ -50,6 +54,7 @@ public class GameMenu implements Screen, InputProcessor {
         this.backgroundTexture = new Texture(Gdx.files.internal("game_menu_assets/game_map.png"));
 
         this.player = new Player(HeroTypes.SHANA);
+        AppData.setCurrentPlayer(player);
     }
 
     @Override
@@ -133,12 +138,12 @@ public class GameMenu implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return true;
+        return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
+        return false;
     }
 
     @Override
@@ -167,5 +172,9 @@ public class GameMenu implements Screen, InputProcessor {
 
     public void setBatch(SpriteBatch batch) {
         this.batch = batch;
+    }
+
+    public PauseMenu getPauseMenu() {
+        return pauseMenu;
     }
 }
