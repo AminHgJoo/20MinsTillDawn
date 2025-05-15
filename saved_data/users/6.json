@@ -1,0 +1,22 @@
+{
+avatarKeyString: SparkPic
+lang: english
+playSFX: true
+musicPath: sfx/music/Pretty Dungeon.wav
+soundVolume: 0.75
+autoReload: true
+keyBinds: {
+	upKey: 51
+	aimbotKey: 62
+	reduceTimeCheat: 45
+	goToBossCheat: 35
+	levelUpCheat: 40
+	pauseKey: 111
+	downKey: 47
+	leftKey: 29
+	rightKey: 32
+	reloadKey: 46
+	invincibilityCheat: 37
+	addHpCheat: 36
+}
+}
