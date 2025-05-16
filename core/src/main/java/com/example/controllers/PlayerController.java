@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.example.models.AppData;
+import com.example.models.GameData;
 import com.example.models.Player;
 import com.example.views.GameMenu;
 
@@ -51,15 +52,15 @@ public class PlayerController {
         HashMap<String, Integer> map = AppData.getCurrentUserSettings().keyBinds;
 
         if (keycode == map.get("upKey")) {
-            player.getVelocity().y = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().y = GameMenu.baseEntitySpeed * player.getHeroSpeedFactor();
         } else if (keycode == map.get("downKey")) {
-            player.getVelocity().y = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().y = -GameMenu.baseEntitySpeed * player.getHeroSpeedFactor();
         }
 
         if (keycode == map.get("leftKey")) {
-            player.getVelocity().x = -GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().x = -GameMenu.baseEntitySpeed * player.getHeroSpeedFactor();
         } else if (keycode == map.get("rightKey")) {
-            player.getVelocity().x = GameMenu.basePlayerSpeed * player.getHeroSpeedFactor();
+            player.getVelocity().x = GameMenu.baseEntitySpeed * player.getHeroSpeedFactor();
         }
 
         if (Gdx.input.isKeyJustPressed(keycode) && keycode == map.get("pauseKey")) {
@@ -97,5 +98,13 @@ public class PlayerController {
             , player.getPosition().y - (float) currentFrame.getRegionHeight() * scaleFactor / 2
             , currentFrame.getRegionWidth() * scaleFactor * reversalFactor
             , currentFrame.getRegionHeight() * scaleFactor);
+    }
+
+    public static boolean isPlayerDead(Player player) {
+        return player.getHP() <= 0;
+    }
+
+    public static boolean hasPlayerWon(GameData gameData) {
+        return gameData.getGameEndTimeInMins() * 60 <= gameData.getElapsedTimeInSeconds();
     }
 }

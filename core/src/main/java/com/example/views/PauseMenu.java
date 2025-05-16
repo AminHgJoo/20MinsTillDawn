@@ -52,7 +52,8 @@ public class PauseMenu implements Screen {
         resumeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                mainApp.setScreen(gameMenu);;
+                mainApp.setScreen(gameMenu);
+                ;
             }
         });
 
@@ -66,7 +67,7 @@ public class PauseMenu implements Screen {
             }
         });
 
-        TextButton saveButton = new TextButton(Translation.SAVE_AND_QUIT.translate(),  skin);
+        TextButton saveButton = new TextButton(Translation.SAVE_AND_QUIT.translate(), skin);
         saveButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -94,7 +95,7 @@ public class PauseMenu implements Screen {
         contentTable.center();
         Label label0 = new Label(Translation.REDUCE_TIME_CHEAT.translate(), skin);
         label0.setColor(Color.RED);
-        Label label1 = new Label(Translation.REDUCE_TIME_DESC.translate(),  skin);
+        Label label1 = new Label(Translation.REDUCE_TIME_DESC.translate(), skin);
         label1.setColor(Color.RED);
         Label label2 = new Label(Translation.LEVEL_UP_CHEAT.translate(), skin);
         label2.setColor(Color.RED);

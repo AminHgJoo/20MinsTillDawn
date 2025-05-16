@@ -86,18 +86,23 @@ public enum Translation {
     DAMAGER_DESC("Increase weapon DMG by 25% for 10s", "Verhoogt de wapenschade met 25% gedurende 10s."),
     PROCREASE_DESC("Increase weapon projectiles by 1.", "Verhoogt het aantal projectielen van het wapen met 1."),
     AMOCREASE_DESC("Increase weapon mag-size by 5.", "Vergroot het magazijn van het wapen met 5."),
-    SPEEDY_DESC("Double player speed for 10s.", "Verdubbelt de snelheid van de speler gedurende 10s."),
+    SPEEDY_DESC("Double player speedFactor for 10s.", "Verdubbelt de snelheid van de speler gedurende 10s."),
     ABILITY("Ability", "Vaardigheid"),
     KEYBIND_CONFLICT("Keybind Conflict", "Sneltoetsconflict"),
     RESUME("Resume", "Hervatten"),
     GIVE_UP("Give Up", "Opgeven"),
-    SAVE_AND_QUIT("Save and Quit","Opslaan en afsluiten"),
+    SAVE_AND_QUIT("Save and Quit", "Opslaan en afsluiten"),
     SAVE_NOT_FOUND("Save not found", "Geen save gevonden"),
     CANNOT_SAVE_NOW("Cannot save now", "Kan nu niet opslaan"),
     START_GAME("Start Game", "Spelen"),
     SELECT_A_HERO("Select a Hero", "Kies een held"),
     SELECT_A_WEAPON("Select a Weapon", "Kies een wapen"),
     SELECT_A_GAME_DURATION("Select a Game Duration", "Kies een spelduur"),
+    ELAPSED_TIME("Elapsed Time", "Verstreken tijd"),
+    REMAINING_TIME("Remaining Time", "Resterende tijd"),
+    AMMO("Ammo", "Munitie"),
+    LEVEL("Level", "Verhoog"),
+
     ;
 
     final public String english;

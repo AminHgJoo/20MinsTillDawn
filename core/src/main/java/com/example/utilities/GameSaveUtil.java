@@ -32,7 +32,7 @@ public class GameSaveUtil {
     /**
      * @author AminHg
      * @apiNote Saves the passed game object. Overrides the last save if existent.
-     * */
+     */
     public static void saveGame(GameData gameData, int userId) {
 
         Json json = new Json();

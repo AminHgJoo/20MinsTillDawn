@@ -1,6 +1,10 @@
 package com.example.models;
 
-import java.util.ArrayList;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.example.models.enums.types.EnemyTypes;
+import com.example.views.GameMenu;
 
 public class GameData {
     private Player player;
@@ -8,11 +12,14 @@ public class GameData {
     private int gameEndTimeInMins;
 
     //TODO: Update these two
-    private int elapsedTimeInSeconds;
+    private float elapsedTimeInSeconds;
     private boolean isGameInBossStage;
 
-    private ArrayList<Enemy> enemies;
-    private ArrayList<Bullet> bullets;
+    private Array<Enemy> enemies;
+    private Array<Bullet> bullets;
+
+    private float timeElapsedFromLastTentacleSpawn;
+    private float timeElapsedFromLastEyebatSpawn;
 
     /**
      * @author AminHg
@@ -32,29 +39,46 @@ public class GameData {
     public GameData() {
     }
 
+
+    private void addTreeMonsters() {
+        final int numOfTrees = MathUtils.random(8, 15);
+        final int treeSize = 200;
+
+        for (int i = 0; i < numOfTrees; i++) {
+            int xPos = MathUtils.random(treeSize, (int) GameMenu.SCREEN_WIDTH * 2 - treeSize);
+            int yPos = MathUtils.random(treeSize, (int) GameMenu.SCREEN_HEIGHT * 2 - treeSize);
+            enemies.add(new Enemy(new Vector2(xPos, yPos), EnemyTypes.TREE_MONSTER));
+        }
+    }
+
     public GameData(int gameEndTimeInMins, Player player) {
         this.gameEndTimeInMins = gameEndTimeInMins;
         this.player = player;
 
         elapsedTimeInSeconds = 0;
-        enemies = new ArrayList<>();
-        bullets = new ArrayList<>();
+        enemies = new Array<>();
+        bullets = new Array<>();
         isGameInBossStage = false;
+
+        addTreeMonsters();
+
+        timeElapsedFromLastTentacleSpawn = 0;
+        timeElapsedFromLastEyebatSpawn = 0;
     }
 
-    public int getElapsedTimeInSeconds() {
+    public float getElapsedTimeInSeconds() {
         return elapsedTimeInSeconds;
     }
 
-    public void setElapsedTimeInSeconds(int elapsedTimeInSeconds) {
+    public void setElapsedTimeInSeconds(float elapsedTimeInSeconds) {
         this.elapsedTimeInSeconds = elapsedTimeInSeconds;
     }
 
-    public ArrayList<Enemy> getEnemies() {
+    public Array<Enemy> getEnemies() {
         return enemies;
     }
 
-    public void setEnemies(ArrayList<Enemy> enemies) {
+    public void setEnemies(Array<Enemy> enemies) {
         this.enemies = enemies;
     }
 
@@ -82,11 +106,27 @@ public class GameData {
         isGameInBossStage = gameInBossStage;
     }
 
-    public ArrayList<Bullet> getBullets() {
+    public Array<Bullet> getBullets() {
         return bullets;
     }
 
-    public void setBullets(ArrayList<Bullet> bullets) {
+    public void setBullets(Array<Bullet> bullets) {
         this.bullets = bullets;
+    }
+
+    public float getTimeElapsedFromLastTentacleSpawn() {
+        return timeElapsedFromLastTentacleSpawn;
+    }
+
+    public void setTimeElapsedFromLastTentacleSpawn(float timeElapsedFromLastTentacleSpawn) {
+        this.timeElapsedFromLastTentacleSpawn = timeElapsedFromLastTentacleSpawn;
+    }
+
+    public float getTimeElapsedFromLastEyebatSpawn() {
+        return timeElapsedFromLastEyebatSpawn;
+    }
+
+    public void setTimeElapsedFromLastEyebatSpawn(float timeElapsedFromLastEyebatSpawn) {
+        this.timeElapsedFromLastEyebatSpawn = timeElapsedFromLastEyebatSpawn;
     }
 }

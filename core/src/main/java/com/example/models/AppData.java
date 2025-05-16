@@ -17,6 +17,10 @@ public class AppData {
 
     private final static HashMap<String, Texture> heroAssets = new HashMap<>();
 
+    private final static HashMap<String, Texture> enemyAssets = new HashMap<>();
+
+    private final static HashMap<String, Texture> weaponAssets =  new HashMap<>();
+
     private static String lang = "english";
     public final static Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
 
@@ -42,7 +46,22 @@ public class AppData {
     }
 
     public static void initializeEnemyAssets() {
-        //TODO: Implement
+
+        for (int i = 0; i <= 2; i++) {
+            enemyAssets.put("TreeMonster" + i, new Texture("game_menu_assets/tree_monster/TreeMonster" + i + ".png"));
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            enemyAssets.put("TentacleMonster" + i, new Texture("game_menu_assets/tentacle_monster/TentacleIdle" + i + ".png"));
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            enemyAssets.put("Eyebat" + i, new Texture("game_menu_assets/eyebat/Eyebat" + i + ".png"));
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            enemyAssets.put("Elder" + i, new Texture("game_menu_assets/elder/Elder" + i + ".png"));
+        }
     }
 
     public static void initializeWeaponAssets() {
@@ -60,7 +79,7 @@ public class AppData {
             if (i == 4) {
                 continue;
             }
-            String shanaWalking =  "ShanaWalking" + i;
+            String shanaWalking = "ShanaWalking" + i;
             String pathString = "game_menu_assets/shana_assets/shana_walking/Walk_" + i + ".png";
             heroAssets.put(shanaWalking, new Texture(pathString));
         }
@@ -91,7 +110,7 @@ public class AppData {
 
         for (int i = 0; i <= 5; i++) {
             String lilithIdle = "LilithIdle" + i;
-            String pathString =  "game_menu_assets/lilith_assets/lilith_idle/Idle_" + i + ".png";
+            String pathString = "game_menu_assets/lilith_assets/lilith_idle/Idle_" + i + ".png";
             heroAssets.put(lilithIdle, new Texture(pathString));
         }
 
@@ -202,5 +221,13 @@ public class AppData {
 
     public static void setCurrentPlayer(Player currentPlayer) {
         AppData.currentPlayer = currentPlayer;
+    }
+
+    public static HashMap<String, Texture> getEnemyAssets() {
+        return enemyAssets;
+    }
+
+    public static HashMap<String, Texture> getWeaponAssets() {
+        return weaponAssets;
     }
 }

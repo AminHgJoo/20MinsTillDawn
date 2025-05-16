@@ -49,7 +49,9 @@ public class MainApp extends Game {
 
     /**
      * Overridden to automatically set the screen field in AppData as well.
-     * @author AminHg*/
+     *
+     * @author AminHg
+     */
     @Override
     public void setScreen(Screen screen) {
         super.setScreen(screen);

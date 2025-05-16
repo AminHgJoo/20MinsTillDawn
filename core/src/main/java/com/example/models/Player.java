@@ -18,10 +18,9 @@ public class Player {
     private Rectangle rectangle;
 
     private transient Animation<TextureRegion> idleAnimation;
-
     private transient Animation<TextureRegion> walkingAnimation;
-    private float stateTimeIdle;
-    private float stateTimeWalking;
+    private transient float stateTimeIdle;
+    private transient float stateTimeWalking;
 
     private int HP;
     private int kills;
@@ -41,6 +40,8 @@ public class Player {
         this.walkingAnimation = new Animation<>(0.1f, heroType.walkingTextures);
         idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
         walkingAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        stateTimeIdle = 0;
+        stateTimeWalking = 0;
     }
 
     public int howMuchXpToNextLevel() {

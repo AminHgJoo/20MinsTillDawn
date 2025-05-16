@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.example.models.enums.types.WeaponTypes;
 
 public class Weapon {
-    private int bulletsLeftInMag;
+    private int bulletsRemaining;
+
     private int maxMagSize;
     private int reloadTime;
     private int projectileAmount;
@@ -26,7 +27,7 @@ public class Weapon {
 
         loadSprite();
 
-        bulletsLeftInMag = type.magSize;
+        bulletsRemaining = type.magSize;
         maxMagSize = type.magSize;
         reloadTime = type.reloadTime;
         projectileAmount = type.projectileAmount;
@@ -73,12 +74,12 @@ public class Weapon {
         this.type = type;
     }
 
-    public int getBulletsLeftInMag() {
-        return bulletsLeftInMag;
+    public int getBulletsRemaining() {
+        return bulletsRemaining;
     }
 
-    public void setBulletsLeftInMag(int bulletsLeftInMag) {
-        this.bulletsLeftInMag = bulletsLeftInMag;
+    public void setBulletsRemaining(int bulletsRemaining) {
+        this.bulletsRemaining = bulletsRemaining;
     }
 
     public int getMaxMagSize() {

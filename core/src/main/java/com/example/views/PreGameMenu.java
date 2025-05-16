@@ -1,6 +1,7 @@
 package com.example.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,6 +19,7 @@ import com.example.models.Weapon;
 import com.example.models.enums.Translation;
 import com.example.models.enums.types.HeroTypes;
 import com.example.models.enums.types.WeaponTypes;
+import com.example.utilities.CursorManager;
 
 public class PreGameMenu implements Screen {
     final private MainApp mainApp;
@@ -87,7 +89,8 @@ public class PreGameMenu implements Screen {
         });
         table.add(startGame).height(80).row();
 
-        Gdx.input.setInputProcessor(stage);
+        InputMultiplexer multiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
