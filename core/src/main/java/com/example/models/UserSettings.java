@@ -8,7 +8,6 @@ import java.util.HashMap;
 public class UserSettings {
     private String avatarKeyString;
 
-    //TODO: Update all these after game is playable.
     private int score;
     private int kills;
     private int longestSurvivalTimeSeconds;
@@ -149,5 +148,17 @@ public class UserSettings {
 
     public void setLang(String lang) {
         this.lang = lang;
+    }
+
+    public void scorePlusPlus(int amount) {
+        score += amount;
+    }
+
+    public void killsPlusPlus(int amount) {
+        kills += amount;
+    }
+
+    public void updateLongestSurvivalTimeSeconds(int newLongestSurvivalTimeSeconds) {
+        longestSurvivalTimeSeconds = Math.max(longestSurvivalTimeSeconds, newLongestSurvivalTimeSeconds);
     }
 }

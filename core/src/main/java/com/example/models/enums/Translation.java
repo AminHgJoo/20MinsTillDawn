@@ -103,7 +103,8 @@ public enum Translation {
     REMAINING_TIME("Remaining Time", "Resterende tijd"),
     AMMO("Ammo", "Munitie"),
     LEVEL("Level", "Verhoog"),
-
+    WIN("Win", "Gewonnen"),
+    LOSS("Loss", "Verloren")
     ;
 
     final public String english;

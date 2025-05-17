@@ -1,6 +1,8 @@
 package com.example.views;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -92,22 +94,15 @@ public class GameMenu implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        if (PlayerController.isPlayerDead(player)) {
-            //TODO: End game
-        }
-
-        if (PlayerController.hasPlayerWon(gameData)) {
-            //TODO: End game
-        }
-
         BackgroundGameController.handleGameTimer(gameData, delta);
         BackgroundGameController.collectStrayBullets(gameData);
         BackgroundGameController.handleBulletMovement(gameData, delta);
-        BackgroundGameController.handleAutoAimCursor(gameData);
 
         EnemyController.spawnEnemies(gameData, delta);
         EnemyController.handleEnemyRenderingUpdates(delta, gameData.getEnemies());
         PlayerController.handlePlayerRenderingUpdates(delta, player);
+        BackgroundGameController.handleExplosionFXUpdates(gameData, delta);
+        BackgroundGameController.handleXpPickups(gameData);
         PlayerController.handlePlayerShooting(gameData, camera, delta);
         PlayerController.handlePlayerReloading(gameData, delta);
 
@@ -123,10 +118,12 @@ public class GameMenu implements Screen, InputProcessor {
         PlayerController.animatePlayer(player, batch);
         PlayerController.handleAimbot(gameData, delta, batch);
         BackgroundGameController.drawBullets(gameData, batch);
+        BackgroundGameController.animateExplosionFX(gameData, batch);
+        BackgroundGameController.drawCorpses(gameData, batch);
         batch.end();
 
         EnemyController.handleEnemyAI(gameData, delta);
-        EnemyController.handleEnemiesDamagingPlayer(gameData);
+        EnemyController.handleEnemiesDamagingPlayer(gameData, delta);
         EnemyController.handleEnemiesGettingDamaged(gameData);
 
         batch.begin();
@@ -136,6 +133,18 @@ public class GameMenu implements Screen, InputProcessor {
         updateUI();
         uiStage.act(delta);
         uiStage.draw();
+
+        BackgroundGameController.checkForLevelUp(gameData);
+
+        if (PlayerController.isPlayerDead(player)) {
+            mainApp.setScreen(new GameEndMenu(mainApp, gameData, false));
+            pauseMenu.dispose();
+            dispose();
+        } else if (PlayerController.hasPlayerWon(gameData)) {
+            mainApp.setScreen(new GameEndMenu(mainApp, gameData, true));
+            pauseMenu.dispose();
+            dispose();
+        }
     }
 
     private void initUI() {
@@ -181,7 +190,7 @@ public class GameMenu implements Screen, InputProcessor {
         levelLabel = label5;
         uiStage.addActor(levelLabel);
 
-        Label label6 = new Label("XP:", AppData.skin);
+        Label label6 = new Label("XP: " + player.getXp() + "/" + player.howMuchXpToNextLevel(), AppData.skin);
         label6.setColor(Color.CYAN);
         label6.setFontScale(1.3f);
         label6.setPosition(0, label5.getY() - label6.getHeight());
@@ -209,6 +218,8 @@ public class GameMenu implements Screen, InputProcessor {
         ammoLabel.setText(Translation.AMMO.translate() + ": " + player.getWeapon().getBulletsRemaining() + "/" + player.getWeapon().getMaxMagSize());
 
         levelLabel.setText(Translation.LEVEL.translate() + ": " + player.getLevel());
+
+        xpLabel.setText("XP: " + player.getXp() + "/" + player.howMuchXpToNextLevel());
 
         xpBar.setRange(0, player.howMuchXpToNextLevel());
         xpBar.setValue(player.getXp());

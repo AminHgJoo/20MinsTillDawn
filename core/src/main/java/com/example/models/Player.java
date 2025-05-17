@@ -28,6 +28,9 @@ public class Player {
     private transient boolean isReloading;
     private transient float reloadingTimer;
 
+    private transient boolean isInvulnerable;
+    private transient float invulnerabilityTimer;
+
     private int HP;
     private int kills;
     private int xp;
@@ -53,6 +56,9 @@ public class Player {
 
         isReloading = false;
         reloadingTimer = 0;
+
+        isInvulnerable = true;
+        invulnerabilityTimer = 0;
     }
 
     public int howMuchXpToNextLevel() {
@@ -93,6 +99,9 @@ public class Player {
 
         isReloading = false;
         reloadingTimer = 0;
+
+        isInvulnerable = true;
+        invulnerabilityTimer = 0;
     }
 
     public Animation<TextureRegion> getIdleAnimation() {
@@ -261,5 +270,29 @@ public class Player {
 
     public void setReloading(boolean reloading) {
         isReloading = reloading;
+    }
+
+    public void killsPlusPlus() {
+        kills++;
+    }
+
+    public boolean isInvulnerable() {
+        return isInvulnerable;
+    }
+
+    public void setInvulnerable(boolean invulnerable) {
+        isInvulnerable = invulnerable;
+    }
+
+    public float getInvulnerabilityTimer() {
+        return invulnerabilityTimer;
+    }
+
+    public void setInvulnerabilityTimer(float invulnerabilityTimer) {
+        this.invulnerabilityTimer = invulnerabilityTimer;
+    }
+
+    public void addXp(int xp) {
+        this.xp += xp;
     }
 }

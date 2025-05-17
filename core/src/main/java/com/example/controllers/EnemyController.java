@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.example.models.Bullet;
-import com.example.models.Enemy;
-import com.example.models.GameData;
-import com.example.models.Player;
+import com.example.models.*;
 import com.example.models.enums.types.BulletConstants;
 import com.example.models.enums.types.EnemyTypes;
 import com.example.utilities.VectorUtil;
@@ -102,13 +99,70 @@ public class EnemyController {
         gameData.getBullets().add(new Bullet(1, false, new Vector2(enemy.getPosition()), bulletVelocity));
     }
 
-    public static void handleEnemiesDamagingPlayer(GameData gameData) {
-        //TODO:
+    public static void handleEnemiesDamagingPlayer(GameData gameData, float delta) {
+        Player player = gameData.getPlayer();
+
+        if (player.isInvulnerable()) {
+            if (player.getInvulnerabilityTimer() >= 1) {
+                player.setInvulnerabilityTimer(0);
+                player.setInvulnerable(false);
+            } else {
+                player.setInvulnerabilityTimer(player.getInvulnerabilityTimer() + delta);
+            }
+            return;
+        }
+
+        for (Enemy enemy : gameData.getEnemies()) {
+            if (enemy.getCollisionRectangle().overlaps(player.getRectangle())) {
+                player.setHP(player.getHP() - 1);
+                player.setInvulnerable(true);
+                player.setInvulnerabilityTimer(0);
+                return;
+            }
+        }
+
+        Array<Bullet> bullets = gameData.getBullets();
+
+        for (int i = bullets.size - 1; i >= 0; i--) {
+            Bullet bullet = bullets.get(i);
+
+            if (bullet.getSprite().getBoundingRectangle().overlaps(player.getRectangle())
+                && !bullet.isPlayerProjectile()) {
+                bullets.removeIndex(i);
+                player.setHP(player.getHP() - 1);
+                player.setInvulnerable(true);
+                player.setInvulnerabilityTimer(0);
+                gameData.getExplosionFX().add(new ExplosionFXHelper(player.getPosition().cpy(), false));
+                return;
+            }
+        }
     }
 
     public static void handleEnemiesGettingDamaged(GameData gameData) {
-        //TODO:
+        Array<Enemy> enemies = gameData.getEnemies();
+        Array<Bullet> bullets = gameData.getBullets();
 
+        for (int i = enemies.size - 1; i >= 0; i--) {
+            for (int j = bullets.size - 1; j >= 0; j--) {
+                Enemy enemy = enemies.get(i);
+                Bullet bullet = bullets.get(j);
+
+                if (bullet.getSprite().getBoundingRectangle().overlaps(enemy.getCollisionRectangle())
+                    && bullet.isPlayerProjectile()) {
+                    bullets.removeIndex(j);
+                    enemy.setHP(enemy.getHP() - bullet.getDmg());
+                    //Add inertial push-back effect
+                    enemy.getVelocity().scl(-20);
+
+                    if (enemy.getHP() <= 0) {
+                        enemies.removeIndex(i);
+                        gameData.getPlayer().killsPlusPlus();
+                        gameData.getExplosionFX().add(new ExplosionFXHelper(enemy.getPosition().cpy(), true));
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public static void spawnEnemies(GameData gameData, float delta) {
@@ -117,7 +171,7 @@ public class EnemyController {
     }
 
     private static void spawnEyebats(GameData gameData, float delta) {
-        if (!(gameData.getElapsedTimeInSeconds() >= gameData.getGameEndTimeInMins() * 60 / 4)) {
+        if (!(gameData.getElapsedTimeInSeconds() >= gameData.getGameEndTimeInMins() * 60 * 0.25)) {
             return;
         }
 

@@ -101,6 +101,17 @@ public class PlayerController {
         if (keycode == map.get("reduceTimeCheat")) {
             gameData.setGameEndTimeInMins(gameData.getGameEndTimeInMins() - 1);
         }
+
+        if (keycode == map.get("goToBossCheat")) {
+            if (gameData.getElapsedTimeInSeconds() < gameData.getGameEndTimeInMins() * 60 * 0.5) {
+                gameData.setElapsedTimeInSeconds((float) (gameData.getGameEndTimeInMins() * 60 * 0.5));
+            }
+        }
+
+        if (keycode == map.get("invincibilityCheat")) {
+            gameData.getPlayer().setInvulnerabilityTimer(0);
+            gameData.getPlayer().setInvulnerable(true);
+        }
     }
 
     public static void handleInputKeyUp(int keycode, Player player) {

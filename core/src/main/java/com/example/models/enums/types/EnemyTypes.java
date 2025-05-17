@@ -7,7 +7,7 @@ import com.example.models.AppData;
 import java.util.HashMap;
 
 public enum EnemyTypes {
-    //TODO: Speed numbers subject to change.
+
     TREE_MONSTER(Double.POSITIVE_INFINITY, 0, "Tree Monster", treeMonsterTextures(), 2f),
     TENTACLE_MONSTER(25, 2, "Tentacle Monster", tentacleMonsterTextures(), 0.1f),
     EYEBAT(50, 2, "Eyebat", eyebatTextures(), 0.1f),
@@ -18,6 +18,10 @@ public enum EnemyTypes {
     public final double HP;
     public final TextureRegion[] textures;
     public final float animationSpeed;
+
+    public static Texture getEnemyCorpseTexture() {
+        return AppData.getEnemyAssets().get("EnemyCorpse");
+    }
 
     private static TextureRegion[] treeMonsterTextures() {
         HashMap<String, Texture> map = AppData.getEnemyAssets();

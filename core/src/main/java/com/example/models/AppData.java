@@ -67,12 +67,20 @@ public class AppData {
         for (int i = 0; i <= 3; i++) {
             enemyAssets.put("Elder" + i, new Texture("game_menu_assets/elder/Elder" + i + ".png"));
         }
+
+        enemyAssets.put("EnemyCorpse", new Texture("game_menu_assets/enemy_death/remains.png"));
     }
 
     public static void initializeWeaponAssets() {
         weaponAssets.put("Bullet", new Texture("game_menu_assets/bullet/Bullet.png"));
         weaponAssets.put("EyebatBullet", new Texture("game_menu_assets/bullet/EyebatBullet.png"));
         weaponAssets.put("Cursor", new Texture("game_menu_assets/cursor/Cursor.png"));
+
+        for (int i = 0; i <= 5; i++) {
+            String explosion = "Explosion" + i;
+            String path = "game_menu_assets/explosion/explosion" + i + ".png";
+            weaponAssets.put(explosion, new Texture(path));
+        }
     }
 
     public static void initializeHeroAssets() {

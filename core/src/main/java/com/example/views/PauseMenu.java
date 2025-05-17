@@ -61,7 +61,7 @@ public class PauseMenu implements Screen {
         giveUpButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                mainApp.setScreen(new MainMenu(mainApp));
+                mainApp.setScreen(new GameEndMenu(mainApp, gameMenu.getGameData(), false));
                 gameMenu.dispose();
                 dispose();
             }

@@ -1,11 +1,10 @@
 package com.example.controllers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.example.models.Bullet;
-import com.example.models.GameData;
-import com.example.utilities.CursorManager;
-import com.example.utilities.CursorUtil;
+import com.badlogic.gdx.utils.Array;
+import com.example.models.*;
 import com.example.views.GameMenu;
 
 public class BackgroundGameController {
@@ -36,11 +35,63 @@ public class BackgroundGameController {
         }
     }
 
-    public static void handleAutoAimCursor(GameData gameData) {
-        if (!gameData.isPlayerAutoAiming()) {
-            return;
+    public static void handleExplosionFXUpdates(GameData gameData, float delta) {
+        Array<ExplosionFXHelper> array = gameData.getExplosionFX();
+
+        for (int i = array.size - 1; i >= 0; i--) {
+            ExplosionFXHelper explosion = array.get(i);
+
+            if (explosion.getAnimation().isAnimationFinished(explosion.getAnimationTimer())) {
+                array.removeIndex(i);
+
+                if (explosion.isEnemyCorpse()) {
+                    gameData.getDroppedXp().add(new DroppedXpHelper(explosion.getPosition().cpy()));
+                }
+            } else {
+                explosion.addTime(delta);
+            }
         }
+    }
 
+    public static void animateExplosionFX(GameData gameData, SpriteBatch batch) {
 
+        final float scaleFactor = 1.5f;
+
+        for (ExplosionFXHelper explosion : gameData.getExplosionFX()) {
+            TextureRegion currentFrame = explosion.getAnimation().getKeyFrame(explosion.getAnimationTimer());
+
+            float x = explosion.getPosition().x;
+            float y = explosion.getPosition().y;
+
+            batch.draw(currentFrame
+                , x - currentFrame.getRegionWidth() * scaleFactor / 2
+                , y - currentFrame.getRegionHeight() * scaleFactor / 2
+                , currentFrame.getRegionWidth() * scaleFactor
+                , currentFrame.getRegionHeight() * scaleFactor);
+        }
+    }
+
+    public static void drawCorpses(GameData gameData, SpriteBatch batch) {
+        for (DroppedXpHelper droppedXp : gameData.getDroppedXp()) {
+            droppedXp.getSprite().draw(batch);
+        }
+    }
+
+    public static void handleXpPickups(GameData gameData) {
+        Player player = gameData.getPlayer();
+
+        for (int i = gameData.getDroppedXp().size - 1; i >= 0; i--) {
+            DroppedXpHelper droppedXp = gameData.getDroppedXp().get(i);
+
+            if (droppedXp.getSprite().getBoundingRectangle().overlaps(player.getRectangle())) {
+                gameData.getDroppedXp().removeIndex(i);
+                player.addXp(3);
+            }
+        }
+    }
+
+    public static void checkForLevelUp(GameData gameData) {
+        Player player = gameData.getPlayer();
+        //TODO:
     }
 }

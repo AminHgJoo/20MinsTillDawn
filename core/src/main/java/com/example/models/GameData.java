@@ -23,6 +23,9 @@ public class GameData {
 
     private transient boolean isPlayerAutoAiming;
 
+    private transient Array<ExplosionFXHelper> explosionFX;
+    private Array<DroppedXpHelper> droppedXp;
+
     /**
      * @author AminHg
      * @apiNote Used after JSON deserialization of saved game, loads all transient graphical assets.
@@ -34,8 +37,12 @@ public class GameData {
         for (Bullet bullet : bullets) {
             bullet.loadSprite();
         }
+        for (DroppedXpHelper helper : droppedXp) {
+            helper.loadTransientObjects();
+        }
         player.loadAnimations();
         isPlayerAutoAiming = false;
+        explosionFX = new Array<>();
     }
 
     public GameData() {
@@ -58,8 +65,12 @@ public class GameData {
         this.player = player;
 
         elapsedTimeInSeconds = 0;
+
         enemies = new Array<>();
         bullets = new Array<>();
+        explosionFX = new Array<>();
+        droppedXp = new Array<>();
+
         isGameInBossStage = false;
 
         addTreeMonsters();
@@ -140,5 +151,25 @@ public class GameData {
 
     public void togglePlayerAutoAiming() {
         isPlayerAutoAiming = !isPlayerAutoAiming;
+    }
+
+    public void setPlayerAutoAiming(boolean isPlayerAutoAiming) {
+        this.isPlayerAutoAiming = isPlayerAutoAiming;
+    }
+
+    public Array<ExplosionFXHelper> getExplosionFX() {
+        return explosionFX;
+    }
+
+    public void setExplosionFX(Array<ExplosionFXHelper> explosionFX) {
+        this.explosionFX = explosionFX;
+    }
+
+    public Array<DroppedXpHelper> getDroppedXp() {
+        return droppedXp;
+    }
+
+    public void setDroppedXp(Array<DroppedXpHelper> droppedXp) {
+        this.droppedXp = droppedXp;
     }
 }
