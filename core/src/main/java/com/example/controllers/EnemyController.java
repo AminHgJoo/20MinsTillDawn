@@ -54,7 +54,8 @@ public class EnemyController {
         Player player = gameData.getPlayer();
 
         for (Enemy enemy : gameData.getEnemies()) {
-            if (player.getRectangle().overlaps(enemy.getCollisionRectangle())) {
+            if (player.getRectangle().overlaps(enemy.getCollisionRectangle())
+                && enemy.getType() != EnemyTypes.ELDER_BOSS) {
                 continue;
             }
 
@@ -72,7 +73,8 @@ public class EnemyController {
             }
 
             if (enemy.getType() == EnemyTypes.ELDER_BOSS) {
-                //TODO: Boss battle.
+                handleElderAI(enemy, delta);
+                handleChasingAI(enemy, player);
             }
         }
     }
@@ -97,6 +99,20 @@ public class EnemyController {
         Vector2 bulletVelocity = VectorUtil.createPolarVector(
             BulletConstants.BAT_PROJECTILE.speedFactor * GameMenu.baseEntitySpeed, angle);
         gameData.getBullets().add(new Bullet(1, false, new Vector2(enemy.getPosition()), bulletVelocity));
+    }
+
+    public static void handleElderAI(Enemy boss, float delta) {
+
+        if (boss.getBehaviourTimer() <= 5) {
+            boss.setSpeedMagnitude(0);
+            boss.setBehaviourTimer(boss.getBehaviourTimer() + delta);
+        } else if (boss.getBehaviourTimer() <= 6) {
+            boss.setSpeedMagnitude(boss.getType().speedFactor * GameMenu.baseEntitySpeed);
+            boss.setBehaviourTimer(boss.getBehaviourTimer() + delta);
+        } else {
+            boss.setSpeedMagnitude(0);
+            boss.setBehaviourTimer(0);
+        }
     }
 
     public static void handleEnemiesDamagingPlayer(GameData gameData, float delta) {
@@ -151,7 +167,7 @@ public class EnemyController {
                     && bullet.isPlayerProjectile()) {
                     bullets.removeIndex(j);
                     enemy.setHP(enemy.getHP() - bullet.getDmg());
-                    //Add inertial push-back effect
+                    //inertial push-back effect
                     enemy.getVelocity().scl(-20);
 
                     if (enemy.getHP() <= 0) {
@@ -168,6 +184,23 @@ public class EnemyController {
     public static void spawnEnemies(GameData gameData, float delta) {
         spawnTentacles(gameData, delta);
         spawnEyebats(gameData, delta);
+        startBossBattle(gameData);
+    }
+
+    private static boolean isBossTimeNow(float totalTime, float currentTime) {
+        return currentTime >= totalTime * 0.5f;
+    }
+
+    private static void startBossBattle(GameData gameData) {
+        if (!gameData.isGameInBossStage()
+            && gameData.getBoss() == null
+            && isBossTimeNow(gameData.getGameEndTimeInMins() * 60, gameData.getElapsedTimeInSeconds())) {
+
+            Enemy boss = new Enemy(new Vector2(GameMenu.SCREEN_WIDTH, GameMenu.SCREEN_HEIGHT), EnemyTypes.ELDER_BOSS);
+            gameData.getEnemies().add(boss);
+            gameData.setBoss(boss);
+            gameData.setGameInBossStage(true);
+        }
     }
 
     private static void spawnEyebats(GameData gameData, float delta) {
@@ -208,6 +241,14 @@ public class EnemyController {
             }
         } else {
             gameData.setTimeElapsedFromLastTentacleSpawn(gameData.getTimeElapsedFromLastTentacleSpawn() + delta);
+        }
+    }
+
+    public static void handleBossBattleOver(GameData gameData) {
+        if (gameData.getBoss() != null) {
+            if (gameData.getBoss().getHP() <= 0) {
+                gameData.setGameInBossStage(false);
+            }
         }
     }
 }

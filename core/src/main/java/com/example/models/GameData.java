@@ -1,6 +1,9 @@
 package com.example.models;
 
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.example.models.enums.types.EnemyTypes;
@@ -12,8 +15,12 @@ public class GameData {
     private int gameEndTimeInMins;
 
     private float elapsedTimeInSeconds;
-    //TODO: Boss battle.
+
     private boolean isGameInBossStage;
+    private transient Texture safeZoneOverlay;
+    private Rectangle safeZone;
+    private Vector2 shrinkingVelocity;
+    private Enemy boss;
 
     private Array<Enemy> enemies;
     private Array<Bullet> bullets;
@@ -43,11 +50,26 @@ public class GameData {
         player.loadAnimations();
         isPlayerAutoAiming = false;
         explosionFX = new Array<>();
+
+        if (boss != null) {
+            boss.loadAnimation();
+        }
+
+        loadSafeZone();
+    }
+
+    private void loadSafeZone() {
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+
+        pixmap.setColor(1f, 0.65f, 0f, 0.15f);
+        pixmap.fill();
+
+        safeZoneOverlay = new Texture(pixmap);
+        pixmap.dispose();
     }
 
     public GameData() {
     }
-
 
     private void addTreeMonsters() {
         final int numOfTrees = MathUtils.random(8, 15);
@@ -79,6 +101,15 @@ public class GameData {
         timeElapsedFromLastEyebatSpawn = 0;
 
         isPlayerAutoAiming = false;
+
+        boss = null;
+
+        //It will take 60 seconds until the screen is completely consumed.
+        shrinkingVelocity = new Vector2(GameMenu.SCREEN_WIDTH / 60f, GameMenu.SCREEN_HEIGHT / 60f);
+
+        safeZone = new Rectangle(0, 0, GameMenu.SCREEN_WIDTH * 2, GameMenu.SCREEN_HEIGHT * 2);
+
+        loadSafeZone();
     }
 
     public float getElapsedTimeInSeconds() {
@@ -171,5 +202,37 @@ public class GameData {
 
     public void setDroppedXp(Array<DroppedXpHelper> droppedXp) {
         this.droppedXp = droppedXp;
+    }
+
+    public Enemy getBoss() {
+        return boss;
+    }
+
+    public void setBoss(Enemy boss) {
+        this.boss = boss;
+    }
+
+    public Vector2 getShrinkingVelocity() {
+        return shrinkingVelocity;
+    }
+
+    public void setShrinkingVelocity(Vector2 shrinkingVelocity) {
+        this.shrinkingVelocity = shrinkingVelocity;
+    }
+
+    public Texture getSafeZoneOverlay() {
+        return safeZoneOverlay;
+    }
+
+    public void setSafeZoneOverlay(Texture safeZoneOverlay) {
+        this.safeZoneOverlay = safeZoneOverlay;
+    }
+
+    public Rectangle getSafeZone() {
+        return safeZone;
+    }
+
+    public void setSafeZone(Rectangle safeZone) {
+        this.safeZone = safeZone;
     }
 }

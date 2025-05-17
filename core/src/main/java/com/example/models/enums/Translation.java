@@ -104,7 +104,9 @@ public enum Translation {
     AMMO("Ammo", "Munitie"),
     LEVEL("Level", "Verhoog"),
     WIN("Win", "Gewonnen"),
-    LOSS("Loss", "Verloren")
+    LOSS("Loss", "Verloren"),
+    LEVEL_UP("Level Up!", "Opgeleveld!"),
+
     ;
 
     final public String english;

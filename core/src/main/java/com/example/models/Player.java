@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.example.models.enums.types.HeroTypes;
 import com.example.views.GameMenu;
 
@@ -38,7 +39,10 @@ public class Player {
 
     private int maxHP;
     private int heroSpeedFactor;
-    private ArrayList<ActiveAbility> activeAbilities;
+
+    private float speedBuffMultiplier;
+
+    private Array<ActiveAbility> activeAbilities;
 
     private Weapon weapon;
     private boolean isIdle;
@@ -76,7 +80,7 @@ public class Player {
         this.velocity = new Vector2(0, 0);
         this.position = new Vector2(GameMenu.SCREEN_WIDTH, GameMenu.SCREEN_HEIGHT);
 
-        this.activeAbilities = new ArrayList<>();
+        this.activeAbilities = new Array<>();
 
         this.stateTimeIdle = 0;
         this.stateTimeWalking = 0;
@@ -102,6 +106,8 @@ public class Player {
 
         isInvulnerable = true;
         invulnerabilityTimer = 0;
+
+        speedBuffMultiplier = 1;
     }
 
     public Animation<TextureRegion> getIdleAnimation() {
@@ -168,8 +174,8 @@ public class Player {
         this.maxHP = maxHP;
     }
 
-    public int getHeroSpeedFactor() {
-        return heroSpeedFactor;
+    public float getHeroSpeedFactor() {
+        return heroSpeedFactor * speedBuffMultiplier;
     }
 
     public void setHeroSpeedFactor(int heroSpeedFactor) {
@@ -184,11 +190,11 @@ public class Player {
         this.rectangle = rectangle;
     }
 
-    public ArrayList<ActiveAbility> getActiveAbilities() {
+    public Array<ActiveAbility> getActiveAbilities() {
         return activeAbilities;
     }
 
-    public void setActiveAbilities(ArrayList<ActiveAbility> activeAbilities) {
+    public void setActiveAbilities(Array<ActiveAbility> activeAbilities) {
         this.activeAbilities = activeAbilities;
     }
 
@@ -294,5 +300,31 @@ public class Player {
 
     public void addXp(int xp) {
         this.xp += xp;
+    }
+
+    public void hpPlusPlus() {
+        HP++;
+    }
+
+    public void maxHPPlusPlus() {
+        maxHP++;
+    }
+
+    public void levelUp() {
+        xp -= howMuchXpToNextLevel();
+        level++;
+    }
+
+    public float getSpeedBuffMultiplier() {
+        return speedBuffMultiplier;
+    }
+
+    public void setSpeedBuffMultiplier(int speedBuffMultiplier) {
+        this.speedBuffMultiplier = speedBuffMultiplier;
+    }
+
+
+    public void applySpeedMultiplier(float multiplier) {
+        speedBuffMultiplier *= multiplier;
     }
 }

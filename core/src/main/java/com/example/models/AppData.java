@@ -205,6 +205,9 @@ public class AppData {
         return currentScreen;
     }
 
+    /**
+     * Do not use this method.
+     * @author AminHg*/
     public static void setCurrentScreen(Screen currentScreen) {
         AppData.currentScreen = currentScreen;
     }

@@ -75,42 +75,30 @@ public class PlayerController {
             GameMenu gameMenu = (GameMenu) AppData.getCurrentScreen();
             AppData.getMainApp().setScreen(gameMenu.getPauseMenu());
             CursorManager.getInstance().setCursorToHover();
-        }
-
-        if (keycode == map.get("shootKey")) {
+        } else if (keycode == map.get("shootKey")) {
             player.setShooting(true);
-        }
-
-        if (keycode == map.get("reloadKey")) {
+        } else if (keycode == map.get("reloadKey")) {
             player.setReloading(true);
-        }
-
-        if (keycode == map.get("aimbotKey")) {
+        } else if (keycode == map.get("aimbotKey")) {
             gameData.togglePlayerAutoAiming();
             if (gameData.isPlayerAutoAiming()) {
                 CursorUtil.hideCursor();
             } else {
                 CursorManager.getInstance().setCursorToHover();
             }
-        }
-
-        if (keycode == map.get("addHpCheat")) {
+        } else if (keycode == map.get("addHpCheat")) {
             player.setHP(player.getMaxHP());
-        }
-
-        if (keycode == map.get("reduceTimeCheat")) {
+        } else if (keycode == map.get("reduceTimeCheat")) {
             gameData.setGameEndTimeInMins(gameData.getGameEndTimeInMins() - 1);
-        }
-
-        if (keycode == map.get("goToBossCheat")) {
+        } else if (keycode == map.get("goToBossCheat")) {
             if (gameData.getElapsedTimeInSeconds() < gameData.getGameEndTimeInMins() * 60 * 0.5) {
                 gameData.setElapsedTimeInSeconds((float) (gameData.getGameEndTimeInMins() * 60 * 0.5));
             }
-        }
-
-        if (keycode == map.get("invincibilityCheat")) {
+        } else if (keycode == map.get("invincibilityCheat")) {
             gameData.getPlayer().setInvulnerabilityTimer(0);
             gameData.getPlayer().setInvulnerable(true);
+        } else if (keycode == map.get("levelUpCheat")) {
+            gameData.getPlayer().setXp(gameData.getPlayer().howMuchXpToNextLevel());
         }
     }
 
@@ -199,8 +187,11 @@ public class PlayerController {
             float mag = BulletConstants.PLAYER_PROJECTILE.speedFactor * GameMenu.baseEntitySpeed;
             Vector2 velocity = VectorUtil.createPolarVector(mag, projectedClickPos.angleRad());
 
-            Bullet bullet = new Bullet(weapon.getDmg(), true, new Vector2(player.getPosition()), velocity);
-            gameData.getBullets().add(bullet);
+            for (int i = 0; i < player.getWeapon().getProjectileAmount(); i++) {
+                Bullet bullet = new Bullet(weapon.getDmg(), true, new Vector2(player.getPosition()), velocity);
+                gameData.getBullets().add(bullet);
+            }
+
             weapon.setBulletsRemaining(weapon.getBulletsRemaining() - 1);
 
             if (AppData.getCurrentUserSettings().isAutoReload() && weapon.getBulletsRemaining() == 0) {
@@ -261,8 +252,11 @@ public class PlayerController {
             float mag = BulletConstants.PLAYER_PROJECTILE.speedFactor * GameMenu.baseEntitySpeed;
             Vector2 velocity = VectorUtil.createPolarVector(mag, targetRelToPlayer.angleRad());
 
-            Bullet bullet = new Bullet(weapon.getDmg(), true, new Vector2(player.getPosition()), velocity);
-            gameData.getBullets().add(bullet);
+            for (int i = 0; i < player.getWeapon().getProjectileAmount(); i++) {
+                Bullet bullet = new Bullet(weapon.getDmg(), true, new Vector2(player.getPosition()), velocity);
+                gameData.getBullets().add(bullet);
+            }
+
             weapon.setBulletsRemaining(weapon.getBulletsRemaining() - 1);
 
             if (AppData.getCurrentUserSettings().isAutoReload() && weapon.getBulletsRemaining() == 0) {

@@ -40,9 +40,9 @@ public class GameEndMenu implements Screen {
 
         this.skin = AppData.skin;
 
-        initializeGUI();
-
         score = finishedGameData.getPlayer().getKills() * (int) finishedGameData.getElapsedTimeInSeconds();
+
+        initializeGUI();
 
         addUserStats();
     }

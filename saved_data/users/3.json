@@ -1,6 +1,8 @@
 {
 avatarKeyString: LilithPic
-kills: 1
+score: 126130
+kills: 414
+longestSurvivalTimeSeconds: 622
 lang: english
 playSFX: true
 musicPath: sfx/music/Pretty Dungeon.wav

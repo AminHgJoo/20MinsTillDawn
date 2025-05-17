@@ -11,7 +11,7 @@ public enum EnemyTypes {
     TREE_MONSTER(Double.POSITIVE_INFINITY, 0, "Tree Monster", treeMonsterTextures(), 2f),
     TENTACLE_MONSTER(25, 2, "Tentacle Monster", tentacleMonsterTextures(), 0.1f),
     EYEBAT(50, 2, "Eyebat", eyebatTextures(), 0.1f),
-    ELDER_BOSS(400, 10, "Elder Boss", elderTextures(), 0.1f);
+    ELDER_BOSS(400, 20, "Elder Boss", elderTextures(), 0.1f);
 
     public final String name;
     public final int speedFactor;

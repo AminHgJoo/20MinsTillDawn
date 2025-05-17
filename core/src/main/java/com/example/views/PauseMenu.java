@@ -130,7 +130,7 @@ public class PauseMenu implements Screen {
         abilitiesTable.center();
 
         for (ActiveAbility ability : AppData.getCurrentPlayer().getActiveAbilities()) {
-            Label label = new Label(ability.getType().name(), skin);
+            Label label = new Label(ability.getType().toString() + "-" + String.format("%.1f", ability.getDuration()) + "(s)", skin);
             label.setColor(Color.ORANGE);
             abilitiesTable.add(label).pad(10).row();
         }
@@ -146,7 +146,7 @@ public class PauseMenu implements Screen {
         mainTable.add(new Label("Cheats", skin)).height(60).pad(10).row();
         mainTable.add(cheatsScrollPane).height(300).pad(10).row();
         mainTable.add(new Label("Abilities", skin)).height(60).pad(10).row();
-        mainTable.add(abilitiesScrollPane).height(150).pad(10).row();
+        mainTable.add(abilitiesScrollPane).width(500).height(150).pad(10).row();
 
         stage.addActor(mainTable);
     }

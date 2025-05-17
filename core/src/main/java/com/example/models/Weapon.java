@@ -14,6 +14,8 @@ public class Weapon {
 
     private WeaponTypes type;
 
+    private float dmgMultiplier;
+
     public Weapon() {
     }
 
@@ -27,6 +29,8 @@ public class Weapon {
         dmg = type.dmg;
 
         reloadTimer = 0;
+
+        dmgMultiplier = 1;
     }
 
     public int getDmg() {
@@ -83,5 +87,25 @@ public class Weapon {
 
     public void setReloadTimer(float reloadTimer) {
         this.reloadTimer = reloadTimer;
+    }
+
+    public void projectilePlusPlus() {
+        projectileAmount++;
+    }
+
+    public void addMagSize(int magSize) {
+        maxMagSize += magSize;
+    }
+
+    public float getDmgMultiplier() {
+        return dmgMultiplier;
+    }
+
+    public void setDmgMultiplier(float dmgMultiplier) {
+        this.dmgMultiplier = dmgMultiplier;
+    }
+
+    public void applyDmgMultiplier(float dmgMultiplier) {
+        this.dmgMultiplier *= dmgMultiplier;
     }
 }

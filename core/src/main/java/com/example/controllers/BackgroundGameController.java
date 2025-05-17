@@ -4,8 +4,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.example.MainApp;
 import com.example.models.*;
 import com.example.views.GameMenu;
+import com.example.views.LevelUpMenu;
+
+import static com.example.views.GameMenu.SCREEN_HEIGHT;
+import static com.example.views.GameMenu.SCREEN_WIDTH;
 
 public class BackgroundGameController {
     public static void handleGameTimer(GameData gameData, float delta) {
@@ -13,7 +18,7 @@ public class BackgroundGameController {
     }
 
     public static void collectStrayBullets(GameData gameData) {
-        Rectangle mapBounds = new Rectangle(0, 0, GameMenu.SCREEN_WIDTH * 2, GameMenu.SCREEN_HEIGHT * 2);
+        Rectangle mapBounds = new Rectangle(0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
 
         for (int i = gameData.getBullets().size - 1; i >= 0; i--) {
             if (!gameData.getBullets().get(i).getSprite().getBoundingRectangle().overlaps(mapBounds)) {
@@ -92,6 +97,55 @@ public class BackgroundGameController {
 
     public static void checkForLevelUp(GameData gameData) {
         Player player = gameData.getPlayer();
-        //TODO:
+
+        if (player.getXp() >= player.howMuchXpToNextLevel()) {
+            player.levelUp();
+            MainApp mainApp = AppData.getMainApp();
+            GameMenu gameMenu = (GameMenu) mainApp.getScreen();
+            mainApp.setScreen(new LevelUpMenu(mainApp, gameData, gameMenu));
+        }
+    }
+
+    public static void handleBuffExpiration(GameData gameData, float delta) {
+        Player player = gameData.getPlayer();
+
+        for (int i = player.getActiveAbilities().size - 1; i >= 0; i--) {
+            ActiveAbility activeAbility = player.getActiveAbilities().get(i);
+
+            if (activeAbility.getDuration() <= 0) {
+                player.getActiveAbilities().removeIndex(i);
+                activeAbility.getType().reverseEffect.execute(gameData);
+            } else {
+                activeAbility.decreaseDuration(delta);
+            }
+        }
+    }
+
+    public static void handleBossSafeZone(GameData gameData, SpriteBatch batch, float delta) {
+        if (!gameData.isGameInBossStage()) {
+            return;
+        }
+
+        Rectangle zone = gameData.getSafeZone();
+        zone.setWidth(Math.max(0, zone.getWidth() - gameData.getShrinkingVelocity().x * 2 * delta));
+        zone.setHeight(Math.max(0, zone.getHeight() - gameData.getShrinkingVelocity().y * 2 * delta));
+        zone.setCenter(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        batch.begin();
+        batch.draw(gameData.getSafeZoneOverlay(), zone.x, zone.y, zone.width, zone.height);
+        batch.end();
+
+        Player player = gameData.getPlayer();
+
+        if (player.isInvulnerable()) {
+            return;
+        }
+
+        if (!zone.contains(player.getPosition())) {
+
+            player.setHP(player.getHP() - 1);
+            player.setInvulnerable(true);
+            player.setInvulnerabilityTimer(0);
+        }
     }
 }

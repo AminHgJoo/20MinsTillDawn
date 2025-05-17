@@ -3,10 +3,7 @@ package com.example.views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -130,11 +127,15 @@ public class GameMenu implements Screen, InputProcessor {
         WorldController.handleLightGradiant(player, batch);
         batch.end();
 
+        BackgroundGameController.handleBossSafeZone(gameData, batch, delta);
+
         updateUI();
         uiStage.act(delta);
         uiStage.draw();
 
         BackgroundGameController.checkForLevelUp(gameData);
+        BackgroundGameController.handleBuffExpiration(gameData, delta);
+        EnemyController.handleBossBattleOver(gameData);
 
         if (PlayerController.isPlayerDead(player)) {
             mainApp.setScreen(new GameEndMenu(mainApp, gameData, false));
@@ -162,7 +163,7 @@ public class GameMenu implements Screen, InputProcessor {
         remainingTimeLabel = label2;
         uiStage.addActor(remainingTimeLabel);
 
-        Label label1 = new Label(Translation.HP.translate() + ": " + player.getHP(), AppData.skin);
+        Label label1 = new Label(Translation.HP.translate() + ": " + player.getHP() + "/" + player.getMaxHP(), AppData.skin);
         label1.setColor(Color.CYAN);
         label1.setFontScale(1.3f);
         label1.setPosition(0, label2.getY() - label1.getHeight());
@@ -208,7 +209,7 @@ public class GameMenu implements Screen, InputProcessor {
     private void updateUI() {
         elapsedTimeLabel.setText(Translation.ELAPSED_TIME.translate() + ": " + String.format("%.0f", gameData.getElapsedTimeInSeconds()));
 
-        hpLabel.setText(Translation.HP.translate() + ": " + player.getHP());
+        hpLabel.setText(Translation.HP.translate() + ": " + player.getHP() + "/" + player.getMaxHP());
 
         float remainingTime = gameData.getGameEndTimeInMins() * 60 - gameData.getElapsedTimeInSeconds();
         remainingTimeLabel.setText(Translation.REMAINING_TIME.translate() + ": " + String.format("%.0f", remainingTime));

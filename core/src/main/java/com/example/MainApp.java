@@ -8,6 +8,7 @@ import com.example.models.AppData;
 import com.example.models.User;
 import com.example.views.GameMenu;
 import com.example.views.LauncherMenu;
+import com.example.views.LevelUpMenu;
 import com.example.views.PauseMenu;
 
 public class MainApp extends Game {
@@ -42,6 +43,10 @@ public class MainApp extends Game {
         } else if (this.screen instanceof PauseMenu pauseMenu) {
             pauseMenu.getGameMenu().dispose();
             pauseMenu.dispose();
+        } else if (this.screen instanceof LevelUpMenu levelUpMenu) {
+            levelUpMenu.getGameMenu().getPauseMenu().dispose();
+            levelUpMenu.getGameMenu().dispose();
+            levelUpMenu.dispose();
         } else {
             screen.dispose();
         }
