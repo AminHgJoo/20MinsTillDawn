@@ -38,7 +38,9 @@ public class MainMenu implements Screen {
             musicName = "sfx/music/Pretty Dungeon.wav";
         }
 
-        mainApp.music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
+        if (mainApp.music == null) {
+            mainApp.music = Gdx.audio.newMusic(Gdx.files.internal(musicName));
+        }
 
         this.skin = AppData.skin;
 
