@@ -50,6 +50,7 @@ public enum Translation {
     CHANGE_MUSIC("Change Music", "Muziek veranderen"),
     GO_BACK("Go Back", "Ga terug"),
     CONTROLS("Controls", "Besturing"),
+    SHOOT_KEY("shootKey", "Schiettoets"),
     UP_KEY("upKey", "omhoogToets"),
     DOWN_KEY("downKey", "omlaagToets"),
     LEFT_KEY("leftKey", "linkerToets"),

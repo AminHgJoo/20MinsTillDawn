@@ -7,19 +7,20 @@ musicPath: sfx/music/Pretty Dungeon.wav
 soundVolume: 0.7
 autoReload: true
 keyBinds: {
-	upKey: 51
+    shootKey: 0
+	upKey: 152
 	aimbotKey: 62
 	reduceTimeCheat: 45
 	goToBossCheat: 35
 	levelUpCheat: 40
 	pauseKey: 111
-	downKey: 144
-	leftKey: 29
-	rightKey: 32
+	downKey: 146
+	leftKey: 148
+	rightKey: 150
 	reloadKey: 46
 	invincibilityCheat: 37
 	addHpCheat: 36
-}
+},
 savedProfileAssetPaths: [
 	C:\\Users\\majid\\Desktop\\T_BatgunProjectile.png
 	C:\\Users\\majid\\Desktop\\ExplosionFX_4.png

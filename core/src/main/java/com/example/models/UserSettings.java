@@ -25,6 +25,7 @@ public class UserSettings {
     public ArrayList<String> savedProfileAssetPaths = new ArrayList<>();
 
     public void initializeKeyBinds() {
+        keyBinds.put("shootKey", Input.Buttons.LEFT);
         keyBinds.put("upKey", Input.Keys.W);
         keyBinds.put("downKey", Input.Keys.S);
         keyBinds.put("leftKey", Input.Keys.A);
@@ -60,6 +61,7 @@ public class UserSettings {
         if (useDefaultKeymap) {
             keyBinds = new HashMap<>();
             initializeKeyBinds();
+            autoReload = true;
         }
     }
 

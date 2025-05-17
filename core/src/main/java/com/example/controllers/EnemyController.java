@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.example.models.Bullet;
 import com.example.models.Enemy;
 import com.example.models.GameData;
 import com.example.models.Player;
+import com.example.models.enums.types.BulletConstants;
 import com.example.models.enums.types.EnemyTypes;
 import com.example.utilities.VectorUtil;
 import com.example.views.GameMenu;
@@ -51,7 +53,7 @@ public class EnemyController {
         }
     }
 
-    public static void handleEnemyAI(GameData gameData) {
+    public static void handleEnemyAI(GameData gameData, float delta) {
         Player player = gameData.getPlayer();
 
         for (Enemy enemy : gameData.getEnemies()) {
@@ -69,11 +71,11 @@ public class EnemyController {
 
             if (enemy.getType() == EnemyTypes.EYEBAT) {
                 handleChasingAI(enemy, player);
-                //TODO: Projectile shooting
+                handleBatShootingAI(enemy, player, gameData, delta);
             }
 
             if (enemy.getType() == EnemyTypes.ELDER_BOSS) {
-
+                //TODO: Boss battle.
             }
         }
     }
@@ -85,11 +87,27 @@ public class EnemyController {
         enemy.getVelocity().set(VectorUtil.createPolarVector(enemy.getSpeedMagnitude(), angle));
     }
 
-    public static void handleEnemiesDamagingPlayer(GameData gameData) {
+    public static void handleBatShootingAI(Enemy enemy, Player player, GameData gameData, float delta) {
+        if (!(enemy.getBehaviourTimer() >= 3)) {
+            enemy.setBehaviourTimer(enemy.getBehaviourTimer() + delta);
+            return;
+        }
+        enemy.setBehaviourTimer(0);
 
+        Vector2 playerVecCopy = new Vector2(player.getPosition());
+        playerVecCopy.mulAdd(enemy.getPosition(), -1);
+        float angle = playerVecCopy.angleRad();
+        Vector2 bulletVelocity = VectorUtil.createPolarVector(
+            BulletConstants.BAT_PROJECTILE.speedFactor * GameMenu.baseEntitySpeed, angle);
+        gameData.getBullets().add(new Bullet(1, false, new Vector2(enemy.getPosition()), bulletVelocity));
+    }
+
+    public static void handleEnemiesDamagingPlayer(GameData gameData) {
+        //TODO:
     }
 
     public static void handleEnemiesGettingDamaged(GameData gameData) {
+        //TODO:
 
     }
 

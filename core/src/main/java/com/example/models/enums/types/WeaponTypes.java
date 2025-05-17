@@ -1,6 +1,5 @@
 package com.example.models.enums.types;
 
-//TODO: Texture for weapons.
 public enum WeaponTypes {
     REVOLVER(6, 1, 1, 20, "Revolver"),
     SHOTGUN(2, 1, 4, 10, "Shotgun"),

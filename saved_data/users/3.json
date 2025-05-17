@@ -9,15 +9,16 @@ autoReload: true
 keyBinds: {
 	upKey: 51
 	aimbotKey: 62
-	reduceTimeCheat: 45
-	goToBossCheat: 35
 	levelUpCheat: 40
 	pauseKey: 111
 	downKey: 47
-	leftKey: 29
 	rightKey: 32
 	reloadKey: 46
-	invincibilityCheat: 37
+	shootKey: 66
 	addHpCheat: 76
+	reduceTimeCheat: 45
+	goToBossCheat: 35
+	leftKey: 29
+	invincibilityCheat: 37
 }
 }

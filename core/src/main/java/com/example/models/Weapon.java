@@ -1,6 +1,5 @@
 package com.example.models;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.example.models.enums.types.WeaponTypes;
 
 public class Weapon {
@@ -11,13 +10,9 @@ public class Weapon {
     private int projectileAmount;
     private int dmg;
 
+    private float reloadTimer;
+
     private WeaponTypes type;
-
-    private transient Sprite sprite;
-
-    public void loadSprite() {
-        //TODO: Implement
-    }
 
     public Weapon() {
     }
@@ -25,13 +20,13 @@ public class Weapon {
     public Weapon(WeaponTypes type) {
         this.type = type;
 
-        loadSprite();
-
         bulletsRemaining = type.magSize;
         maxMagSize = type.magSize;
         reloadTime = type.reloadTime;
         projectileAmount = type.projectileAmount;
         dmg = type.dmg;
+
+        reloadTimer = 0;
     }
 
     public int getDmg() {
@@ -58,14 +53,6 @@ public class Weapon {
         this.reloadTime = reloadTime;
     }
 
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-
     public WeaponTypes getType() {
         return type;
     }
@@ -88,5 +75,13 @@ public class Weapon {
 
     public void setMaxMagSize(int maxMagSize) {
         this.maxMagSize = maxMagSize;
+    }
+
+    public float getReloadTimer() {
+        return reloadTimer;
+    }
+
+    public void setReloadTimer(float reloadTimer) {
+        this.reloadTimer = reloadTimer;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.utilities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -45,5 +46,13 @@ public class CursorUtil {
 
         original.dispose();
         return scaledPixmap;
+    }
+
+    public static void hideCursor() {
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(0, 0, 0, 0);
+        pixmap.fill();
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pixmap, 0, 0));
+        pixmap.dispose();
     }
 }

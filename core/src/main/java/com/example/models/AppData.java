@@ -10,6 +10,11 @@ import com.example.models.enums.Translation;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Asset manager and central data hub for the game. All fields are static. This class shouldn't be instantiated.
+ *
+ * @author AminHg
+ */
 public class AppData {
     private final static HashMap<String, Texture> profileAssets = new HashMap<>();
 
@@ -19,7 +24,7 @@ public class AppData {
 
     private final static HashMap<String, Texture> enemyAssets = new HashMap<>();
 
-    private final static HashMap<String, Texture> weaponAssets =  new HashMap<>();
+    private final static HashMap<String, Texture> weaponAssets = new HashMap<>();
 
     private static String lang = "english";
     public final static Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
@@ -65,7 +70,9 @@ public class AppData {
     }
 
     public static void initializeWeaponAssets() {
-        //TODO: Implement
+        weaponAssets.put("Bullet", new Texture("game_menu_assets/bullet/Bullet.png"));
+        weaponAssets.put("EyebatBullet", new Texture("game_menu_assets/bullet/EyebatBullet.png"));
+        weaponAssets.put("Cursor", new Texture("game_menu_assets/cursor/Cursor.png"));
     }
 
     public static void initializeHeroAssets() {
@@ -147,7 +154,6 @@ public class AppData {
         profileAssets.put("SparkPic", new Texture("avatar_pictures/T_Spark_Portrait.png"));
         profileAssets.put("YukiPic", new Texture("avatar_pictures/T_Yuki_Portrait.png"));
     }
-
 
     public static void loadCustomProfileAssets(ArrayList<String> assetPaths) {
         for (String assetPath : assetPaths) {

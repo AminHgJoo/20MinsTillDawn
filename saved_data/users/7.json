@@ -6,6 +6,7 @@ musicPath: sfx/music/Pretty Dungeon.wav
 soundVolume: 0.75
 autoReload: true
 keyBinds: {
+    shootKey: 0
 	upKey: 51
 	aimbotKey: 62
 	reduceTimeCheat: 45

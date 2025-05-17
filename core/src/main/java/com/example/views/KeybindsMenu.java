@@ -1,7 +1,6 @@
 package com.example.views;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +17,7 @@ import com.example.models.AppData;
 import com.example.models.UIPopupHelper;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
+import com.example.utilities.InputUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +73,7 @@ public class KeybindsMenu implements Screen {
             Label functionLabel = new Label(function.translate(), skin);
             functionLabel.setColor(Color.BLUE);
 
-            TextButton keyButton = new TextButton(Input.Keys.toString(keyCode), skin);
+            TextButton keyButton = new TextButton(InputUtil.inputCodeToString(keyCode), skin);
             keyButtons.put(function, keyButton);
 
             keyButton.addListener(new ClickListener() {
@@ -113,7 +113,7 @@ public class KeybindsMenu implements Screen {
 
                     if (AppData.getCurrentUser().getUserSettings().detectKeybindConflict(keycode)) {
                         TextButton keyButton = keyButtons.get(currentlyRebinding);
-                        keyButton.setText(Input.Keys.toString(AppData.getCurrentUser().getUserSettings().keyBinds.get(currentlyRebinding.english)));
+                        keyButton.setText(InputUtil.inputCodeToString(AppData.getCurrentUser().getUserSettings().keyBinds.get(currentlyRebinding.english)));
 
                         currentlyRebinding = null;
 
@@ -125,13 +125,42 @@ public class KeybindsMenu implements Screen {
                     keyBinds.put(currentlyRebinding, keycode);
 
                     TextButton btn = keyButtons.get(currentlyRebinding);
-                    btn.setText(Input.Keys.toString(keycode));
+                    btn.setText(InputUtil.inputCodeToString(keycode));
 
                     AppData.getCurrentUser().getUserSettings().keyBinds.put(currentlyRebinding.english, keycode);
 
                     currentlyRebinding = null;
                     return true;
                 }
+                return false;
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (currentlyRebinding != null) {
+
+                    if (AppData.getCurrentUser().getUserSettings().detectKeybindConflict(button)) {
+                        TextButton keyButton = keyButtons.get(currentlyRebinding);
+                        keyButton.setText(InputUtil.inputCodeToString(AppData.getCurrentUser().getUserSettings().keyBinds.get(currentlyRebinding.english)));
+
+                        currentlyRebinding = null;
+
+                        UIPopupHelper uiPopupHelper = new UIPopupHelper(stage, skin);
+                        uiPopupHelper.showDialog(Translation.KEYBIND_CONFLICT.translate(), Translation.ERROR);
+                        return false;
+                    }
+
+                    keyBinds.put(currentlyRebinding, button);
+
+                    TextButton btn = keyButtons.get(currentlyRebinding);
+                    btn.setText(InputUtil.inputCodeToString(button));
+
+                    AppData.getCurrentUser().getUserSettings().keyBinds.put(currentlyRebinding.english, button);
+
+                    currentlyRebinding = null;
+                    return false;
+                }
+
                 return false;
             }
         });

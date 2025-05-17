@@ -22,6 +22,12 @@ public class Player {
     private transient float stateTimeIdle;
     private transient float stateTimeWalking;
 
+    private transient boolean isShooting;
+    private transient float shootingTimer;
+
+    private transient boolean isReloading;
+    private transient float reloadingTimer;
+
     private int HP;
     private int kills;
     private int xp;
@@ -31,7 +37,6 @@ public class Player {
     private int heroSpeedFactor;
     private ArrayList<ActiveAbility> activeAbilities;
 
-    //TODO: Initialize later.
     private Weapon weapon;
     private boolean isIdle;
 
@@ -42,6 +47,12 @@ public class Player {
         walkingAnimation.setPlayMode(Animation.PlayMode.LOOP);
         stateTimeIdle = 0;
         stateTimeWalking = 0;
+
+        isShooting = false;
+        shootingTimer = 0;
+
+        isReloading = false;
+        reloadingTimer = 0;
     }
 
     public int howMuchXpToNextLevel() {
@@ -76,6 +87,12 @@ public class Player {
 
         xp = 0;
         level = 1;
+
+        isShooting = false;
+        shootingTimer = 0;
+
+        isReloading = false;
+        reloadingTimer = 0;
     }
 
     public Animation<TextureRegion> getIdleAnimation() {
@@ -212,5 +229,37 @@ public class Player {
 
     public void setKills(int kills) {
         this.kills = kills;
+    }
+
+    public boolean isShooting() {
+        return isShooting;
+    }
+
+    public void setShooting(boolean shooting) {
+        isShooting = shooting;
+    }
+
+    public float getShootingTimer() {
+        return shootingTimer;
+    }
+
+    public void setShootingTimer(float shootingTimer) {
+        this.shootingTimer = shootingTimer;
+    }
+
+    public float getReloadingTimer() {
+        return reloadingTimer;
+    }
+
+    public void setReloadingTimer(float reloadingTimer) {
+        this.reloadingTimer = reloadingTimer;
+    }
+
+    public boolean isReloading() {
+        return isReloading;
+    }
+
+    public void setReloading(boolean reloading) {
+        isReloading = reloading;
     }
 }

@@ -11,8 +11,8 @@ public class GameData {
 
     private int gameEndTimeInMins;
 
-    //TODO: Update these two
     private float elapsedTimeInSeconds;
+    //TODO: Boss battle.
     private boolean isGameInBossStage;
 
     private Array<Enemy> enemies;
@@ -20,6 +20,8 @@ public class GameData {
 
     private float timeElapsedFromLastTentacleSpawn;
     private float timeElapsedFromLastEyebatSpawn;
+
+    private transient boolean isPlayerAutoAiming;
 
     /**
      * @author AminHg
@@ -32,8 +34,8 @@ public class GameData {
         for (Bullet bullet : bullets) {
             bullet.loadSprite();
         }
-        player.getWeapon().loadSprite();
         player.loadAnimations();
+        isPlayerAutoAiming = false;
     }
 
     public GameData() {
@@ -64,6 +66,8 @@ public class GameData {
 
         timeElapsedFromLastTentacleSpawn = 0;
         timeElapsedFromLastEyebatSpawn = 0;
+
+        isPlayerAutoAiming = false;
     }
 
     public float getElapsedTimeInSeconds() {
@@ -128,5 +132,13 @@ public class GameData {
 
     public void setTimeElapsedFromLastEyebatSpawn(float timeElapsedFromLastEyebatSpawn) {
         this.timeElapsedFromLastEyebatSpawn = timeElapsedFromLastEyebatSpawn;
+    }
+
+    public boolean isPlayerAutoAiming() {
+        return isPlayerAutoAiming;
+    }
+
+    public void togglePlayerAutoAiming() {
+        isPlayerAutoAiming = !isPlayerAutoAiming;
     }
 }

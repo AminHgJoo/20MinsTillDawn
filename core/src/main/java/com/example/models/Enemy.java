@@ -21,7 +21,7 @@ public class Enemy {
     private transient Animation<TextureRegion> animation;
     private transient float animationTimer;
 
-    //TODO: Update this for bat and elder
+    //TODO: Update this for elder.
     private float behaviourTimer;
 
     public void loadAnimation() {

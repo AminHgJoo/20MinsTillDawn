@@ -69,6 +69,10 @@ public class CursorManager extends InputAdapter implements Disposable {
         return false;
     }
 
+    public void setCursorToHover() {
+        Gdx.graphics.setCursor(hoverCursor);
+    }
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {

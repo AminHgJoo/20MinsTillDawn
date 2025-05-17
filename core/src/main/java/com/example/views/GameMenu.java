@@ -21,6 +21,7 @@ import com.example.models.GameData;
 import com.example.models.Player;
 import com.example.models.enums.Translation;
 import com.example.utilities.CursorManager;
+import com.example.utilities.CursorUtil;
 
 public class GameMenu implements Screen, InputProcessor {
 
@@ -69,12 +70,18 @@ public class GameMenu implements Screen, InputProcessor {
 
         this.uiStage = new Stage(new ScreenViewport());
         initUI();
+
+        PlayerController.gameData = this.gameData;
     }
 
     @Override
     public void show() {
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), this);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(this);
+        if (gameData.isPlayerAutoAiming()) {
+            CursorUtil.hideCursor();
+        } else {
+            CursorManager.getInstance().setCursorToHover();
+        }
     }
 
     public void handleCameraViewportUpdates() {
@@ -94,10 +101,15 @@ public class GameMenu implements Screen, InputProcessor {
         }
 
         BackgroundGameController.handleGameTimer(gameData, delta);
+        BackgroundGameController.collectStrayBullets(gameData);
+        BackgroundGameController.handleBulletMovement(gameData, delta);
+        BackgroundGameController.handleAutoAimCursor(gameData);
 
         EnemyController.spawnEnemies(gameData, delta);
         EnemyController.handleEnemyRenderingUpdates(delta, gameData.getEnemies());
         PlayerController.handlePlayerRenderingUpdates(delta, player);
+        PlayerController.handlePlayerShooting(gameData, camera, delta);
+        PlayerController.handlePlayerReloading(gameData, delta);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -109,9 +121,11 @@ public class GameMenu implements Screen, InputProcessor {
         batch.draw(backgroundTexture, 0, 0);
         EnemyController.animateEnemies(gameData.getEnemies(), batch);
         PlayerController.animatePlayer(player, batch);
+        PlayerController.handleAimbot(gameData, delta, batch);
+        BackgroundGameController.drawBullets(gameData, batch);
         batch.end();
 
-        EnemyController.handleEnemyAI(gameData);
+        EnemyController.handleEnemyAI(gameData, delta);
         EnemyController.handleEnemiesDamagingPlayer(gameData);
         EnemyController.handleEnemiesGettingDamaged(gameData);
 

@@ -1,12 +1,19 @@
 package com.example.controllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.example.models.AppData;
-import com.example.models.GameData;
-import com.example.models.Player;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.example.models.*;
+import com.example.models.enums.types.BulletConstants;
+import com.example.models.enums.types.EnemyTypes;
+import com.example.utilities.CursorManager;
+import com.example.utilities.CursorUtil;
+import com.example.utilities.VectorUtil;
 import com.example.views.GameMenu;
 
 import java.util.HashMap;
@@ -14,6 +21,7 @@ import java.util.HashMap;
 public class PlayerController {
     public final static float scaleFactor = 2;
     public final static float zoomFactor = 2;
+    public static GameData gameData;
 
     public static void handlePlayerRenderingUpdates(float delta, Player player) {
         TextureRegion currentFrame;
@@ -66,6 +74,32 @@ public class PlayerController {
         if (Gdx.input.isKeyJustPressed(keycode) && keycode == map.get("pauseKey")) {
             GameMenu gameMenu = (GameMenu) AppData.getCurrentScreen();
             AppData.getMainApp().setScreen(gameMenu.getPauseMenu());
+            CursorManager.getInstance().setCursorToHover();
+        }
+
+        if (keycode == map.get("shootKey")) {
+            player.setShooting(true);
+        }
+
+        if (keycode == map.get("reloadKey")) {
+            player.setReloading(true);
+        }
+
+        if (keycode == map.get("aimbotKey")) {
+            gameData.togglePlayerAutoAiming();
+            if (gameData.isPlayerAutoAiming()) {
+                CursorUtil.hideCursor();
+            } else {
+                CursorManager.getInstance().setCursorToHover();
+            }
+        }
+
+        if (keycode == map.get("addHpCheat")) {
+            player.setHP(player.getMaxHP());
+        }
+
+        if (keycode == map.get("reduceTimeCheat")) {
+            gameData.setGameEndTimeInMins(gameData.getGameEndTimeInMins() - 1);
         }
     }
 
@@ -78,6 +112,11 @@ public class PlayerController {
 
         if (keycode == map.get("leftKey") || keycode == map.get("rightKey")) {
             player.getVelocity().x = 0;
+        }
+
+        if (keycode == map.get("shootKey")) {
+            player.setShooting(false);
+            player.setShootingTimer(0);
         }
     }
 
@@ -106,5 +145,119 @@ public class PlayerController {
 
     public static boolean hasPlayerWon(GameData gameData) {
         return gameData.getGameEndTimeInMins() * 60 <= gameData.getElapsedTimeInSeconds();
+    }
+
+    public static void handlePlayerReloading(GameData gameData, float delta) {
+        if (!gameData.getPlayer().isReloading()) {
+            return;
+        }
+
+        if (gameData.getPlayer().getReloadingTimer() < gameData.getPlayer().getWeapon().getReloadTime()) {
+            gameData.getPlayer().setReloadingTimer(gameData.getPlayer().getReloadingTimer() + delta);
+        } else {
+            gameData.getPlayer().setReloadingTimer(0);
+            gameData.getPlayer().setReloading(false);
+            gameData.getPlayer().getWeapon().setBulletsRemaining(gameData.getPlayer().getWeapon().getMaxMagSize());
+        }
+    }
+
+    public static void handlePlayerShooting(GameData gameData, OrthographicCamera camera, float delta) {
+        final float shootingCooldown = 0.2f;
+
+        Player player = gameData.getPlayer();
+        Weapon weapon = player.getWeapon();
+
+        if (!player.isShooting() || player.isReloading() || gameData.isPlayerAutoAiming()) {
+            return;
+        }
+
+        if (player.getShootingTimer() >= shootingCooldown) {
+            player.setShootingTimer(0);
+        } else {
+            player.setShootingTimer(player.getShootingTimer() + delta);
+            return;
+        }
+
+        if (weapon.getBulletsRemaining() > 0) {
+            Vector3 rawMousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(rawMousePos);
+
+            Vector2 projectedClickPos = new Vector2(rawMousePos.x, rawMousePos.y);
+            projectedClickPos.mulAdd(gameData.getPlayer().getPosition(), -1);
+
+            float mag = BulletConstants.PLAYER_PROJECTILE.speedFactor * GameMenu.baseEntitySpeed;
+            Vector2 velocity = VectorUtil.createPolarVector(mag, projectedClickPos.angleRad());
+
+            Bullet bullet = new Bullet(weapon.getDmg(), true, new Vector2(player.getPosition()), velocity);
+            gameData.getBullets().add(bullet);
+            weapon.setBulletsRemaining(weapon.getBulletsRemaining() - 1);
+
+            if (AppData.getCurrentUserSettings().isAutoReload() && weapon.getBulletsRemaining() == 0) {
+                player.setReloading(true);
+                player.setReloadingTimer(0);
+            }
+        }
+    }
+
+    public static void handleAimbot(GameData gameData, float delta, SpriteBatch batch) {
+        if (!gameData.isPlayerAutoAiming() || gameData.getElapsedTimeInSeconds() < 30) {
+            return;
+        }
+
+        Enemy closestEnemy = gameData.getEnemies().get(gameData.getEnemies().size - 1);
+        Vector2 playerPos = gameData.getPlayer().getPosition();
+
+        for (Enemy enemy : gameData.getEnemies()) {
+            if (enemy.getType() == EnemyTypes.TREE_MONSTER) {
+                continue;
+            }
+            float newDist = playerPos.dst(enemy.getPosition());
+
+            if (newDist < playerPos.dst(closestEnemy.getPosition())) {
+                closestEnemy = enemy;
+            }
+        }
+
+        if (closestEnemy == null) {
+            return;
+        }
+
+        Texture reticleTexture = AppData.getWeaponAssets().get("Cursor");
+        float drawX = closestEnemy.getPosition().x - reticleTexture.getWidth() / 2f;
+        float drawY = closestEnemy.getPosition().y - reticleTexture.getHeight() / 2f;
+        batch.draw(reticleTexture, drawX, drawY);
+
+        final float shootingCooldown = 0.2f;
+
+        Player player = gameData.getPlayer();
+        Weapon weapon = player.getWeapon();
+
+        if (!player.isShooting() || player.isReloading()) {
+            return;
+        }
+
+        if (player.getShootingTimer() >= shootingCooldown) {
+            player.setShootingTimer(0);
+        } else {
+            player.setShootingTimer(player.getShootingTimer() + delta);
+            return;
+        }
+
+        if (weapon.getBulletsRemaining() > 0) {
+            Vector2 targetRelToPlayer = new Vector2(closestEnemy.getPosition());
+            targetRelToPlayer.mulAdd(gameData.getPlayer().getPosition(), -1);
+
+            float mag = BulletConstants.PLAYER_PROJECTILE.speedFactor * GameMenu.baseEntitySpeed;
+            Vector2 velocity = VectorUtil.createPolarVector(mag, targetRelToPlayer.angleRad());
+
+            Bullet bullet = new Bullet(weapon.getDmg(), true, new Vector2(player.getPosition()), velocity);
+            gameData.getBullets().add(bullet);
+            weapon.setBulletsRemaining(weapon.getBulletsRemaining() - 1);
+
+            if (AppData.getCurrentUserSettings().isAutoReload() && weapon.getBulletsRemaining() == 0) {
+                player.setReloading(true);
+                player.setReloadingTimer(0);
+            }
+        }
     }
 }
