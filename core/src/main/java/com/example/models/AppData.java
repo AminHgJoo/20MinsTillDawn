@@ -51,7 +51,7 @@ public class AppData {
     }
 
     public static void initializeSoundFXPaths() {
-        //TODO
+
         soundFX.put("Explosion", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Explosion.wav")));
         soundFX.put("XpPickup", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Obtain_Points.wav")));
         soundFX.put("WeaponReload", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Weapon_Reload.wav")));
