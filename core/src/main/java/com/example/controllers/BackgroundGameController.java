@@ -91,6 +91,9 @@ public class BackgroundGameController {
             if (droppedXp.getSprite().getBoundingRectangle().overlaps(player.getRectangle())) {
                 gameData.getDroppedXp().removeIndex(i);
                 player.addXp(3);
+                if (AppData.getCurrentUserSettings().isPlaySFX()) {
+                    AppData.getSoundFX().get("XpPickup").play();
+                }
             }
         }
     }

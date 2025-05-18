@@ -61,6 +61,7 @@ public class UserSettings {
             keyBinds = new HashMap<>();
             initializeKeyBinds();
             autoReload = true;
+            playSFX = true;
         }
     }
 

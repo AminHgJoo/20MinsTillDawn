@@ -89,6 +89,9 @@ public class LevelUpMenu implements Screen {
         InputMultiplexer inputMultiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         CursorManager.getInstance().setCursorToHover();
+        if (AppData.getCurrentUserSettings().isPlaySFX()) {
+            AppData.getSoundFX().get("YouWin").play();
+        }
     }
 
     @Override

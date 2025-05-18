@@ -146,6 +146,9 @@ public class EnemyController {
                 && !bullet.isPlayerProjectile()) {
                 bullets.removeIndex(i);
                 player.setHP(player.getHP() - 1);
+                if (AppData.getCurrentUserSettings().isPlaySFX()) {
+                    AppData.getSoundFX().get("Explosion").play();
+                }
                 player.setInvulnerable(true);
                 player.setInvulnerabilityTimer(0);
                 gameData.getExplosionFX().add(new ExplosionFXHelper(player.getPosition().cpy(), false));
@@ -167,8 +170,13 @@ public class EnemyController {
                     && bullet.isPlayerProjectile()) {
                     bullets.removeIndex(j);
                     enemy.setHP(enemy.getHP() - bullet.getDmg());
+                    if (AppData.getCurrentUserSettings().isPlaySFX()) {
+                        AppData.getSoundFX().get("Explosion").play();
+                    }
                     //inertial push-back effect
-                    enemy.getVelocity().scl(-20);
+                    if (enemy.getType() != EnemyTypes.ELDER_BOSS) {
+                        enemy.getVelocity().scl(-20);
+                    }
 
                     if (enemy.getHP() <= 0) {
                         enemies.removeIndex(i);

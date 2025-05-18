@@ -111,6 +111,9 @@ public class GameEndMenu implements Screen {
     public void show() {
         InputMultiplexer multiplexer = new InputMultiplexer(CursorManager.getInstance(), stage);
         Gdx.input.setInputProcessor(multiplexer);
+        if (AppData.getCurrentUserSettings().isPlaySFX()) {
+            AppData.getSoundFX().get(isVictory ? "YouWin" : "YouLose").play();
+        }
     }
 
     @Override

@@ -193,6 +193,9 @@ public class PlayerController {
             }
 
             weapon.setBulletsRemaining(weapon.getBulletsRemaining() - 1);
+            if (AppData.getCurrentUserSettings().isPlaySFX()) {
+                AppData.getSoundFX().get("WeaponShoot").play();
+            }
 
             if (AppData.getCurrentUserSettings().isAutoReload() && weapon.getBulletsRemaining() == 0) {
                 player.setReloading(true);
@@ -257,6 +260,9 @@ public class PlayerController {
                 gameData.getBullets().add(bullet);
             }
 
+            if (AppData.getCurrentUserSettings().isPlaySFX()) {
+                AppData.getSoundFX().get("WeaponShoot").play();
+            }
             weapon.setBulletsRemaining(weapon.getBulletsRemaining() - 1);
 
             if (AppData.getCurrentUserSettings().isAutoReload() && weapon.getBulletsRemaining() == 0) {

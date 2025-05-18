@@ -2,6 +2,7 @@ package com.example.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.example.MainApp;
@@ -26,6 +27,8 @@ public class AppData {
 
     private final static HashMap<String, Texture> weaponAssets = new HashMap<>();
 
+    private final static HashMap<String, Sound> soundFX = new HashMap<>();
+
     private static String lang = "english";
     public final static Skin skin = new Skin(Gdx.files.internal("pixthulhu/skin/pixthulhu-ui.json"));
 
@@ -44,6 +47,17 @@ public class AppData {
         initializeMapAssets();
         initializeWeaponAssets();
         initializeEnemyAssets();
+        initializeSoundFXPaths();
+    }
+
+    public static void initializeSoundFXPaths() {
+        //TODO
+        soundFX.put("Explosion", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Explosion.wav")));
+        soundFX.put("XpPickup", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Obtain_Points.wav")));
+        soundFX.put("WeaponReload", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Weapon_Reload.wav")));
+        soundFX.put("WeaponShoot", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/Weapon_Shoot.wav")));
+        soundFX.put("YouLose", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/You_Lose.wav")));
+        soundFX.put("YouWin", Gdx.audio.newSound(Gdx.files.internal("sfx/sounds/You_Win.wav")));
     }
 
     public static void initializeMapAssets() {
@@ -207,7 +221,9 @@ public class AppData {
 
     /**
      * Do not use this method.
-     * @author AminHg*/
+     *
+     * @author AminHg
+     */
     public static void setCurrentScreen(Screen currentScreen) {
         AppData.currentScreen = currentScreen;
     }
@@ -246,5 +262,9 @@ public class AppData {
 
     public static HashMap<String, Texture> getWeaponAssets() {
         return weaponAssets;
+    }
+
+    public static HashMap<String, Sound> getSoundFX() {
+        return soundFX;
     }
 }
